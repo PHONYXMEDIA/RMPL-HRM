@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rmpl_hrm/constants/dimensions.dart';
+import 'package:rmpl_hrm/responsive/web_screen_layout.dart';
 import 'package:rmpl_hrm/screens/apply_leave_screen.dart';
 import 'package:rmpl_hrm/screens/attendance_screen.dart';
 import 'package:rmpl_hrm/screens/drawer/drawer.dart';
@@ -107,7 +109,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       //   ],
       // ),
       
-      body: Stack(
+      body: mq.width > webScreenSize ? WebScreenLayout() : Stack(
         children: [
           Container(
             width: double.infinity,

@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:get/utils.dart';
 import 'package:rmpl_hrm/components/button.dart';
+import 'package:rmpl_hrm/components/textfield.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/constants/dimensions.dart';
 import 'package:rmpl_hrm/main.dart';
+import 'package:rmpl_hrm/screens/apply_leave_screen.dart';
+import 'package:rmpl_hrm/screens/home_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,6 +18,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final idController = TextEditingController();
+  final passController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
@@ -22,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: mq.width * 0.3,
+            height: mq.width > webScreenSize ? mq.width * 0.05 : mq.width * 0.3,
           ),
           Expanded(
             child: Stack(
@@ -53,13 +61,16 @@ class _LoginScreenState extends State<LoginScreen> {
           Container(
             // height: mq.height * 0.6,
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            padding: mq.width > webScreenSize
+                ? EdgeInsets.symmetric(horizontal: mq.width * 0.3, vertical: 20)
+                : EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             decoration: const BoxDecoration(
-                color: whiteColor,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(28),topRight: Radius.circular(28)),
-                // borderRadius: BorderRadius.all(Radius.circular(28)
-                // )
-                ),
+              color: whiteColor,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(28), topRight: Radius.circular(28)),
+              // borderRadius: BorderRadius.all(Radius.circular(28)
+              // )
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -85,21 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.w500),
                 ),
                 8.heightBox,
-                TextFormField(
-                  decoration: InputDecoration(
-                      focusedBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(color: borderColor)),
-                      enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(color: borderColor)),
-                      hintText: 'DEL122233',
-                      filled: true,
-                      fillColor: lightGreyColor,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      )),
-                ),
+                customTextFormField('DEL122233', idController),
                 20.heightBox,
                 const Text(
                   'Enter your password',
@@ -110,21 +107,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.w500),
                 ),
                 8.heightBox,
-                TextFormField(
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        borderSide: BorderSide(color: borderColor)),
-                    enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        borderSide: BorderSide(color: borderColor)),
-                    hintText: '**********',
-                    filled: true,
-                    fillColor: lightGreyColor,
-                  ),
-                ),
+                customTextFormField('************', passController),
                 20.heightBox,
-                customButton(() {}, 'Login'),
+                customButton(() {
+                  Get.off(()=> HomeScreen());
+                }, 'Login', context),
                 8.heightBox,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

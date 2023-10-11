@@ -26,20 +26,22 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primaryColor,
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        elevation: 0,
-        title: const Text(
-          'Manage Leave',
-          style: TextStyle(
-              fontFamily: 'Inter', fontSize: 24, fontWeight: FontWeight.w600),
-        ),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: primaryColor,
+      //   elevation: 0,
+      //   title: const Text(
+      //     'Manage Leave',
+      //     style: TextStyle(
+      //         fontFamily: 'Inter', fontSize: 24, fontWeight: FontWeight.w600),
+      //   ),
+      // ),
       body: Container(
         margin: const EdgeInsets.only(top: 20),
         padding: const EdgeInsets.symmetric(vertical: 20),
         decoration: BoxDecoration(
-            color: whiteColor, borderRadius: BorderRadius.circular(20)),
+            color: whiteColor,
+            // borderRadius: BorderRadius.circular(20)
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
@@ -47,7 +49,8 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
             children: [
               20.heightBox,
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: borderColor)),
@@ -61,8 +64,8 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         });
                       },
                       child: Container(
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 8, horizontal: 48),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 48),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             color: isSelected
@@ -84,8 +87,8 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         });
                       },
                       child: Container(
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 8, horizontal: 48),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 48),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             // color: Colors.amber
@@ -123,7 +126,10 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     fontWeight: FontWeight.w500),
               ),
               8.heightBox,
-              isSelected ? customTextFormField('Select Date', _departmentController) : customTextFormField('Select from Date', _departmentController),
+              isSelected
+                  ? customTextFormField('Select Date', _departmentController)
+                  : customTextFormField(
+                      'Select from Date', _departmentController),
               12.heightBox,
               Text(
                 isSelected ? 'Full Day / Half Day' : 'Select to date',
@@ -133,7 +139,10 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     fontWeight: FontWeight.w500),
               ),
               8.heightBox,
-              isSelected ? customTextFormField('Select', _departmentController) : customTextFormField('Select To Date', _departmentController),
+              isSelected
+                  ? customTextFormField('Select', _departmentController)
+                  : customTextFormField(
+                      'Select To Date', _departmentController),
               12.heightBox,
               const Text(
                 'Leave Type',
@@ -171,7 +180,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     )),
               ),
               Expanded(child: Container()),
-              customButton(() {}, 'Apply Leave')
+              customButton(() {}, 'Apply Leave', context)
             ],
           ),
         ),

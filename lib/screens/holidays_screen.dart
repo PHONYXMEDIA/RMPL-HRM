@@ -16,15 +16,15 @@ class _HolidayScreenState extends State<HolidayScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: primaryColor,
-        appBar: AppBar(
-          backgroundColor: primaryColor,
-          elevation: 0,
-          title: const Text(
-            'Holidays',
-            style: TextStyle(
-                fontFamily: 'Inter', fontSize: 24, fontWeight: FontWeight.w600),
-          ),
-        ),
+        // appBar: AppBar(
+        //   backgroundColor: primaryColor,
+        //   elevation: 0,
+        //   title: const Text(
+        //     'Holidays',
+        //     style: TextStyle(
+        //         fontFamily: 'Inter', fontSize: 24, fontWeight: FontWeight.w600),
+        //   ),
+        // ),
         body: Container(
             margin: const EdgeInsets.only(top: 20),
             padding: const EdgeInsets.symmetric(vertical: 20),

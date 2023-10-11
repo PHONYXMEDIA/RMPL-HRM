@@ -20,21 +20,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     mq = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: primaryColor,
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        centerTitle: false,
-        title: Text(
-          'My Profile',
-          style: TextStyle(
-              fontFamily: 'Inter', fontSize: 24, fontWeight: FontWeight.w600),
-        ),
-        elevation: 0,
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: primaryColor,
+      //   centerTitle: false,
+      //   title: Text(
+      //     'My Profile',
+      //     style: TextStyle(
+      //         fontFamily: 'Inter', fontSize: 24, fontWeight: FontWeight.w600),
+      //   ),
+      //   elevation: 0,
+      // ),
       body: Container(
+        margin: EdgeInsets.only(top: 20),
         decoration: BoxDecoration(
-          color: whiteColor,
-          borderRadius: BorderRadius.circular(20),
-        ),
+            color: whiteColor,
+            // borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
           child: Column(
@@ -120,7 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               12.heightBox,
               customTextFormField('Field 1', fieldcontroller),
               const Spacer(),
-              customButton(() {}, 'Save Changes')
+              customButton(() {}, 'Save Changes', context)
             ],
           ),
         ),

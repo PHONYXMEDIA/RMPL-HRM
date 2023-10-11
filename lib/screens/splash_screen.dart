@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:rmpl_hrm/main.dart';
+import 'package:rmpl_hrm/screens/home_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../constants/colors.dart';
@@ -14,6 +17,14 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    Future.delayed(Duration(seconds: 2), (){
+      Get.to(()=> HomeScreen());
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;

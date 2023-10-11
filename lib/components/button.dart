@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/constants/dimensions.dart';
+import 'package:rmpl_hrm/main.dart';
 
-Widget customButton(void Function()? onPress, String text) {
+Widget customButton(void Function()? onPress, String text, context) {
+  mq = MediaQuery.of(context).size;
   return ElevatedButton(
       onPressed: onPress,
       style: ButtonStyle(
           shape: MaterialStatePropertyAll(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-          padding: MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 12)),
+          padding: mq.width > webScreenSize
+              ? MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 20))
+              : MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 12)),
           backgroundColor: MaterialStatePropertyAll(buttonColor),
           elevation: MaterialStatePropertyAll(3.0)),
       child: Center(
