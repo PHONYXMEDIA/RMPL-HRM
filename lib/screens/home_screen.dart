@@ -28,163 +28,154 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var currentPage = DrawerSections.dashboard;
   int pageNumber = 0;
+
   @override
   Widget build(BuildContext context) {
     var container;
     if (currentPage == DrawerSections.dashboard) {
-      container = DashboardScreen();
+      container = const DashboardScreen();
     } else if (currentPage == DrawerSections.notifications) {
-      container = NotificationScreen();
+      container = const NotificationScreen();
     } else if (currentPage == DrawerSections.my_attendance) {
-      container = AttendanceScreen();
+      container = const AttendanceScreen();
     } else if (currentPage == DrawerSections.holidays) {
-      container = HolidayScreen();
+      container = const HolidayScreen();
     } else if (currentPage == DrawerSections.manage_leave) {
-      container = ManageLeave();
+      container = const ManageLeave();
     } else if (currentPage == DrawerSections.salary_details) {
-      container = ApplyLeaveScreen();
+      container = const ApplyLeaveScreen();
     } else if (currentPage == DrawerSections.my_profile) {
-      container = ProfileScreen();
+      container = const ProfileScreen();
     } else if (currentPage == DrawerSections.contact_admin) {
-      container = () {};
+      container = const DashboardScreen();
     }
     mq = MediaQuery.of(context).size;
     final List<ChartData> chartData = [
       ChartData('25% Attendance', 25, Colors.purple[300]!),
       ChartData('8% Leave', 38, Colors.red[300]!),
-      ChartData('12% Remaning\nWorking Days', 34, Colors.pink[300]!),
-      ChartData('Others', 52, Colors.green[500]!)
+      ChartData('12% Remaining\nWorking Days', 34, Colors.pink[300]!),
+      ChartData('Others', 52, Colors.green[500]!),
     ];
 
     List<String> appBarTitle = [
-      'Hello! Name',
-      'Hello! Name',
+      'Name',
+      'Name',
       'Notifications',
       'My Attendance',
       'Holidays',
       'Manage Leave',
       'Salary Details',
       'My Profile',
-      'Contact Admin'
+      'Contact Admin',
     ];
     return Scaffold(
+      backgroundColor: primaryColor,
+      appBar: AppBar(
         backgroundColor: primaryColor,
-        appBar: AppBar(
-          backgroundColor: primaryColor,
-          elevation: 0,
-          leading: Builder(builder: (context) {
-            return IconButton(
-              onPressed: () => Scaffold.of(context).openDrawer(),
-              icon: const Icon(Icons.menu_outlined),
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            );
-          }),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                appBarTitle[pageNumber],
-                style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: pageNumber == 0 || pageNumber == 1 ? 20 : 24,
-                    fontWeight: FontWeight.w600),
-              ),
-              pageNumber == 0 || pageNumber == 1 ? 4.heightBox : Container(),
-              pageNumber == 0 || pageNumber == 1 ? Text(
-                'Designation',
-                style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14),
-              ) : Container(),
-            ],
-          ),
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Get.to(() => NotificationScreen());
-              },
-              child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: whiteColor),
-                  child: Stack(
-                    children: [
-                      Center(
-                        child: SvgPicture.asset(
-                          'assets/icons/Notification.svg',
-                          width: 16,
-                        ),
-                      ),
-                      Positioned(
-                          right: 0,
-                          top: 4,
-                          child: Container(
-                            width: 8,
-                            height: 8,
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.red),
-                          ))
-                    ],
-                  )),
+        elevation: 0,
+        leading: Builder(builder: (context) {
+          return IconButton(
+            onPressed: () => Scaffold.of(context).openDrawer(),
+            icon: const Icon(Icons.menu_outlined),
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          );
+        }),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              appBarTitle[pageNumber],
+              style: TextStyle(fontFamily: 'Inter', fontSize: pageNumber == 0 || pageNumber == 1 ? 20 : 20, fontWeight: FontWeight.w600),
             ),
-            8.widthBox,
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: whiteColor),
-                  child: SvgPicture.asset(
-                    'assets/icons/Logout.svg',
-                    width: 20,
-                  )),
-            ),
-            16.widthBox
+            pageNumber == 0 || pageNumber == 1 ? 4.heightBox : Container(),
+            pageNumber == 0 || pageNumber == 1
+                ? const Text(
+                    'Designation',
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                    ),
+                  )
+                : Container(),
           ],
         ),
-        drawer: Drawer(
-          child: SingleChildScrollView(
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Get.to(() => const NotificationScreen());
+            },
             child: Container(
-              // color: primaryColor,
-              child: Column(
-                children: [MyDrawerHeader(), myDrawerList()],
+              padding: const EdgeInsets.all(12),
+              decoration: const BoxDecoration(shape: BoxShape.circle, color: whiteColor),
+              child: Stack(
+                children: [
+                  Center(
+                    child: SvgPicture.asset(
+                      'assets/icons/Notification.svg',
+                      width: 16,
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    top: 4,
+                    child: Container(
+                      width: 8,
+                      height: 8,
+                      decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+                    ),
+                  )
+                ],
               ),
             ),
           ),
+          8.widthBox,
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(shape: BoxShape.circle, color: whiteColor),
+                child: SvgPicture.asset(
+                  'assets/icons/Logout.svg',
+                  width: 20,
+                )),
+          ),
+          16.widthBox
+        ],
+      ),
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const MyDrawerHeader(),
+              myDrawerList(),
+            ],
+          ),
         ),
-        body: container);
+      ),
+      body: container,
+    );
   }
 
   Widget myDrawerList() {
-    return Container(
-      child: Column(
-        children: [
-          menuItem(1, "Dashboard",
-              currentPage == DrawerSections.dashboard ? true : false),
-          menuItem(2, "Notifications",
-              currentPage == DrawerSections.notifications ? true : false),
-          menuItem(3, "My Attendance",
-              currentPage == DrawerSections.my_attendance ? true : false),
-          menuItem(4, "Holidays",
-              currentPage == DrawerSections.holidays ? true : false),
-          menuItem(5, "Manage Leave",
-              currentPage == DrawerSections.manage_leave ? true : false),
-          menuItem(6, "Salary Details",
-              currentPage == DrawerSections.salary_details ? true : false),
-          menuItem(7, "My Profile",
-              currentPage == DrawerSections.my_profile ? true : false),
-          menuItem(8, "Contact Admin",
-              currentPage == DrawerSections.contact_admin ? true : false),
-        ],
-      ),
+    return Column(
+      children: [
+        menuItem(1, "Dashboard", currentPage == DrawerSections.dashboard ? true : false),
+        menuItem(2, "Notifications", currentPage == DrawerSections.notifications ? true : false),
+        menuItem(3, "My Attendance", currentPage == DrawerSections.my_attendance ? true : false),
+        menuItem(4, "Holidays", currentPage == DrawerSections.holidays ? true : false),
+        menuItem(5, "Manage Leave", currentPage == DrawerSections.manage_leave ? true : false),
+        menuItem(6, "Salary Details", currentPage == DrawerSections.salary_details ? true : false),
+        menuItem(7, "My Profile", currentPage == DrawerSections.my_profile ? true : false),
+        menuItem(8, "Contact Admin", currentPage == DrawerSections.contact_admin ? true : false),
+      ],
     );
   }
 
   Widget menuItem(int id, String title, bool selected) {
     return Material(
       child: Container(
-        margin: EdgeInsets.only(left: 12, right: 12, top: 8),
+        margin: const EdgeInsets.only(left: 12, right: 12, top: 8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: selected ? primaryColor.withOpacity(0.3) : Colors.transparent,
@@ -232,10 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     child: Text(
                   title,
-                  style: const TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.w500),
                 )),
                 const Icon(Icons.arrow_forward_ios)
               ],
@@ -247,19 +235,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-enum DrawerSections {
-  dashboard,
-  notifications,
-  my_attendance,
-  holidays,
-  manage_leave,
-  salary_details,
-  my_profile,
-  contact_admin
-}
+enum DrawerSections { dashboard, notifications, my_attendance, holidays, manage_leave, salary_details, my_profile, contact_admin }
 
 class ChartData {
   ChartData(this.x, this.y, this.color);
+
   final String x;
   final double y;
   Color color;

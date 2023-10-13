@@ -26,10 +26,15 @@ class _HolidayScreenState extends State<HolidayScreen> {
         //   ),
         // ),
         body: Container(
-            margin: const EdgeInsets.only(top: 20),
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            decoration: BoxDecoration(
-                color: whiteColor, borderRadius: BorderRadius.circular(20)),
+            margin: const EdgeInsets.only(top: 12),
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            decoration: const BoxDecoration(
+              color: whiteColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+            ),
             child: Column(children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -45,19 +50,12 @@ class _HolidayScreenState extends State<HolidayScreen> {
                         8.widthBox,
                         const Text(
                           '01 Sep - 30 Sep',
-                          style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
+                          style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
                         ),
                         12.widthBox,
-                        const Text(
-                          'Change Duration',
-                          style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 16,
-                              color: primaryColor,
-                              fontWeight: FontWeight.w500),
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text("Change Duration"),
                         ),
                       ],
                     ),
@@ -73,11 +71,7 @@ class _HolidayScreenState extends State<HolidayScreen> {
                     8.heightBox,
                     Text(
                       '2 holidays this month',
-                      style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 12,
-                          color: textGreyColor,
-                          fontWeight: FontWeight.w400),
+                      style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: textGreyColor, fontWeight: FontWeight.w400),
                     ),
                     const Divider(
                       color: textGreyColor,

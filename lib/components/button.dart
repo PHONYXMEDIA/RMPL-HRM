@@ -8,18 +8,18 @@ Widget customButton(void Function()? onPress, String text, context) {
   return ElevatedButton(
       onPressed: onPress,
       style: ButtonStyle(
-          shape: MaterialStatePropertyAll(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-          padding: mq.width > webScreenSize
-              ? MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 20))
-              : MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 12)),
-          backgroundColor: MaterialStatePropertyAll(buttonColor),
-          elevation: MaterialStatePropertyAll(3.0)),
+          shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+          padding: mq.width > webScreenSize ? const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 20)) : const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16)),
+          backgroundColor: const MaterialStatePropertyAll(buttonColor),
+          elevation: const MaterialStatePropertyAll(3.0)),
       child: Center(
         child: Text(
           text,
-          style: TextStyle(
-              fontFamily: 'Inter', fontWeight: FontWeight.w500, fontSize: 16),
+          style: const TextStyle(
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w500,
+            fontSize: 16,
+          ),
         ),
       ));
 }

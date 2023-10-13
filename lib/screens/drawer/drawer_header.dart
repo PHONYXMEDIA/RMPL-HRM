@@ -27,7 +27,7 @@ class _MyDrawerHeaderState extends State<MyDrawerHeader> {
           const Text(
             'Recorded\nMusic\nPrivate\nLimited',
             style: TextStyle(
-                fontWeight: FontWeight.w700, fontSize: 20, color: whiteColor),
+                fontWeight: FontWeight.w700, fontSize: 24, color: whiteColor),
           )
         ],
       ),

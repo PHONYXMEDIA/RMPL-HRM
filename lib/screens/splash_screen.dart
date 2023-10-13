@@ -8,6 +8,7 @@ import 'package:rmpl_hrm/screens/home_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../constants/colors.dart';
+import 'authentication/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,8 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    Future.delayed(Duration(seconds: 2), (){
-      Get.to(()=> HomeScreen());
+    Future.delayed(const Duration(seconds: 2), (){
+      Get.to(()=> const LoginScreen());
     });
     super.initState();
   }
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
         // crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Spacer(
+          const Spacer(
             flex: 2,
           ),
           Center(

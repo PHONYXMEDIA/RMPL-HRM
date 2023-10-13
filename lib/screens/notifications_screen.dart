@@ -31,10 +31,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
       //       icon: Icon(Icons.arrow_back_ios_new_outlined)),
       // ),
       body: Container(
-        margin: const EdgeInsets.only(top: 20),
+        margin: const EdgeInsets.only(top: 12),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-        decoration: BoxDecoration(
-            color: whiteColor, borderRadius: BorderRadius.circular(20)),
+        decoration: const BoxDecoration(
+          color: whiteColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          ),
+        ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

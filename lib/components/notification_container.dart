@@ -5,24 +5,24 @@ import 'package:velocity_x/velocity_x.dart';
 Widget notificationContianer(String text) {
   return Container(
     width: double.infinity,
-    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-    margin: EdgeInsets.only(top: 12),
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+    margin: const EdgeInsets.only(top: 12),
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: borderColor)),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
               fontFamily: 'Inter',
-              fontSize: 16,
+              fontSize: 15,
               color: darkColor,
               fontWeight: FontWeight.w500),
         ),
-        4.heightBox,
-        Text(
+        6.heightBox,
+        const Text(
           'Date and Time: 24.10.2023 11:00AM IST',
           style: TextStyle(
               fontFamily: 'Inter',
