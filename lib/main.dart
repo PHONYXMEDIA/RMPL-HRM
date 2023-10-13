@@ -13,8 +13,6 @@ import 'package:rmpl_hrm/screens/notifications_screen.dart';
 import 'package:rmpl_hrm/screens/profile_screen.dart';
 import 'package:rmpl_hrm/screens/splash_screen.dart';
 
-import 'screens/home_screen.dart';
-
 late Size mq;
 void main() {
   runApp(const MyApp());
