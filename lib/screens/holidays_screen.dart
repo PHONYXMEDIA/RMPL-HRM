@@ -1,3 +1,4 @@
+import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rmpl_hrm/components/holiday_container.dart';
@@ -112,21 +113,16 @@ class _HolidayScreenState extends State<HolidayScreen> {
                     );
                   } else {
                     return Expanded(
-                      child: ListView.separated(
-                        itemCount: snapshot.data!.length,
-                        separatorBuilder: (_, __) => 12.heightBox,
-                        itemBuilder: (context, index) {
-                          if (index < snapshot.data!.length) {
-                            final holiday = snapshot.data!.elementAt(
-                              index,
-                            );
-                            return holidayContainer(
-                              '${holiday.formattedDate}',
-                              '${holiday.title}',
-                            );
-                          } else {
-                            return buildLoader();
-                          }
+                      child: FirestorePagination(
+                        query: db.collection('holidays'),
+                        itemBuilder: (context, documentSnapshot, index) {
+                          final holiday = Holiday.fromJson(
+                            documentSnapshot.data() as Map<String, dynamic>,
+                          );
+                          return holidayContainer(
+                            '${holiday.formattedDate}',
+                            '${holiday.title}',
+                          );
                         },
                       ),
                     );

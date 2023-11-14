@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/constants/constants.dart';
 import 'package:rmpl_hrm/models/notification.dart' as n;
+import 'package:firebase_pagination/firebase_pagination.dart';
 
 import '../components/notification_container.dart';
 
@@ -13,25 +14,6 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  Stream<Iterable<n.Notification>> getNotifications() =>
-      db.collection('notifications').snapshots().map(
-            (event) => event.docs.map(
-              (e) => n.Notification.fromJson(
-                e.data(),
-              ),
-            ),
-          );
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,32 +40,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
             topRight: Radius.circular(16),
           ),
         ),
-        child: StreamBuilder<Iterable<n.Notification>>(
-          stream: getNotifications().asBroadcastStream(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return buildLoader();
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text('Error: ${snapshot.error}'),
-              );
-            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(
-                child: Text('No data available.'),
-              );
-            } else {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  if (index < snapshot.data!.length) {
-                    final notification = snapshot.data!.elementAt(index);
-                    return notificationContianer(notification.message ?? "");
-                  } else {
-                    return buildLoader();
-                  }
-                },
-              );
-            }
+        child: FirestorePagination(
+          query: db.collection('notifications'),
+          itemBuilder: (context, snapshot, index) {
+            final notifications = n.Notification.fromJson(
+              snapshot.data() as Map<String, dynamic>,
+            );
+            return notificationContianer(notifications.message ?? "");
           },
         ),
       ),
