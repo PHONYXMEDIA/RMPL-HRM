@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "650911172279",
+    "project_id": "rmpl-hrm",
+    "storage_bucket": "rmpl-hrm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650911172279:android:30d41d47202fd5396c2f32",
+        "android_client_info": {
+          "package_name": "com.rmpl.rmpl_hrm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXcIblaRRZf4vKA8ty_7j-ONuWBOuwOuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
