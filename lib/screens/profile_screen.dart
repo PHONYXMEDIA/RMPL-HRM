@@ -24,10 +24,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // appBar: AppBar(
       //   backgroundColor: primaryColor,
       //   centerTitle: false,
-      //   title: Text(
+      //   title: const Text(
       //     'My Profile',
       //     style: TextStyle(
-      //         fontFamily: 'Inter', fontSize: 24, fontWeight: FontWeight.w600),
+      //       fontFamily: 'Inter',
+      //       fontSize: 24,
+      //       fontWeight: FontWeight.w600,
+      //     ),
       //   ),
       //   elevation: 0,
       // ),
@@ -35,7 +38,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         margin: const EdgeInsets.only(top: 12),
         decoration: const BoxDecoration(
           color: whiteColor,
-          // borderRadius: BorderRadius.circular(20),
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(16),
           ),
@@ -51,7 +53,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Container(
                     height: mq.width * 0.3,
                     width: mq.width * 0.25,
-                    decoration: BoxDecoration(color: lightGreyColor, borderRadius: BorderRadius.circular(8)),
+                    decoration: BoxDecoration(
+                      color: lightGreyColor,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     child: Image.network(
                       'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg',
                       fit: BoxFit.cover,
@@ -65,17 +70,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         const Text(
                           'Rajesh Kundra',
-                          style: TextStyle(fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                         12.heightBox,
                         const Text(
                           'Designation',
-                          style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w400),
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                         12.heightBox,
                         const Text(
                           'Employee since 12 August 2020',
-                          style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w400),
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                         12.heightBox
                       ],
@@ -88,26 +105,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               const Text(
                 'Field 1',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
               12.heightBox,
               customTextFormField('Field 1', fieldcontroller),
               16.heightBox,
               const Text(
                 'Field 2',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
               12.heightBox,
-              customTextFormField('Field 1', fieldcontroller),
+              customTextFormField(
+                'Field 1',
+                fieldcontroller,
+              ),
               16.heightBox,
               const Text(
                 'Field 3',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
               12.heightBox,
-              customTextFormField('Field 1', fieldcontroller),
+              customTextFormField(
+                'Field 1',
+                fieldcontroller,
+              ),
               const Spacer(),
-              customButton(() {}, 'Save Changes', context)
+              customButton(
+                () {},
+                'Save Changes',
+                context,
+              )
             ],
           ),
         ),
