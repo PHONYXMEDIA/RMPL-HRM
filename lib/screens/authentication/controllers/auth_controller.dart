@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../constants/constants.dart';
-import '../../../models/employee.dart';
+import '../../../remote/data.dart';
 import '../exceptions/exceptions.dart';
 import '../login_screen.dart';
 import '../../home_screen.dart';
@@ -73,22 +73,16 @@ class AuthController extends GetxController {
       return;
     }
 
-    final documentSnapshot = await db
-        .collection('employees')
-        .doc(
-          user.uid,
-        )
-        .get();
+    final employee = await Data.getEmployee(user.uid);
 
-    if (!documentSnapshot.exists) {
+    if (employee == null) {
+      await logOut();
       Get.offAll(() => const LoginScreen());
       return;
     }
 
-    final doc = documentSnapshot.data();
-    final employee = Employee.fromJson(doc!);
-
     if (user.email != employee.email) {
+      await logOut();
       Get.offAll(() => const LoginScreen());
       return;
     }
