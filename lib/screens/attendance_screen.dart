@@ -46,12 +46,18 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                   children: [
                     SvgPicture.asset(
                       'assets/icons/Calendar.svg',
-                      color: primaryColor,
+                      colorFilter: const ColorFilter.mode(
+                        primaryColor,
+                        BlendMode.srcIn,
+                      ),
                     ),
                     8.widthBox,
                     const Text(
                       '01 Sep - 30 Sep',
-                      style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
                     ),
                     12.widthBox,
                     TextButton(
@@ -75,7 +81,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        summaryContainer('20', 'Present', context, Colors.green),
+                        summaryContainer(
+                            '20', 'Present', context, Colors.green),
                         summaryContainer('2', 'Absent', context, Colors.red),
                       ],
                     ),
@@ -83,7 +90,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        summaryContainer('8', 'Holidays', context, primaryColor),
+                        summaryContainer(
+                            '8', 'Holidays', context, primaryColor),
                         summaryContainer('2', 'Leave', context, Colors.grey),
                       ],
                     ),
@@ -102,7 +110,11 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 12.heightBox,
                 const Text(
                   '8 working days yet to come this month',
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 14, color: textGreyColor, fontWeight: FontWeight.w400),
+                  style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 14,
+                      color: textGreyColor,
+                      fontWeight: FontWeight.w400),
                 ),
                 const Divider(
                   color: textGreyColor,
@@ -124,7 +136,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                         Container(
                           height: 10,
                           width: 10,
-                          decoration: const BoxDecoration(color: greenColor, shape: BoxShape.circle),
+                          decoration: const BoxDecoration(
+                              color: greenColor, shape: BoxShape.circle),
                         ),
                         8.widthBox,
                         const Text(
@@ -142,7 +155,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                         Container(
                           height: 10,
                           width: 10,
-                          decoration: const BoxDecoration(color: redColor, shape: BoxShape.circle),
+                          decoration: const BoxDecoration(
+                              color: redColor, shape: BoxShape.circle),
                         ),
                         8.widthBox,
                         const Text(
@@ -160,7 +174,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                         Container(
                           height: 10,
                           width: 10,
-                          decoration: const BoxDecoration(color: primaryColor, shape: BoxShape.circle),
+                          decoration: const BoxDecoration(
+                              color: primaryColor, shape: BoxShape.circle),
                         ),
                         8.widthBox,
                         const Text(
@@ -178,7 +193,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                         Container(
                           height: 10,
                           width: 10,
-                          decoration: const BoxDecoration(color: borderColor, shape: BoxShape.circle),
+                          decoration: const BoxDecoration(
+                              color: borderColor, shape: BoxShape.circle),
                         ),
                         8.widthBox,
                         const Text(

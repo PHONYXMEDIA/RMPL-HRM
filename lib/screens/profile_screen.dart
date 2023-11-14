@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/utils.dart';
 import 'package:rmpl_hrm/components/button.dart';
 import 'package:rmpl_hrm/components/textfield.dart';
 import 'package:rmpl_hrm/constants/colors.dart';

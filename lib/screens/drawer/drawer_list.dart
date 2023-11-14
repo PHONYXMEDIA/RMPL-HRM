@@ -5,22 +5,30 @@ import 'package:velocity_x/velocity_x.dart';
 
 Widget drawerList(String text) {
   return Padding(
-    padding: const EdgeInsets.only(top: 28, left: 16 , right: 16),
+    padding: const EdgeInsets.only(top: 28, left: 16, right: 16),
     child: Row(
       children: [
         SvgPicture.asset(
           'assets/icons/Home.svg',
-          color: whiteColor,
+          colorFilter: const ColorFilter.mode(
+            whiteColor,
+            BlendMode.srcIn,
+          ),
         ),
         12.widthBox,
         Expanded(
             child: Text(
           text,
           style: const TextStyle(
-            color: whiteColor,
-              fontFamily: 'Inter', fontSize: 20, fontWeight: FontWeight.w500),
+              color: whiteColor,
+              fontFamily: 'Inter',
+              fontSize: 20,
+              fontWeight: FontWeight.w500),
         )),
-        const Icon(Icons.arrow_forward_ios, color: whiteColor,)
+        const Icon(
+          Icons.arrow_forward_ios,
+          color: whiteColor,
+        )
       ],
     ),
   );

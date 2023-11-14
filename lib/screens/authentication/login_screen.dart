@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:get/utils.dart';
 import 'package:rmpl_hrm/components/button.dart';
 import 'package:rmpl_hrm/components/textfield.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/constants/dimensions.dart';
 import 'package:rmpl_hrm/main.dart';
-import 'package:rmpl_hrm/screens/apply_leave_screen.dart';
 import 'package:rmpl_hrm/screens/home_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -46,7 +44,10 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               // height: mq.height * 0.6,
               width: double.infinity,
-              padding: mq.width > webScreenSize ? EdgeInsets.symmetric(horizontal: mq.width * 0.3, vertical: 20) : const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              padding: mq.width > webScreenSize
+                  ? EdgeInsets.symmetric(
+                      horizontal: mq.width * 0.3, vertical: 20)
+                  : const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               decoration: const BoxDecoration(
                 color: whiteColor,
                 borderRadius: BorderRadius.only(
@@ -74,14 +75,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   20.heightBox,
                   const Text(
                     'Enter your Employee ID',
-                    style: TextStyle(fontFamily: 'Inter', color: darkColor, fontSize: 16, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontFamily: 'Inter',
+                        color: darkColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
                   ),
                   8.heightBox,
                   customTextFormField('DEL122233', idController),
                   20.heightBox,
                   const Text(
                     'Enter your password',
-                    style: TextStyle(fontFamily: 'Inter', color: darkColor, fontSize: 16, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontFamily: 'Inter',
+                        color: darkColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
                   ),
                   8.heightBox,
                   customTextFormField('************', passController),

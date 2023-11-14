@@ -3,7 +3,7 @@ import 'package:rmpl_hrm/constants/colors.dart';
 
 Widget holidayContainer(String date, String reason) {
   return Container(
-    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: primaryColor)),
@@ -11,13 +11,13 @@ Widget holidayContainer(String date, String reason) {
       children: [
         Text(
           date,
-          style: TextStyle(
+          style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 16,
               // color: textGreyColor,
               fontWeight: FontWeight.w500),
         ),
-        Text(
+        const Text(
           ': ',
           style: TextStyle(
               fontFamily: 'Inter',
@@ -27,7 +27,7 @@ Widget holidayContainer(String date, String reason) {
         ),
         Text(
           reason,
-          style: TextStyle(
+          style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 16,
               color: textGreyColor,

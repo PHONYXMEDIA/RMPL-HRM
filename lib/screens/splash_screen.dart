@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:rmpl_hrm/main.dart';
-import 'package:rmpl_hrm/screens/home_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../constants/colors.dart';
@@ -20,12 +17,12 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
-    Future.delayed(const Duration(seconds: 2), (){
-      Get.to(()=> const LoginScreen());
+    Future.delayed(const Duration(seconds: 2), () {
+      Get.to(() => const LoginScreen());
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
@@ -62,7 +59,8 @@ class _SplashScreenState extends State<SplashScreen> {
               width: double.infinity,
               height: 4,
               decoration: BoxDecoration(
-                  color: lightGreyColor, borderRadius: BorderRadius.circular(12)),
+                  color: lightGreyColor,
+                  borderRadius: BorderRadius.circular(12)),
             ),
           ),
           16.heightBox,
@@ -89,17 +87,17 @@ class _SplashScreenState extends State<SplashScreen> {
               // height: 2
             ),
           ),
-          Spacer(
+          const Spacer(
             flex: 2,
           ),
-          Container(
+          const SizedBox(
             height: 40,
-            child: const LoadingIndicator(
+            child: LoadingIndicator(
               indicatorType: Indicator.lineScale,
               colors: [whiteColor],
             ),
           ),
-          Spacer(
+          const Spacer(
             flex: 1,
           ),
           const Text(
@@ -112,7 +110,7 @@ class _SplashScreenState extends State<SplashScreen> {
               // height: 2
             ),
           ),
-          Spacer(),
+          const Spacer(),
         ],
       ),
     );

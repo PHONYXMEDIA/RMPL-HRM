@@ -5,10 +5,8 @@ class MobileScreenLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('mobile bro'),
-      ),
+    return const Center(
+      child: Text('mobile bro'),
     );
   }
 }

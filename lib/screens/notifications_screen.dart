@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:rmpl_hrm/components/notification_container.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
-import 'package:rmpl_hrm/screens/home_screen.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});

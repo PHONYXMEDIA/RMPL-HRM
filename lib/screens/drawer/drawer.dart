@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/route_manager.dart';
-import 'package:get/utils.dart';
 import 'package:rmpl_hrm/screens/drawer/drawer_list.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/main.dart';
 import 'package:rmpl_hrm/screens/apply_leave_screen.dart';
-import 'package:rmpl_hrm/screens/home_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 Widget customDrawer(context) {
@@ -28,7 +25,10 @@ Widget customDrawer(context) {
               12.widthBox,
               const Text(
                 'Recorded\nMusic\nPrivate\nLimited',
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: whiteColor),
+                style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                    color: whiteColor),
               )
             ],
           ),

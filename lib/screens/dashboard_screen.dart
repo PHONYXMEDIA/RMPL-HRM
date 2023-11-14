@@ -2,17 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rmpl_hrm/constants/dimensions.dart';
 import 'package:rmpl_hrm/responsive/web_screen_layout.dart';
-import 'package:rmpl_hrm/screens/apply_leave_screen.dart';
-import 'package:rmpl_hrm/screens/attendance_screen.dart';
-import 'package:rmpl_hrm/screens/drawer/drawer.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/main.dart';
-import 'package:rmpl_hrm/screens/drawer/drawer_header.dart';
-import 'package:rmpl_hrm/screens/drawer/drawer_list.dart';
-import 'package:rmpl_hrm/screens/holidays_screen.dart';
-import 'package:rmpl_hrm/screens/manage_leave_screen.dart';
-import 'package:rmpl_hrm/screens/profile_screen.dart';
-import 'package:swipe_to_complete/bloc/swiper_bloc.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -27,7 +18,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
-    final List<ChartData> chartData = [ChartData('25% Attendance', 25, Colors.purple[300]!), ChartData('8% Leave', 38, Colors.red[300]!), ChartData('12% Remaning\nWorking Days', 34, Colors.pink[300]!), ChartData('Others', 52, Colors.green[500]!)];
+    final List<ChartData> chartData = [
+      ChartData('25% Attendance', 25, Colors.purple[300]!),
+      ChartData('8% Leave', 38, Colors.red[300]!),
+      ChartData('12% Remaning\nWorking Days', 34, Colors.pink[300]!),
+      ChartData('Others', 52, Colors.green[500]!)
+    ];
     return Scaffold(
       backgroundColor: primaryColor,
       // appBar: AppBar(
@@ -104,7 +100,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       // ),
 
       body: mq.width > webScreenSize
-          ? WebScreenLayout()
+          ? const WebScreenLayout()
           : Stack(
               children: [
                 Container(
@@ -126,7 +122,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Container(
                           width: double.infinity,
                           color: Colors.red[800],
-                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8,
+                            horizontal: 12,
+                          ),
                           child: const Center(
                             child: Text(
                               'You are under probation which will last till 2.04.2024',
@@ -146,14 +145,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           child: Container(
                             width: double.infinity,
                             margin: const EdgeInsets.symmetric(horizontal: 12),
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: buttonColor, boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 4,
-                                spreadRadius: 2,
-                              ),
-                            ]),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 16),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: buttonColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 4,
+                                    spreadRadius: 2,
+                                  ),
+                                ]),
                             child: const Center(
                               child: Text(
                                 "Hold to punch in",
@@ -174,15 +177,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               children: [
                                 Text(
                                   'Punch In',
-                                  style: TextStyle(fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.w500),
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                                 Text(
                                   'Punch Out',
-                                  style: TextStyle(fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.w500),
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                                 Text(
                                   'Working Hours',
-                                  style: TextStyle(fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.w500),
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ],
                             ),
@@ -200,19 +215,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   flex: 5,
                                   child: Text(
                                     '10:00 AM',
-                                    style: TextStyle(fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.w500),
+                                    style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
                                   ),
                                 ),
                                 const Expanded(
                                   flex: 6,
                                   child: Text(
                                     '05:00 PM',
-                                    style: TextStyle(fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.w500),
+                                    style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
                                   ),
                                 ),
                                 const Text(
                                   '08:00 Hrs',
-                                  style: TextStyle(fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.w500),
+                                  style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
                                 ),
                                 28.widthBox
                               ],
@@ -249,16 +273,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                             selectionGesture: ActivationMode.singleTap,
                             annotations: <CircularChartAnnotation>[
-                              CircularChartAnnotation(angle: 300, radius: '40%', widget: const Text('25%')),
-                              CircularChartAnnotation(angle: 200, radius: '40%', widget: const Text('38%')),
-                              CircularChartAnnotation(angle: 100, radius: '40%', widget: const Text('34%')),
-                              CircularChartAnnotation(angle: 0, radius: '40%', widget: const Text('52%')),
+                              CircularChartAnnotation(
+                                  angle: 300,
+                                  radius: '40%',
+                                  widget: const Text('25%')),
+                              CircularChartAnnotation(
+                                  angle: 200,
+                                  radius: '40%',
+                                  widget: const Text('38%')),
+                              CircularChartAnnotation(
+                                  angle: 100,
+                                  radius: '40%',
+                                  widget: const Text('34%')),
+                              CircularChartAnnotation(
+                                  angle: 0,
+                                  radius: '40%',
+                                  widget: const Text('52%')),
                             ],
                             series: <CircularSeries>[
                               // Render pie chart
                               PieSeries<ChartData, String>(
                                 dataSource: chartData,
-                                pointColorMapper: (ChartData data, _) => data.color,
+                                pointColorMapper: (ChartData data, _) =>
+                                    data.color,
                                 xValueMapper: (ChartData data, _) => data.x,
                                 yValueMapper: (ChartData data, _) => data.y,
                               )
@@ -295,16 +332,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                             selectionGesture: ActivationMode.singleTap,
                             annotations: <CircularChartAnnotation>[
-                              CircularChartAnnotation(angle: 300, radius: '40%', widget: const Text('25%')),
-                              CircularChartAnnotation(angle: 200, radius: '40%', widget: const Text('38%')),
-                              CircularChartAnnotation(angle: 100, radius: '40%', widget: const Text('34%')),
-                              CircularChartAnnotation(angle: 0, radius: '40%', widget: const Text('52%')),
+                              CircularChartAnnotation(
+                                  angle: 300,
+                                  radius: '40%',
+                                  widget: const Text('25%')),
+                              CircularChartAnnotation(
+                                  angle: 200,
+                                  radius: '40%',
+                                  widget: const Text('38%')),
+                              CircularChartAnnotation(
+                                  angle: 100,
+                                  radius: '40%',
+                                  widget: const Text('34%')),
+                              CircularChartAnnotation(
+                                  angle: 0,
+                                  radius: '40%',
+                                  widget: const Text('52%')),
                             ],
                             series: <CircularSeries>[
                               // Render pie chart
                               PieSeries<ChartData, String>(
                                 dataSource: chartData,
-                                pointColorMapper: (ChartData data, _) => data.color,
+                                pointColorMapper: (ChartData data, _) =>
+                                    data.color,
                                 xValueMapper: (ChartData data, _) => data.x,
                                 yValueMapper: (ChartData data, _) => data.y,
                               )
@@ -317,9 +367,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 Container(
                   height: 112,
-                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: BoxDecoration(color: whiteColor, borderRadius: BorderRadius.circular(8), border: Border.all(color: borderColor)),
+                  decoration: BoxDecoration(
+                      color: whiteColor,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: borderColor)),
                   child: Column(
                     children: [
                       Row(
@@ -332,7 +386,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           12.widthBox,
                           const Text(
                             '01 Sep - 30 Sep',
-                            style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                            style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500),
                           ),
                         ],
                       ),
@@ -344,12 +401,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             children: [
                               const Text(
                                 '20',
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w500),
                               ),
                               8.heightBox,
                               const Text(
                                 'Present',
-                                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
                               )
                             ],
                           ),
@@ -357,12 +418,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             children: [
                               const Text(
                                 '20',
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w500),
                               ),
                               8.heightBox,
                               const Text(
                                 'Absent',
-                                style: TextStyle(color: Colors.red, fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontFamily: 'Inter',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
                               )
                             ],
                           ),
@@ -370,12 +436,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             children: [
                               const Text(
                                 '20',
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w500),
                               ),
                               8.heightBox,
                               const Text(
                                 'Holidays',
-                                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
                               )
                             ],
                           ),
@@ -383,12 +453,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             children: [
                               const Text(
                                 '20',
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w500),
                               ),
                               8.heightBox,
                               const Text(
                                 'Leave',
-                                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
                               )
                             ],
                           ),

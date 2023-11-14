@@ -59,12 +59,18 @@ class _ManageLeaveState extends State<ManageLeave> {
                   children: [
                     SvgPicture.asset(
                       'assets/icons/Calendar.svg',
-                      color: primaryColor,
+                      colorFilter: const ColorFilter.mode(
+                        primaryColor,
+                        BlendMode.srcIn,
+                      ),
                     ),
                     8.widthBox,
                     const Text(
                       '01 Sep - 30 Sep',
-                      style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
                     ),
                     12.widthBox,
                     TextButton(

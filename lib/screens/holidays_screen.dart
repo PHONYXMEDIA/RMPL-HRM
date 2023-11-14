@@ -45,12 +45,18 @@ class _HolidayScreenState extends State<HolidayScreen> {
                       children: [
                         SvgPicture.asset(
                           'assets/icons/Calendar.svg',
-                          color: primaryColor,
+                          colorFilter: const ColorFilter.mode(
+                            primaryColor,
+                            BlendMode.srcIn,
+                          ),
                         ),
                         8.widthBox,
                         const Text(
                           '01 Sep - 30 Sep',
-                          style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
                         ),
                         12.widthBox,
                         TextButton(
@@ -69,9 +75,13 @@ class _HolidayScreenState extends State<HolidayScreen> {
                           fontWeight: FontWeight.w500),
                     ),
                     8.heightBox,
-                    Text(
+                    const Text(
                       '2 holidays this month',
-                      style: TextStyle(fontFamily: 'Inter', fontSize: 12, color: textGreyColor, fontWeight: FontWeight.w400),
+                      style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 12,
+                          color: textGreyColor,
+                          fontWeight: FontWeight.w400),
                     ),
                     const Divider(
                       color: textGreyColor,

@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:rmpl_hrm/constants/dimensions.dart';
 import 'package:rmpl_hrm/screens/apply_leave_screen.dart';
 import 'package:rmpl_hrm/screens/attendance_screen.dart';
 import 'package:rmpl_hrm/screens/dashboard_screen.dart';
-import 'package:rmpl_hrm/screens/drawer/drawer.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/main.dart';
 import 'package:rmpl_hrm/screens/drawer/drawer_header.dart';
-import 'package:rmpl_hrm/screens/drawer/drawer_list.dart';
 import 'package:rmpl_hrm/screens/holidays_screen.dart';
 import 'package:rmpl_hrm/screens/manage_leave_screen.dart';
 import 'package:rmpl_hrm/screens/notifications_screen.dart';
 import 'package:rmpl_hrm/screens/profile_screen.dart';
-import 'package:swipe_to_complete/bloc/swiper_bloc.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,22 +26,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var container;
+    late final StatefulWidget container;
     if (currentPage == DrawerSections.dashboard) {
       container = const DashboardScreen();
     } else if (currentPage == DrawerSections.notifications) {
       container = const NotificationScreen();
-    } else if (currentPage == DrawerSections.my_attendance) {
+    } else if (currentPage == DrawerSections.myAttendance) {
       container = const AttendanceScreen();
     } else if (currentPage == DrawerSections.holidays) {
       container = const HolidayScreen();
-    } else if (currentPage == DrawerSections.manage_leave) {
+    } else if (currentPage == DrawerSections.manageLeave) {
       container = const ManageLeave();
-    } else if (currentPage == DrawerSections.salary_details) {
+    } else if (currentPage == DrawerSections.salaryDetails) {
       container = const ApplyLeaveScreen();
-    } else if (currentPage == DrawerSections.my_profile) {
+    } else if (currentPage == DrawerSections.myProfile) {
       container = const ProfileScreen();
-    } else if (currentPage == DrawerSections.contact_admin) {
+    } else if (currentPage == DrawerSections.contactAdmin) {
       container = const DashboardScreen();
     }
     mq = MediaQuery.of(context).size;
@@ -85,7 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Text(
               appBarTitle[pageNumber],
-              style: TextStyle(fontFamily: 'Inter', fontSize: pageNumber == 0 || pageNumber == 1 ? 20 : 20, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: pageNumber == 0 || pageNumber == 1 ? 20 : 20,
+                  fontWeight: FontWeight.w600),
             ),
             pageNumber == 0 || pageNumber == 1 ? 4.heightBox : Container(),
             pageNumber == 0 || pageNumber == 1
@@ -107,7 +105,8 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             child: Container(
               padding: const EdgeInsets.all(12),
-              decoration: const BoxDecoration(shape: BoxShape.circle, color: whiteColor),
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: whiteColor),
               child: Stack(
                 children: [
                   Center(
@@ -122,7 +121,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       width: 8,
                       height: 8,
-                      decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.red),
                     ),
                   )
                 ],
@@ -134,7 +134,8 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: () {},
             child: Container(
                 padding: const EdgeInsets.all(10),
-                decoration: const BoxDecoration(shape: BoxShape.circle, color: whiteColor),
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: whiteColor),
                 child: SvgPicture.asset(
                   'assets/icons/Logout.svg',
                   width: 20,
@@ -160,14 +161,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget myDrawerList() {
     return Column(
       children: [
-        menuItem(1, "Dashboard", currentPage == DrawerSections.dashboard ? true : false),
-        menuItem(2, "Notifications", currentPage == DrawerSections.notifications ? true : false),
-        menuItem(3, "My Attendance", currentPage == DrawerSections.my_attendance ? true : false),
-        menuItem(4, "Holidays", currentPage == DrawerSections.holidays ? true : false),
-        menuItem(5, "Manage Leave", currentPage == DrawerSections.manage_leave ? true : false),
-        menuItem(6, "Salary Details", currentPage == DrawerSections.salary_details ? true : false),
-        menuItem(7, "My Profile", currentPage == DrawerSections.my_profile ? true : false),
-        menuItem(8, "Contact Admin", currentPage == DrawerSections.contact_admin ? true : false),
+        menuItem(1, "Dashboard",
+            currentPage == DrawerSections.dashboard ? true : false),
+        menuItem(2, "Notifications",
+            currentPage == DrawerSections.notifications ? true : false),
+        menuItem(3, "My Attendance",
+            currentPage == DrawerSections.myAttendance ? true : false),
+        menuItem(4, "Holidays",
+            currentPage == DrawerSections.holidays ? true : false),
+        menuItem(5, "Manage Leave",
+            currentPage == DrawerSections.manageLeave ? true : false),
+        menuItem(6, "Salary Details",
+            currentPage == DrawerSections.salaryDetails ? true : false),
+        menuItem(7, "My Profile",
+            currentPage == DrawerSections.myProfile ? true : false),
+        menuItem(8, "Contact Admin",
+            currentPage == DrawerSections.contactAdmin ? true : false),
       ],
     );
   }
@@ -192,22 +201,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 currentPage = DrawerSections.notifications;
               } else if (id == 3) {
                 pageNumber = id;
-                currentPage = DrawerSections.my_attendance;
+                currentPage = DrawerSections.myAttendance;
               } else if (id == 4) {
                 pageNumber = id;
                 currentPage = DrawerSections.holidays;
               } else if (id == 5) {
                 pageNumber = id;
-                currentPage = DrawerSections.manage_leave;
+                currentPage = DrawerSections.manageLeave;
               } else if (id == 6) {
                 pageNumber = id;
-                currentPage = DrawerSections.salary_details;
+                currentPage = DrawerSections.salaryDetails;
               } else if (id == 7) {
                 pageNumber = id;
-                currentPage = DrawerSections.my_profile;
+                currentPage = DrawerSections.myProfile;
               } else if (id == 8) {
                 pageNumber = id;
-                currentPage = DrawerSections.contact_admin;
+                currentPage = DrawerSections.contactAdmin;
               }
             });
           },
@@ -217,13 +226,19 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 SvgPicture.asset(
                   'assets/icons/Home.svg',
-                  color: darkColor,
+                  colorFilter: const ColorFilter.mode(
+                    darkColor,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 12.widthBox,
                 Expanded(
                     child: Text(
                   title,
-                  style: const TextStyle(fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.w500),
+                  style: const TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500),
                 )),
                 const Icon(Icons.arrow_forward_ios)
               ],
@@ -235,7 +250,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-enum DrawerSections { dashboard, notifications, my_attendance, holidays, manage_leave, salary_details, my_profile, contact_admin }
+enum DrawerSections {
+  dashboard,
+  notifications,
+  myAttendance,
+  holidays,
+  manageLeave,
+  salaryDetails,
+  myProfile,
+  contactAdmin,
+}
 
 class ChartData {
   ChartData(this.x, this.y, this.color);
