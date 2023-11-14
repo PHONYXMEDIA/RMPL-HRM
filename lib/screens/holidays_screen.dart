@@ -119,9 +119,14 @@ class _HolidayScreenState extends State<HolidayScreen> {
                           final holiday = Holiday.fromJson(
                             documentSnapshot.data() as Map<String, dynamic>,
                           );
-                          return holidayContainer(
-                            '${holiday.formattedDate}',
-                            '${holiday.title}',
+                          return Column(
+                            children: [
+                              holidayContainer(
+                                '${holiday.formattedDate}',
+                                '${holiday.title}',
+                              ),
+                              12.heightBox,
+                            ],
                           );
                         },
                       ),
