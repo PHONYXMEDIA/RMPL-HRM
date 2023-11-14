@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:rmpl_hrm/main.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../constants/colors.dart';
-import 'authentication/login_screen.dart';
+import 'authentication/controllers/auth_controller.dart';
+import '../main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,9 +16,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 2), () {
-      Get.to(() => const LoginScreen());
-    });
+    Future.delayed(const Duration(seconds: 2), () => authController);
     super.initState();
   }
 

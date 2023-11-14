@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:rmpl_hrm/screens/apply_leave_screen.dart';
-import 'package:rmpl_hrm/screens/attendance_screen.dart';
-import 'package:rmpl_hrm/screens/dashboard_screen.dart';
-import 'package:rmpl_hrm/constants/colors.dart';
-import 'package:rmpl_hrm/main.dart';
-import 'package:rmpl_hrm/screens/drawer/drawer_header.dart';
-import 'package:rmpl_hrm/screens/holidays_screen.dart';
-import 'package:rmpl_hrm/screens/manage_leave_screen.dart';
-import 'package:rmpl_hrm/screens/notifications_screen.dart';
-import 'package:rmpl_hrm/screens/profile_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import '../constants/colors.dart';
+import 'authentication/controllers/auth_controller.dart';
+import '../main.dart';
+import 'apply_leave_screen.dart';
+import 'attendance_screen.dart';
+import 'dashboard_screen.dart';
+import 'drawer/drawer_header.dart';
+import 'holidays_screen.dart';
+import 'manage_leave_screen.dart';
+import 'notifications_screen.dart';
+import 'profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -45,12 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
       container = const DashboardScreen();
     }
     mq = MediaQuery.of(context).size;
-    final List<ChartData> chartData = [
-      ChartData('25% Attendance', 25, Colors.purple[300]!),
-      ChartData('8% Leave', 38, Colors.red[300]!),
-      ChartData('12% Remaining\nWorking Days', 34, Colors.pink[300]!),
-      ChartData('Others', 52, Colors.green[500]!),
-    ];
+    // final List<ChartData> chartData = [
+    //   ChartData('25% Attendance', 25, Colors.purple[300]!),
+    //   ChartData('8% Leave', 38, Colors.red[300]!),
+    //   ChartData('12% Remaining\nWorking Days', 34, Colors.pink[300]!),
+    //   ChartData('Others', 52, Colors.green[500]!),
+    // ];
 
     List<String> appBarTitle = [
       'Name',
@@ -131,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           8.widthBox,
           GestureDetector(
-            onTap: () {},
+            onTap: () => authController.logOut(),
             child: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(

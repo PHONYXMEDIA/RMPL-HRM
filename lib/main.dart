@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rmpl_hrm/constants/colors.dart';
-import 'package:rmpl_hrm/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:rmpl_hrm/firebase_options.dart';
+
+import 'constants/colors.dart';
+import 'screens/authentication/controllers/auth_controller.dart';
+import 'firebase_options.dart';
+import 'screens/splash_screen.dart';
 
 late Size mq;
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  ).then(
+    (_) => Get.lazyPut(
+      () => AuthController(),
+    ),
+  );
   runApp(const MyApp());
 }
 

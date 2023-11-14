@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 
-Widget customTextFormField(String text, TextEditingController controller) {
+Widget customTextFormField(
+  String text, {
+  TextEditingController? controller,
+  String? Function(String?)? validator,
+  TextInputAction? textInputAction,
+}) {
   return TextFormField(
     controller: controller,
     decoration: InputDecoration(
@@ -20,5 +25,7 @@ Widget customTextFormField(String text, TextEditingController controller) {
         borderRadius: BorderRadius.circular(8),
       ),
     ),
+    validator: validator,
+    textInputAction: textInputAction,
   );
 }

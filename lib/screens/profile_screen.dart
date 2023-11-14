@@ -111,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               12.heightBox,
-              customTextFormField('Field 1', fieldcontroller),
+              customTextFormField('Field 1', controller: fieldcontroller),
               16.heightBox,
               const Text(
                 'Field 2',
@@ -124,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               12.heightBox,
               customTextFormField(
                 'Field 1',
-                fieldcontroller,
+                controller: fieldcontroller,
               ),
               16.heightBox,
               const Text(
@@ -138,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               12.heightBox,
               customTextFormField(
                 'Field 1',
-                fieldcontroller,
+                controller: fieldcontroller,
               ),
               const Spacer(),
               customButton(

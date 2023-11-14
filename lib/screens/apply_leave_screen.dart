@@ -156,7 +156,8 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                       fontWeight: FontWeight.w500),
                 ),
                 8.heightBox,
-                customTextFormField('Select Department', _departmentController),
+                customTextFormField('Select Department',
+                    controller: _departmentController),
                 12.heightBox,
                 Text(
                   isSelected ? 'Date' : 'Select from date',
@@ -167,9 +168,10 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                 ),
                 8.heightBox,
                 isSelected
-                    ? customTextFormField('Select Date', _departmentController)
-                    : customTextFormField(
-                        'Select from Date', _departmentController),
+                    ? customTextFormField('Select Date',
+                        controller: _departmentController)
+                    : customTextFormField('Select from Date',
+                        controller: _departmentController),
                 12.heightBox,
                 Text(
                   isSelected ? 'Full Day / Half Day' : 'Select to date',
@@ -180,9 +182,10 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                 ),
                 8.heightBox,
                 isSelected
-                    ? customTextFormField('Select', _departmentController)
-                    : customTextFormField(
-                        'Select To Date', _departmentController),
+                    ? customTextFormField('Select',
+                        controller: _departmentController)
+                    : customTextFormField('Select To Date',
+                        controller: _departmentController),
                 12.heightBox,
                 const Text(
                   'Leave Type',
@@ -192,7 +195,8 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                       fontWeight: FontWeight.w500),
                 ),
                 8.heightBox,
-                customTextFormField('Select Leave Type', _departmentController),
+                customTextFormField('Select Leave Type',
+                    controller: _departmentController),
                 12.heightBox,
                 const Text(
                   'Reason',
