@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../constants/constants.dart';
+import '../../../models/employee.dart';
 import '../exceptions/exceptions.dart';
 import '../login_screen.dart';
 import '../../home_screen.dart';
@@ -9,8 +11,6 @@ import '../../home_screen.dart';
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   late Rx<firebase_auth.User?> firebaseUser;
-
-  final auth = firebase_auth.FirebaseAuth.instance;
 
   @override
   void onReady() {
@@ -39,6 +39,7 @@ class AuthController extends GetxController {
         err.message,
         backgroundColor: Colors.red,
         snackPosition: SnackPosition.BOTTOM,
+        margin: const EdgeInsets.all(16),
       );
     } catch (_) {
       const err = LogInWithEmailAndPasswordFailure();
@@ -47,6 +48,7 @@ class AuthController extends GetxController {
         err.message,
         backgroundColor: Colors.red,
         snackPosition: SnackPosition.BOTTOM,
+        margin: const EdgeInsets.all(16),
       );
     }
   }
@@ -65,12 +67,33 @@ class AuthController extends GetxController {
     }
   }
 
-  void _setInitialScreen(firebase_auth.User? user) {
+  void _setInitialScreen(firebase_auth.User? user) async {
     if (user == null) {
       Get.offAll(() => const LoginScreen());
-    } else {
-      Get.offAll(() => const HomeScreen());
+      return;
     }
+
+    final documentSnapshot = await db
+        .collection('employees')
+        .doc(
+          user.uid,
+        )
+        .get();
+
+    if (!documentSnapshot.exists) {
+      Get.offAll(() => const LoginScreen());
+      return;
+    }
+
+    final doc = documentSnapshot.data();
+    final employee = Employee.fromJson(doc!);
+
+    if (user.email != employee.email) {
+      Get.offAll(() => const LoginScreen());
+      return;
+    }
+
+    Get.offAll(() => const HomeScreen());
   }
 
   @override

@@ -16,7 +16,11 @@ class _MyDrawerHeaderState extends State<MyDrawerHeader> {
     mq = MediaQuery.of(context).size;
     return Container(
       color: primaryColor,
-      padding: EdgeInsets.only(left: 16, top: mq.width * 0.15, bottom: 20),
+      padding: EdgeInsets.only(
+        left: 16,
+        top: mq.width * 0.15,
+        bottom: 20,
+      ),
       child: Row(
         children: [
           Image.asset(
@@ -27,7 +31,10 @@ class _MyDrawerHeaderState extends State<MyDrawerHeader> {
           const Text(
             'Recorded\nMusic\nPrivate\nLimited',
             style: TextStyle(
-                fontWeight: FontWeight.w700, fontSize: 24, color: whiteColor),
+              fontWeight: FontWeight.w700,
+              fontSize: 24,
+              color: whiteColor,
+            ),
           )
         ],
       ),

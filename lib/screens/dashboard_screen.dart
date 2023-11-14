@@ -366,7 +366,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 ),
                 Container(
-                  height: 112,
+                  height: 115,
                   margin:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                   padding: const EdgeInsets.symmetric(vertical: 8),
@@ -387,9 +387,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           const Text(
                             '01 Sep - 30 Sep',
                             style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500),
+                              fontFamily: 'Inter',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ],
                       ),
