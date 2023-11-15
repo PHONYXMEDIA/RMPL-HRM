@@ -84,6 +84,13 @@ class AuthController extends GetxController {
     if (user.email != employee.email) {
       await logOut();
       Get.offAll(() => const LoginScreen());
+      Get.snackbar(
+        "Error",
+        "The email address is not associated with the employee",
+        backgroundColor: Colors.red,
+        snackPosition: SnackPosition.BOTTOM,
+        margin: const EdgeInsets.all(16),
+      );
       return;
     }
 
