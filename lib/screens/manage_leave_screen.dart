@@ -19,6 +19,25 @@ class ManageLeave extends StatefulWidget {
 }
 
 class _ManageLeaveState extends State<ManageLeave> {
+  final countApproved = db
+      .collection('leave')
+      .where("status", isEqualTo: 'approved')
+      .count()
+      .query
+      .snapshots();
+  final countRejected = db
+      .collection('leave')
+      .where("status", isEqualTo: 'rejected')
+      .count()
+      .query
+      .snapshots();
+  final countPending = db
+      .collection('leave')
+      .where("status", isEqualTo: 'pending')
+      .count()
+      .query
+      .snapshots();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,37 +119,74 @@ class _ManageLeaveState extends State<ManageLeave> {
                   ),
                 ),
                 8.heightBox,
-                const Text.rich(TextSpan(children: [
-                  TextSpan(
-                    text: '2 Approved leave',
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 12,
-                      color: greenColor,
-                      fontWeight: FontWeight.w500,
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    StreamBuilder(
+                      stream: countApproved,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Text('Calculating approved leave');
+                        } else if (snapshot.hasError) {
+                          return const SizedBox.shrink();
+                        }
+                        return Text(
+                          '${snapshot.data?.docs.length} Approved leave',
+                          style: const TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 12,
+                            color: greenColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                  TextSpan(text: '  '),
-                  TextSpan(
-                    text: '2 Rejected leave',
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 12,
-                      color: redColor,
-                      fontWeight: FontWeight.w500,
+                    12.widthBox,
+                    StreamBuilder(
+                      stream: countRejected,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Text('Calculating rejected leave');
+                        } else if (snapshot.hasError) {
+                          return const SizedBox.shrink();
+                        }
+                        return Text(
+                          '${snapshot.data?.docs.length} Rejected leave',
+                          style: const TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 12,
+                            color: redColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                ])),
-                4.heightBox,
-                const Text(
-                  '1 Pending leave',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 12,
-                    color: textGreyColor,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  ],
                 ),
+
+                StreamBuilder(
+                  stream: countPending,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Text('Calculating pending leave');
+                    } else if (snapshot.hasError) {
+                      return const SizedBox.shrink();
+                    }
+                    return Text(
+                      '${snapshot.data?.docs.length} Pending leave',
+                      style: const TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 12,
+                        color: textGreyColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    );
+                  },
+                ),
+
                 const Divider(
                   color: textGreyColor,
                 ),
@@ -138,6 +194,7 @@ class _ManageLeaveState extends State<ManageLeave> {
                 FirestorePagination(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
+                  isLive: true,
                   query: db.collection('leave').where(
                         "uid",
                         isEqualTo: db

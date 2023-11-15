@@ -9,9 +9,9 @@ class CustomDropdownField extends StatelessWidget {
 
   const CustomDropdownField({
     super.key,
+    this.hintText,
     required this.items,
     required this.onChanged,
-    this.hintText,
   });
 
   @override
@@ -19,11 +19,15 @@ class CustomDropdownField extends StatelessWidget {
     return DropdownButtonFormField(
       decoration: InputDecoration(
         focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
           borderSide: BorderSide(color: borderColor),
         ),
         enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
           borderSide: BorderSide(color: borderColor),
         ),
         filled: true,

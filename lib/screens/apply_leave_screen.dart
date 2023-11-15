@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rmpl_hrm/components/button.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/constants/constants.dart';
+import 'package:rmpl_hrm/screens/authentication/controllers/auth_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../components/custom_dropdown_field.dart';
@@ -15,11 +19,11 @@ class ApplyLeaveScreen extends StatefulWidget {
 
 class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
   late final TextEditingController _dateController;
-  late final TextEditingController _fulldayController;
+  late final TextEditingController _dayTypeController;
   late final TextEditingController _leaveController;
   late final TextEditingController _reasonController;
-  late final TextEditingController _selecttodateController;
-  late final TextEditingController _selectfromdateController;
+  late final TextEditingController _selectToDateController;
+  late final TextEditingController _selectFromDateController;
 
   bool isSelected = true;
 
@@ -27,21 +31,21 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
   void initState() {
     super.initState();
     _dateController = TextEditingController();
-    _fulldayController = TextEditingController();
+    _dayTypeController = TextEditingController();
     _leaveController = TextEditingController();
     _reasonController = TextEditingController();
-    _selecttodateController = TextEditingController();
-    _selectfromdateController = TextEditingController();
+    _selectToDateController = TextEditingController();
+    _selectFromDateController = TextEditingController();
   }
 
   @override
   void dispose() {
     _dateController.dispose();
-    _fulldayController.dispose();
+    _dayTypeController.dispose();
     _leaveController.dispose();
     _reasonController.dispose();
-    _selecttodateController.dispose();
-    _selectfromdateController.dispose();
+    _selectToDateController.dispose();
+    _selectFromDateController.dispose();
     super.dispose();
   }
 
@@ -84,8 +88,9 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: borderColor)),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: borderColor),
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -95,10 +100,11 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: isSelected
-                                    ? buttonColor.withOpacity(0.3)
-                                    : whiteColor),
+                              borderRadius: BorderRadius.circular(8),
+                              color: isSelected
+                                  ? buttonColor.withOpacity(0.3)
+                                  : whiteColor,
+                            ),
                             child: const Center(
                               child: Text(
                                 'One Day',
@@ -166,18 +172,45 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                 isSelected
                     ? customTextFormField(
                         'Select Date',
-                        controller: _selecttodateController,
+                        controller: _dateController,
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.calendar_month),
-                          onPressed: () {},
+                          onPressed: () async {
+                            final selectedDate = await showDatePicker(
+                              context: context,
+                              firstDate: DateTime(
+                                DateTime.now().year,
+                                DateTime.now().month,
+                                DateTime.now().day,
+                              ),
+                              lastDate: DateTime(3000),
+                            );
+                            if (selectedDate != null) {
+                              _dateController.text = selectedDate.toString();
+                            }
+                          },
                         ),
                       )
                     : customTextFormField(
                         'Select from Date',
-                        controller: _selectfromdateController,
+                        controller: _selectFromDateController,
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.calendar_month),
-                          onPressed: () {},
+                          onPressed: () async {
+                            final selectedDate = await showDatePicker(
+                              context: context,
+                              firstDate: DateTime(
+                                DateTime.now().year,
+                                DateTime.now().month,
+                                DateTime.now().day,
+                              ),
+                              lastDate: DateTime(3000),
+                            );
+                            if (selectedDate != null) {
+                              _selectFromDateController.text =
+                                  selectedDate.toString();
+                            }
+                          },
                         ),
                       ),
                 12.heightBox,
@@ -198,15 +231,29 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                           'half': 'Half Day',
                         },
                         onChanged: (value) {
-                          _fulldayController.text = value ?? "";
+                          _dayTypeController.text = value ?? "";
                         },
                       )
                     : customTextFormField(
                         'Select To Date',
-                        controller: _selecttodateController,
+                        controller: _selectToDateController,
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.calendar_month),
-                          onPressed: () {},
+                          onPressed: () async {
+                            final selectedDate = await showDatePicker(
+                              context: context,
+                              firstDate: DateTime(
+                                DateTime.now().year,
+                                DateTime.now().month,
+                                DateTime.now().day,
+                              ),
+                              lastDate: DateTime(3000),
+                            );
+                            if (selectedDate != null) {
+                              _selectToDateController.text =
+                                  selectedDate.toString();
+                            }
+                          },
                         ),
                       ),
                 12.heightBox,
@@ -266,7 +313,102 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                 ),
                 24.heightBox,
                 customButton(
-                  () {},
+                  () async {
+                    if (isSelected) {
+                      try {
+                        await db.collection("leave").add({
+                          "date": Timestamp.fromDate(
+                            DateTime.parse(
+                              _dateController.text,
+                            ),
+                          ),
+                          "dayType": _dayTypeController.text,
+                          "leaveType": _leaveController.text,
+                          "reason": _reasonController.text,
+                          "createdAt": Timestamp.fromDate(
+                            DateTime.now(),
+                          ),
+                          "status": "pending",
+                          "uid": db
+                              .collection(
+                                'employees',
+                              )
+                              .doc(
+                                authController.firebaseUser.value?.uid,
+                              ),
+                        });
+                        if (mounted) {
+                          Navigator.of(context).pop();
+                          Get.snackbar(
+                            "Success",
+                            "Leave Applied",
+                            backgroundColor: Colors.green,
+                            colorText: Colors.white,
+                            snackPosition: SnackPosition.BOTTOM,
+                            margin: const EdgeInsets.all(16),
+                          );
+                        }
+                      } catch (e) {
+                        Get.snackbar(
+                          "Error",
+                          e.toString(),
+                          backgroundColor: Colors.red,
+                          colorText: Colors.white,
+                          snackPosition: SnackPosition.BOTTOM,
+                          margin: const EdgeInsets.all(16),
+                        );
+                      }
+                    } else {
+                      try {
+                        await db.collection("leave").add({
+                          "fromDate": Timestamp.fromDate(
+                            DateTime.parse(
+                              _selectFromDateController.text,
+                            ),
+                          ),
+                          "toDate": Timestamp.fromDate(
+                            DateTime.parse(
+                              _selectToDateController.text,
+                            ),
+                          ),
+                          "leaveType": _leaveController.text,
+                          "reason": _reasonController.text,
+                          "status": "pending",
+                          "createdAt": Timestamp.fromDate(
+                            DateTime.now(),
+                          ),
+                          "uid": db
+                              .collection(
+                                'employees',
+                              )
+                              .doc(
+                                authController.firebaseUser.value?.uid,
+                              ),
+                        });
+
+                        if (mounted) {
+                          Navigator.of(context).pop();
+                          Get.snackbar(
+                            "Success",
+                            "Leave Applied",
+                            backgroundColor: Colors.green,
+                            colorText: Colors.white,
+                            snackPosition: SnackPosition.BOTTOM,
+                            margin: const EdgeInsets.all(16),
+                          );
+                        }
+                      } catch (e) {
+                        Get.snackbar(
+                          "Error",
+                          e.toString(),
+                          backgroundColor: Colors.red,
+                          colorText: Colors.white,
+                          snackPosition: SnackPosition.BOTTOM,
+                          margin: const EdgeInsets.all(16),
+                        );
+                      }
+                    }
+                  },
                   'Apply Leave',
                   context,
                 ),
