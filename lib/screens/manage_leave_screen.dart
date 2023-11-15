@@ -1,10 +1,14 @@
+import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:rmpl_hrm/components/manageleave_card.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/models/leave.dart';
 import 'package:rmpl_hrm/screens/apply_leave_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import '../constants/constants.dart';
 
 class ManageLeave extends StatefulWidget {
   const ManageLeave({super.key});
@@ -33,7 +37,10 @@ class _ManageLeaveState extends State<ManageLeave> {
         },
         isExtended: true,
         backgroundColor: primaryColor,
-        label: const Text("Apply Leave"),
+        label: const Text(
+          "Apply Leave",
+          style: TextStyle(color: Colors.white),
+        ),
         icon: const Icon(
           Icons.add,
           color: Colors.white,
@@ -42,6 +49,7 @@ class _ManageLeaveState extends State<ManageLeave> {
       body: Container(
         margin: const EdgeInsets.only(top: 12),
         padding: const EdgeInsets.symmetric(vertical: 8),
+        height: double.infinity,
         decoration: const BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.only(
@@ -53,7 +61,7 @@ class _ManageLeaveState extends State<ManageLeave> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
                   children: [
@@ -68,9 +76,10 @@ class _ManageLeaveState extends State<ManageLeave> {
                     const Text(
                       '01 Sep - 30 Sep',
                       style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500),
+                        fontFamily: 'Inter',
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     12.widthBox,
                     TextButton(
@@ -83,10 +92,11 @@ class _ManageLeaveState extends State<ManageLeave> {
                 const Text(
                   'Leave Application',
                   style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 20,
-                      // color: primaryColor,
-                      fontWeight: FontWeight.w500),
+                    fontFamily: 'Inter',
+                    fontSize: 20,
+                    // color: primaryColor,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 8.heightBox,
                 const Text.rich(TextSpan(children: [
@@ -124,15 +134,37 @@ class _ManageLeaveState extends State<ManageLeave> {
                   color: textGreyColor,
                 ),
                 // 16.heightBox,
-                manageLeaveCard(borderColor),
-                manageLeaveCard(redColor),
-                manageLeaveCard(greenColor),
-                manageLeaveCard(greenColor),
+                FirestorePagination(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  query: db.collection('leave'),
+                  itemBuilder: (context, snapshot, index) {
+                    final leave = Leave.fromJson(
+                      snapshot.data() as Map<String, dynamic>,
+                    );
+                    return manageLeaveCard(
+                      color: leave.color,
+                      status: leave.status ?? "",
+                    );
+                  },
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+extension LeaveStatusColor on Leave {
+  Color get color {
+    if (status?.toLowerCase() == 'approved') {
+      return greenColor;
+    } else if (status?.toLowerCase() == 'rejected') {
+      return redColor;
+    } else {
+      return borderColor;
+    }
   }
 }

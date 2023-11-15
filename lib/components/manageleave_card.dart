@@ -3,20 +3,27 @@ import 'package:flutter_svg/svg.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-Widget manageLeaveCard(Color color) {
+Widget manageLeaveCard({
+  required Color color,
+  required String status,
+}) {
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
     margin: const EdgeInsets.symmetric(vertical: 8),
     decoration: BoxDecoration(
-        boxShadow: const [
-          BoxShadow(
-              color: borderColor,
-              blurRadius: 30,
-              // spreadRadius: 12
-              blurStyle: BlurStyle.outer)
-        ],
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: borderColor)),
+      boxShadow: const [
+        BoxShadow(
+          color: borderColor,
+          blurRadius: 30,
+          // spreadRadius: 12
+          blurStyle: BlurStyle.outer,
+        )
+      ],
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(
+        color: borderColor,
+      ),
+    ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -49,9 +56,9 @@ Widget manageLeaveCard(Color color) {
                 color: color,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Text(
-                'Status: Pending',
-                style: TextStyle(
+              child: Text(
+                'Status: $status',
+                style: const TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 12,
                   fontWeight: FontWeight.w500,

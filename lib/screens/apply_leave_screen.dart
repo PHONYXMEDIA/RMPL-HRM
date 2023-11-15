@@ -3,6 +3,7 @@ import 'package:rmpl_hrm/components/button.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../components/custom_dropdown_field.dart';
 import '../components/textfield.dart';
 
 class ApplyLeaveScreen extends StatefulWidget {
@@ -13,7 +14,6 @@ class ApplyLeaveScreen extends StatefulWidget {
 }
 
 class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
-  late final TextEditingController _departmentController;
   late final TextEditingController _dateController;
   late final TextEditingController _fulldayController;
   late final TextEditingController _leaveController;
@@ -25,19 +25,17 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
 
   @override
   void initState() {
-    _departmentController = TextEditingController();
+    super.initState();
     _dateController = TextEditingController();
     _fulldayController = TextEditingController();
     _leaveController = TextEditingController();
     _reasonController = TextEditingController();
     _selecttodateController = TextEditingController();
     _selectfromdateController = TextEditingController();
-    super.initState();
   }
 
   @override
   void dispose() {
-    _departmentController.dispose();
     _dateController.dispose();
     _fulldayController.dispose();
     _leaveController.dispose();
@@ -66,6 +64,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
       body: Container(
         margin: const EdgeInsets.only(top: 12),
         padding: const EdgeInsets.symmetric(vertical: 8),
+        height: double.infinity,
         decoration: const BoxDecoration(
           color: whiteColor,
           // borderRadius: BorderRadius.circular(20)
@@ -92,11 +91,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     children: [
                       Expanded(
                         child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isSelected = true;
-                            });
-                          },
+                          onTap: () => setState(() => isSelected = true),
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             decoration: BoxDecoration(
@@ -108,9 +103,10 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                               child: Text(
                                 'One Day',
                                 style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500),
+                                  fontFamily: 'Inter',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ),
@@ -118,26 +114,23 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                       ),
                       Expanded(
                         child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isSelected = false;
-                            });
-                          },
+                          onTap: () => setState(() => isSelected = false),
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                // color: Colors.amber
-                                color: isSelected
-                                    ? whiteColor
-                                    : buttonColor.withOpacity(0.3)),
+                              borderRadius: BorderRadius.circular(8),
+                              color: isSelected
+                                  ? whiteColor
+                                  : buttonColor.withOpacity(0.3),
+                            ),
                             child: const Center(
                               child: Text(
                                 'Multiple Day',
                                 style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500),
+                                  fontFamily: 'Inter',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ),
@@ -146,85 +139,137 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     ],
                   ),
                 ),
-
                 20.heightBox,
-                const Text(
-                  'Department',
-                  style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500),
-                ),
-                8.heightBox,
-                customTextFormField('Select Department',
-                    controller: _departmentController),
-                12.heightBox,
+                // const Text(
+                //   'Department',
+                //   style: TextStyle(
+                //     fontFamily: 'Inter',
+                //     fontSize: 14,
+                //     fontWeight: FontWeight.w500,
+                //   ),
+                // ),
+                // 8.heightBox,
+                // customTextFormField(
+                //   'Select Department',
+                //   controller: _departmentController,
+                // ),
+                // 12.heightBox,
                 Text(
                   isSelected ? 'Date' : 'Select from date',
                   style: const TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500),
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 8.heightBox,
                 isSelected
-                    ? customTextFormField('Select Date',
-                        controller: _departmentController)
-                    : customTextFormField('Select from Date',
-                        controller: _departmentController),
+                    ? customTextFormField(
+                        'Select Date',
+                        controller: _selecttodateController,
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.calendar_month),
+                          onPressed: () {},
+                        ),
+                      )
+                    : customTextFormField(
+                        'Select from Date',
+                        controller: _selectfromdateController,
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.calendar_month),
+                          onPressed: () {},
+                        ),
+                      ),
                 12.heightBox,
                 Text(
                   isSelected ? 'Full Day / Half Day' : 'Select to date',
                   style: const TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500),
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 8.heightBox,
                 isSelected
-                    ? customTextFormField('Select',
-                        controller: _departmentController)
-                    : customTextFormField('Select To Date',
-                        controller: _departmentController),
+                    ? CustomDropdownField(
+                        hintText: 'Select',
+                        items: const {
+                          'full': 'Full Day',
+                          'half': 'Half Day',
+                        },
+                        onChanged: (value) {
+                          _fulldayController.text = value ?? "";
+                        },
+                      )
+                    : customTextFormField(
+                        'Select To Date',
+                        controller: _selecttodateController,
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.calendar_month),
+                          onPressed: () {},
+                        ),
+                      ),
                 12.heightBox,
                 const Text(
                   'Leave Type',
                   style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500),
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 8.heightBox,
-                customTextFormField('Select Leave Type',
-                    controller: _departmentController),
+                CustomDropdownField(
+                  hintText: 'Select Leave Type',
+                  items: const {
+                    'sick': 'Sick Leave',
+                    'casual': 'Casual Leave',
+                  },
+                  onChanged: (value) {
+                    _leaveController.text = value ?? "";
+                  },
+                ),
+
                 12.heightBox,
                 const Text(
                   'Reason',
                   style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500),
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 8.heightBox,
                 TextFormField(
                   maxLines: 5,
-                  controller: _departmentController,
+                  controller: _reasonController,
                   decoration: InputDecoration(
-                      focusedBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(color: borderColor)),
-                      enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(color: borderColor)),
-                      hintText: 'Write your reason in 100 characters',
-                      filled: true,
-                      fillColor: lightGreyColor,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      )),
+                    focusedBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                      borderSide: BorderSide(color: borderColor),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                      borderSide: BorderSide(color: borderColor),
+                    ),
+                    hintText: 'Write your reason in 100 characters',
+                    filled: true,
+                    fillColor: lightGreyColor,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
                 ),
                 24.heightBox,
-                customButton(() {}, 'Apply Leave', context),
+                customButton(
+                  () {},
+                  'Apply Leave',
+                  context,
+                ),
                 12.heightBox,
               ],
             ),

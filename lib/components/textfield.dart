@@ -6,6 +6,7 @@ Widget customTextFormField(
   TextEditingController? controller,
   String? Function(String?)? validator,
   TextInputAction? textInputAction,
+  Widget? suffixIcon,
 }) {
   return TextFormField(
     controller: controller,
@@ -21,11 +22,12 @@ Widget customTextFormField(
       hintText: text,
       filled: true,
       fillColor: lightGreyColor,
+      suffixIcon: suffixIcon,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
       ),
     ),
-    validator: validator,
     textInputAction: textInputAction,
+    validator: validator,
   );
 }

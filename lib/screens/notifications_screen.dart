@@ -41,7 +41,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
           ),
         ),
         child: FirestorePagination(
-          query: db.collection('notifications'),
+          query: db
+              .collection('notifications')
+              .where('branch', isEqualTo: 'Delhi'),
           itemBuilder: (context, snapshot, index) {
             final notifications = n.Notification.fromJson(
               snapshot.data() as Map<String, dynamic>,
@@ -49,15 +51,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
             return notificationContianer(notifications.message ?? "");
           },
         ),
-      ),
-    );
-  }
-
-  Widget buildLoader() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: Center(
-        child: CircularProgressIndicator(),
       ),
     );
   }

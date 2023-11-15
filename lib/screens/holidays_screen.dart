@@ -1,6 +1,7 @@
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:rmpl_hrm/components/holiday_container.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/models/holiday.dart';
@@ -16,14 +17,9 @@ class HolidayScreen extends StatefulWidget {
 }
 
 class _HolidayScreenState extends State<HolidayScreen> {
-  Stream<Iterable<Holiday>> getHolidays() =>
-      db.collection('holidays').snapshots().map(
-            (event) => event.docs.map(
-              (e) => Holiday.fromJson(
-                e.data(),
-              ),
-            ),
-          );
+  DateTime selectedDate = DateTime.now();
+  final formatterDate = DateFormat('MMM yyyy');
+  final monthFormatter = DateFormat('MM/yyyy');
 
   @override
   Widget build(BuildContext context) {
@@ -98,41 +94,25 @@ class _HolidayScreenState extends State<HolidayScreen> {
               const Divider(
                 color: textGreyColor,
               ),
-              StreamBuilder(
-                stream: getHolidays(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return buildLoader();
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Error: ${snapshot.error}'),
+              Expanded(
+                child: FirestorePagination(
+                  query: db.collection('holidays').where('formattedDate',
+                      isEqualTo: monthFormatter.format(selectedDate)),
+                  itemBuilder: (context, documentSnapshot, index) {
+                    final holiday = Holiday.fromJson(
+                      documentSnapshot.data() as Map<String, dynamic>,
                     );
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(
-                      child: Text('No data available.'),
+                    return Column(
+                      children: [
+                        holidayContainer(
+                          '${holiday.formattedDate}',
+                          '${holiday.title}',
+                        ),
+                        12.heightBox,
+                      ],
                     );
-                  } else {
-                    return Expanded(
-                      child: FirestorePagination(
-                        query: db.collection('holidays'),
-                        itemBuilder: (context, documentSnapshot, index) {
-                          final holiday = Holiday.fromJson(
-                            documentSnapshot.data() as Map<String, dynamic>,
-                          );
-                          return Column(
-                            children: [
-                              holidayContainer(
-                                '${holiday.formattedDate}',
-                                '${holiday.title}',
-                              ),
-                              12.heightBox,
-                            ],
-                          );
-                        },
-                      ),
-                    );
-                  }
-                },
+                  },
+                ),
               ),
             ],
           ),
