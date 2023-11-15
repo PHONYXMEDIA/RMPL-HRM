@@ -9,8 +9,8 @@ part of 'leave.dart';
 Leave _$LeaveFromJson(Map<String, dynamic> json) => Leave(
       createdAt:
           const TimestampConverter().fromJson(json['createdAt'] as Timestamp?),
-      from: const TimestampConverter().fromJson(json['from'] as Timestamp?),
-      to: const TimestampConverter().fromJson(json['to'] as Timestamp?),
+      from: const TimestampConverter().fromJson(json['fromDate'] as Timestamp?),
+      to: const TimestampConverter().fromJson(json['toDate'] as Timestamp?),
       date: const TimestampConverter().fromJson(json['date'] as Timestamp?),
       day: json['day'] as String?,
       reason: json['reason'] as String?,
@@ -21,8 +21,8 @@ Leave _$LeaveFromJson(Map<String, dynamic> json) => Leave(
 
 Map<String, dynamic> _$LeaveToJson(Leave instance) => <String, dynamic>{
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
-      'from': const TimestampConverter().toJson(instance.from),
-      'to': const TimestampConverter().toJson(instance.to),
+      'fromDate': const TimestampConverter().toJson(instance.from),
+      'toDate': const TimestampConverter().toJson(instance.to),
       'date': const TimestampConverter().toJson(instance.date),
       'day': instance.day,
       'reason': instance.reason,

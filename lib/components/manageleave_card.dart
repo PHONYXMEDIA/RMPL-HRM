@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/models/leave.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 Widget manageLeaveCard({
   required Color color,
-  required String status,
+  required Leave leave,
 }) {
+  final format = DateFormat('dd MMMM yyyy');
+  final withoutYearFormat = DateFormat('dd MMM');
   return Container(
-    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-    margin: const EdgeInsets.symmetric(vertical: 8),
+    padding: const EdgeInsets.symmetric(
+      vertical: 16,
+      horizontal: 12,
+    ),
+    margin: const EdgeInsets.symmetric(
+      vertical: 8,
+    ),
     decoration: BoxDecoration(
       boxShadow: const [
         BoxShadow(
@@ -37,10 +46,12 @@ Widget manageLeaveCard({
               ),
             ),
             8.widthBox,
-            const Expanded(
+            Expanded(
               child: Text(
-                '01 Sep - 30 Sep',
-                style: TextStyle(
+                leave.date != null
+                    ? withoutYearFormat.format(leave.date!)
+                    : '${withoutYearFormat.format(leave.from!)} - ${withoutYearFormat.format(leave.to!)}',
+                style: const TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -57,7 +68,7 @@ Widget manageLeaveCard({
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                'Status: $status',
+                'Status: ${leave.status}',
                 style: const TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 12,
@@ -68,9 +79,9 @@ Widget manageLeaveCard({
           ],
         ),
         12.heightBox,
-        const Text(
-          'Leave type: Casual Leave',
-          style: TextStyle(
+        Text(
+          'Leave type: ${leave.leaveType} leave',
+          style: const TextStyle(
             fontFamily: 'Inter',
             fontSize: 12,
             // color: textGreyColor,
@@ -78,9 +89,9 @@ Widget manageLeaveCard({
           ),
         ),
         8.heightBox,
-        const Text(
-          'Applied on: 1 September 2023',
-          style: TextStyle(
+        Text(
+          'Applied on: ${format.format(leave.createdAt!)}',
+          style: const TextStyle(
             fontFamily: 'Inter',
             fontSize: 12,
             // color: textGreyColor,

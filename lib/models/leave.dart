@@ -37,7 +37,9 @@ T? tryCast<T>(value) {
 @DocumentReferenceJsonConverter()
 class Leave extends Equatable {
   final DateTime? createdAt;
+  @JsonKey(name: 'fromDate')
   final DateTime? from;
+  @JsonKey(name: 'toDate')
   final DateTime? to;
   final DateTime? date;
   final String? day;

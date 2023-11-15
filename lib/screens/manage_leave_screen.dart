@@ -205,10 +205,9 @@ class _ManageLeaveState extends State<ManageLeave> {
                     final leave = Leave.fromJson(
                       snapshot.data() as Map<String, dynamic>,
                     );
-
                     return manageLeaveCard(
                       color: leave.color,
-                      status: leave.status ?? "",
+                      leave: leave,
                     );
                   },
                 ),
