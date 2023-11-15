@@ -6,6 +6,7 @@ import 'package:rmpl_hrm/components/manageleave_card.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/models/leave.dart';
 import 'package:rmpl_hrm/screens/apply_leave_screen.dart';
+import 'package:rmpl_hrm/screens/authentication/controllers/auth_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../constants/constants.dart';
@@ -137,11 +138,17 @@ class _ManageLeaveState extends State<ManageLeave> {
                 FirestorePagination(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  query: db.collection('leave'),
+                  query: db.collection('leave').where(
+                        "uid",
+                        isEqualTo: db
+                            .collection('employees')
+                            .doc(authController.firebaseUser.value?.uid),
+                      ),
                   itemBuilder: (context, snapshot, index) {
                     final leave = Leave.fromJson(
                       snapshot.data() as Map<String, dynamic>,
                     );
+
                     return manageLeaveCard(
                       color: leave.color,
                       status: leave.status ?? "",
