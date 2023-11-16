@@ -1,7 +1,7 @@
-import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:kr_paginate_firestore/paginate_firestore.dart';
 import 'package:rmpl_hrm/components/holiday_container.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/models/holiday.dart';
@@ -95,12 +95,13 @@ class _HolidayScreenState extends State<HolidayScreen> {
                 color: textGreyColor,
               ),
               Expanded(
-                child: FirestorePagination(
+                child: KrPaginateFirestore(
                   query: db.collection('holidays').where('formattedDate',
                       isEqualTo: monthFormatter.format(selectedDate)),
+                  itemBuilderType: PaginateBuilderType.listView,
                   itemBuilder: (context, documentSnapshot, index) {
                     final holiday = Holiday.fromJson(
-                      documentSnapshot.data() as Map<String, dynamic>,
+                      documentSnapshot[index].data() as Map<String, dynamic>,
                     );
                     return Column(
                       children: [

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kr_paginate_firestore/paginate_firestore.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/constants/constants.dart';
 import 'package:rmpl_hrm/models/notification.dart' as n;
-import 'package:firebase_pagination/firebase_pagination.dart';
 
 import '../components/notification_container.dart';
 
@@ -40,16 +40,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
             topRight: Radius.circular(16),
           ),
         ),
-        child: FirestorePagination(
+        child: KrPaginateFirestore(
           query: db
               .collection('notifications')
               .where('branch', isEqualTo: 'Delhi'),
           itemBuilder: (context, snapshot, index) {
             final notifications = n.Notification.fromJson(
-              snapshot.data() as Map<String, dynamic>,
+              snapshot[index].data() as Map<String, dynamic>,
             );
             return notificationContianer(notifications.message ?? "");
           },
+          itemBuilderType: PaginateBuilderType.listView,
         ),
       ),
     );

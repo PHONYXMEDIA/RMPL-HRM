@@ -1,7 +1,7 @@
-import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:kr_paginate_firestore/paginate_firestore.dart';
 import 'package:rmpl_hrm/components/manageleave_card.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/models/leave.dart';
@@ -19,24 +19,12 @@ class ManageLeave extends StatefulWidget {
 }
 
 class _ManageLeaveState extends State<ManageLeave> {
-  final countApproved = db
-      .collection('leave')
-      .where("status", isEqualTo: 'approved')
-      .count()
-      .query
-      .snapshots();
-  final countRejected = db
-      .collection('leave')
-      .where("status", isEqualTo: 'rejected')
-      .count()
-      .query
-      .snapshots();
-  final countPending = db
-      .collection('leave')
-      .where("status", isEqualTo: 'pending')
-      .count()
-      .query
-      .snapshots();
+  final countApproved =
+      db.collection('leave').where("status", isEqualTo: 'approved').snapshots();
+  final countRejected =
+      db.collection('leave').where("status", isEqualTo: 'rejected').snapshots();
+  final countPending =
+      db.collection('leave').where("status", isEqualTo: 'pending').snapshots();
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +179,7 @@ class _ManageLeaveState extends State<ManageLeave> {
                   color: textGreyColor,
                 ),
                 // 16.heightBox,
-                FirestorePagination(
+                KrPaginateFirestore(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   isLive: true,
@@ -201,9 +189,10 @@ class _ManageLeaveState extends State<ManageLeave> {
                             .collection('employees')
                             .doc(authController.firebaseUser.value?.uid),
                       ),
+                  itemBuilderType: PaginateBuilderType.listView,
                   itemBuilder: (context, snapshot, index) {
                     final leave = Leave.fromJson(
-                      snapshot.data() as Map<String, dynamic>,
+                      snapshot[index].data() as Map<String, dynamic>,
                     );
                     return manageLeaveCard(
                       color: leave.color,
