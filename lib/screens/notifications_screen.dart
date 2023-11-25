@@ -51,6 +51,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             return notificationContianer(notifications.message ?? "");
           },
           itemBuilderType: PaginateBuilderType.listView,
+          isLive: true,
         ),
       ),
     );

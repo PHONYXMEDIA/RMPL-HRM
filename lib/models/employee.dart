@@ -1,11 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:rmpl_hrm/models/leave.dart';
 
 part 'employee.g.dart';
 
 @JsonSerializable()
+@TimestampConverter()
+@DocumentReferenceJsonConverter()
 class Employee extends Equatable {
   const Employee({
+    this.creator,
     this.aadharNumber,
     this.address,
     this.basicSalary,
@@ -46,15 +51,16 @@ class Employee extends Equatable {
         fathersName,
         fieldWorkAllowance,
         firstName,
+        creator,
       ];
 
   final String? aadharNumber;
   final String? address;
-  final String? basicSalary;
+  final double? basicSalary;
   final String? branch;
-  final String? dateJoined;
+  final DateTime? dateJoined;
   final String? designation;
-  final String? dob;
+  final DateTime? dob;
   final String? eid;
   final String? email;
   final String? fathersName;
@@ -67,4 +73,5 @@ class Employee extends Equatable {
   final String? password;
   final String? profileUrl;
   final String? uid;
+  final DocumentReference? creator;
 }

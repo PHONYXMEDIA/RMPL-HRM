@@ -325,9 +325,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                           "dayType": _dayTypeController.text,
                           "leaveType": _leaveController.text,
                           "reason": _reasonController.text,
-                          "createdAt": Timestamp.fromDate(
-                            DateTime.now(),
-                          ),
+                          "createdAt": FieldValue.serverTimestamp(),
                           "status": "pending",
                           "uid": db
                               .collection(
@@ -374,9 +372,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                           "leaveType": _leaveController.text,
                           "reason": _reasonController.text,
                           "status": "pending",
-                          "createdAt": Timestamp.fromDate(
-                            DateTime.now(),
-                          ),
+                          "createdAt": FieldValue.serverTimestamp(),
                           "uid": db
                               .collection(
                                 'employees',

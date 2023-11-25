@@ -7,13 +7,15 @@ part of 'employee.dart';
 // **************************************************************************
 
 Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
+      creator: const DocumentReferenceJsonConverter().fromJson(json['creator']),
       aadharNumber: json['aadharNumber'] as String?,
       address: json['address'] as String?,
-      basicSalary: json['basicSalary'] as String?,
+      basicSalary: (json['basicSalary'] as num?)?.toDouble(),
       branch: json['branch'] as String?,
-      dateJoined: json['dateJoined'] as String?,
+      dateJoined:
+          const TimestampConverter().fromJson(json['dateJoined'] as Timestamp?),
       designation: json['designation'] as String?,
-      dob: json['dob'] as String?,
+      dob: const TimestampConverter().fromJson(json['dob'] as Timestamp?),
       eid: json['eid'] as String?,
       email: json['email'] as String?,
       fathersName: json['fathersName'] as String?,
@@ -33,9 +35,9 @@ Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
       'address': instance.address,
       'basicSalary': instance.basicSalary,
       'branch': instance.branch,
-      'dateJoined': instance.dateJoined,
+      'dateJoined': const TimestampConverter().toJson(instance.dateJoined),
       'designation': instance.designation,
-      'dob': instance.dob,
+      'dob': const TimestampConverter().toJson(instance.dob),
       'eid': instance.eid,
       'email': instance.email,
       'fathersName': instance.fathersName,
@@ -48,4 +50,6 @@ Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
       'password': instance.password,
       'profileUrl': instance.profileUrl,
       'uid': instance.uid,
+      'creator':
+          const DocumentReferenceJsonConverter().toJson(instance.creator),
     };

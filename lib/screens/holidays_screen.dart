@@ -113,6 +113,7 @@ class _HolidayScreenState extends State<HolidayScreen> {
                       ],
                     );
                   },
+                  isLive: true,
                 ),
               ),
             ],

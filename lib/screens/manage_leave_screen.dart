@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:kr_paginate_firestore/bloc/pagination_listeners.dart';
 import 'package:kr_paginate_firestore/paginate_firestore.dart';
 import 'package:rmpl_hrm/components/manageleave_card.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
@@ -19,12 +20,29 @@ class ManageLeave extends StatefulWidget {
 }
 
 class _ManageLeaveState extends State<ManageLeave> {
-  final countApproved =
-      db.collection('leave').where("status", isEqualTo: 'approved').snapshots();
-  final countRejected =
-      db.collection('leave').where("status", isEqualTo: 'rejected').snapshots();
-  final countPending =
-      db.collection('leave').where("status", isEqualTo: 'pending').snapshots();
+  final countApproved = db
+      .collection('leave')
+      .where(
+        "status",
+        isEqualTo: 'approved',
+      )
+      .snapshots();
+  final countRejected = db
+      .collection('leave')
+      .where(
+        "status",
+        isEqualTo: 'rejected',
+      )
+      .snapshots();
+  final countPending = db
+      .collection('leave')
+      .where(
+        "status",
+        isEqualTo: 'pending',
+      )
+      .snapshots();
+
+  final refreshChangeListener = PaginateRefreshedChangeListener();
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +109,13 @@ class _ManageLeaveState extends State<ManageLeave> {
                     ),
                     12.widthBox,
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await showDateRangePicker(
+                          context: context,
+                          firstDate: DateTime(1999),
+                          lastDate: DateTime(3000),
+                        );
+                      },
                       child: const Text("Change Duration"),
                     ),
                   ],
@@ -107,7 +131,6 @@ class _ManageLeaveState extends State<ManageLeave> {
                   ),
                 ),
                 8.heightBox,
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -183,11 +206,14 @@ class _ManageLeaveState extends State<ManageLeave> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   isLive: true,
+                  listeners: [
+                    refreshChangeListener,
+                  ],
                   query: db.collection('leave').where(
                         "uid",
-                        isEqualTo: db
-                            .collection('employees')
-                            .doc(authController.firebaseUser.value?.uid),
+                        isEqualTo: db.collection('employees').doc(
+                              authController.firebaseUser.value?.uid,
+                            ),
                       ),
                   itemBuilderType: PaginateBuilderType.listView,
                   itemBuilder: (context, snapshot, index) {

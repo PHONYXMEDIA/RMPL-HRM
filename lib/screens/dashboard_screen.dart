@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rmpl_hrm/constants/dimensions.dart';
-import 'package:rmpl_hrm/responsive/web_screen_layout.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/constants/dimensions.dart';
 import 'package:rmpl_hrm/main.dart';
+import 'package:rmpl_hrm/models/attendance.dart';
+import 'package:rmpl_hrm/responsive/web_screen_layout.dart';
+import 'package:rmpl_hrm/screens/authentication/controllers/auth_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -15,6 +20,60 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  bool isPunchedIn = false;
+  bool disablePunchIn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _init();
+  }
+
+  Future<void> _init() async {
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('common')
+          .doc('attendance')
+          .collection(DateFormat('yyyy-MM-dd').format(DateTime.now()))
+          .doc(authController.firebaseUser.value!.uid)
+          .get();
+      if (!doc.exists) return;
+      final attendance = Attendance.fromJson(doc.data()!);
+      if (attendance.punchedIn != null && attendance.punchedOut != null) {
+        setState(() {
+          isPunchedIn = true;
+          disablePunchIn = true;
+        });
+      } else if (attendance.punchedIn != null &&
+          attendance.punchedOut == null) {
+        setState(() => isPunchedIn = true);
+      } else {
+        setState(() => isPunchedIn = false);
+      }
+    } catch (_) {
+      setState(() {
+        isPunchedIn = false;
+        disablePunchIn = true;
+      });
+    }
+  }
+
+  Stream<Attendance> get _getAttendance async* {
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('common')
+          .doc('attendance')
+          .collection(DateFormat('yyyy-MM-dd').format(DateTime.now()))
+          .doc(authController.firebaseUser.value!.uid)
+          .get();
+      if (!doc.exists) return;
+      final attendance = Attendance.fromJson(doc.data()!);
+      yield attendance;
+    } catch (_) {
+      yield const Attendance();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
@@ -140,34 +199,183 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                         16.heightBox,
                         // Hold to punch-in button
-                        GestureDetector(
-                          onLongPress: () {},
-                          child: Container(
-                            width: double.infinity,
-                            margin: const EdgeInsets.symmetric(horizontal: 12),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 16),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: buttonColor,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 4,
-                                    spreadRadius: 2,
+                        disablePunchIn
+                            ? const SizedBox.shrink()
+                            : GestureDetector(
+                                onLongPress: disablePunchIn
+                                    ? null
+                                    : () async {
+                                        Get.defaultDialog(
+                                          title: "Please Wait",
+                                          content: const Text(
+                                            "Checking if you are punched in",
+                                          ),
+                                          barrierDismissible: false,
+                                        );
+
+                                        final doc = await FirebaseFirestore
+                                            .instance
+                                            .collection('common')
+                                            .doc('attendance')
+                                            .collection(DateFormat('yyyy-MM-dd')
+                                                .format(DateTime.now()))
+                                            .doc(authController
+                                                .firebaseUser.value!.uid)
+                                            .get();
+
+                                        if (Get.isDialogOpen == true) {
+                                          Get.back(closeOverlays: true);
+                                        }
+
+                                        if (!doc.exists) {
+                                          Get.defaultDialog(
+                                            title: 'Please Wait',
+                                            content: const Text('Punching in'),
+                                            barrierDismissible: false,
+                                          );
+                                          await FirebaseFirestore.instance
+                                              .collection('common')
+                                              .doc('attendance')
+                                              .collection(
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(DateTime.now()))
+                                              .doc(authController
+                                                  .firebaseUser.value!.uid)
+                                              .set({
+                                            'punchedIn':
+                                                FieldValue.serverTimestamp(),
+                                            'punchedBy': FirebaseFirestore
+                                                .instance
+                                                .collection('employees')
+                                                .doc(authController
+                                                    .firebaseUser.value!.uid),
+                                            'under': FirebaseFirestore.instance
+                                                .collection('admin')
+                                                .doc(
+                                                  authController.employee.value!
+                                                      .creator!.id,
+                                                ),
+                                            'createdAt':
+                                                FieldValue.serverTimestamp(),
+                                          });
+
+                                          if (Get.isDialogOpen == true) {
+                                            Get.back(closeOverlays: true);
+                                          }
+
+                                          Get.snackbar(
+                                            "Punch In",
+                                            "You are now punched in",
+                                            backgroundColor: Colors.green,
+                                            duration:
+                                                const Duration(seconds: 2),
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            margin: const EdgeInsets.all(16),
+                                            colorText: Colors.white,
+                                          );
+
+                                          setState(() => isPunchedIn = true);
+                                        } else {
+                                          Get.defaultDialog(
+                                            title: 'Please Wait',
+                                            content: const Text('Punching out'),
+                                            barrierDismissible: false,
+                                          );
+                                          final attendance =
+                                              Attendance.fromJson(doc.data()!);
+
+                                          if (attendance.punchedIn != null &&
+                                              attendance.punchedOut != null) {
+                                            Get.snackbar(
+                                              "Punch In",
+                                              "You are already punched in",
+                                              backgroundColor: Colors.red,
+                                              duration:
+                                                  const Duration(seconds: 2),
+                                              snackPosition:
+                                                  SnackPosition.BOTTOM,
+                                              margin: const EdgeInsets.all(16),
+                                              colorText: Colors.white,
+                                            );
+                                          } else if (attendance.punchedIn !=
+                                                  null &&
+                                              attendance.punchedOut == null) {
+                                            await FirebaseFirestore.instance
+                                                .collection('common')
+                                                .doc('attendance')
+                                                .collection(
+                                                    DateFormat('yyyy-MM-dd')
+                                                        .format(DateTime.now()))
+                                                .doc(authController
+                                                    .firebaseUser.value!.uid)
+                                                .update({
+                                              'punchedOut':
+                                                  FieldValue.serverTimestamp(),
+                                            });
+
+                                            if (Get.isDialogOpen == true) {
+                                              Get.back(closeOverlays: true);
+                                            }
+
+                                            Get.snackbar(
+                                              "Punch Out",
+                                              "You are now punched out",
+                                              backgroundColor: Colors.red,
+                                              duration: const Duration(
+                                                seconds: 2,
+                                              ),
+                                              snackPosition:
+                                                  SnackPosition.BOTTOM,
+                                              margin: const EdgeInsets.all(16),
+                                              colorText: Colors.white,
+                                            );
+                                            setState(
+                                              () => disablePunchIn = true,
+                                            );
+                                          } else {
+                                            Get.snackbar(
+                                              "Punch In",
+                                              "You are already punched out",
+                                              backgroundColor: Colors.red,
+                                              duration:
+                                                  const Duration(seconds: 2),
+                                              snackPosition:
+                                                  SnackPosition.BOTTOM,
+                                              margin: const EdgeInsets.all(16),
+                                              colorText: Colors.white,
+                                            );
+                                          }
+                                        }
+                                      },
+                                child: Container(
+                                  width: double.infinity,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 12),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 16),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: buttonColor,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.2),
+                                          blurRadius: 4,
+                                          spreadRadius: 2,
+                                        ),
+                                      ]),
+                                  child: Center(
+                                    child: Text(
+                                      isPunchedIn
+                                          ? 'Hold to punch out'
+                                          : "Hold to punch in",
+                                      style: const TextStyle(
+                                        color: backgroundColor,
+                                        fontSize: 16,
+                                      ),
+                                    ),
                                   ),
-                                ]),
-                            child: const Center(
-                              child: Text(
-                                "Hold to punch in",
-                                style: TextStyle(
-                                  color: backgroundColor,
-                                  fontSize: 16,
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
                         24.heightBox,
                         // Info table
                         Column(
@@ -207,40 +415,80 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               endIndent: 16,
                               indent: 16,
                             ),
-                            Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                28.widthBox,
-                                const Expanded(
-                                  flex: 5,
-                                  child: Text(
-                                    '10:00 AM',
-                                    style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                                const Expanded(
-                                  flex: 6,
-                                  child: Text(
-                                    '05:00 PM',
-                                    style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                                const Text(
-                                  '08:00 Hrs',
-                                  style: TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                28.widthBox
-                              ],
-                            ),
+                            StreamBuilder<Attendance>(
+                                stream: _getAttendance,
+                                builder: (context, snapshots) {
+                                  if (snapshots.hasData) {
+                                    final data = snapshots.requireData;
+                                    final punchedIn = data.punchedIn != null
+                                        ? DateFormat.jm()
+                                            .format(data.punchedIn!)
+                                        : 'N/A';
+                                    final punchedOut = data.punchedOut != null
+                                        ? DateFormat.jm()
+                                            .format(data.punchedOut!)
+                                        : 'N/A';
+
+                                    final f = DateFormat('HH:mm');
+                                    DateTime? start = data.punchedIn != null
+                                        ? f.parse(DateFormat('HH:mm')
+                                            .format(data.punchedIn!))
+                                        : null;
+                                    DateTime? end = data.punchedOut != null
+                                        ? f.parse(DateFormat('HH:mm')
+                                            .format(data.punchedOut!))
+                                        : null;
+
+                                    String workingHours = 'N/A';
+                                    if ((start != null && end != null) &&
+                                        end.isAfter(start)) {
+                                      end = end.add(const Duration(days: 0));
+                                      final diff = end.difference(start).abs();
+                                      final hours = diff.inHours;
+                                      final minutes = diff.inMinutes % 60;
+                                      workingHours = '$hours:$minutes Hrs';
+                                    }
+
+                                    return Row(
+                                      // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: [
+                                        28.widthBox,
+                                        Expanded(
+                                          flex: 5,
+                                          child: Text(
+                                            punchedIn,
+                                            style: const TextStyle(
+                                              fontFamily: 'Inter',
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 6,
+                                          child: Text(
+                                            punchedOut,
+                                            style: const TextStyle(
+                                              fontFamily: 'Inter',
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          workingHours,
+                                          style: const TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        28.widthBox
+                                      ],
+                                    );
+                                  }
+                                  return const SizedBox.shrink();
+                                }),
                           ],
                         ),
                         24.heightBox,
@@ -371,9 +619,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
-                      color: whiteColor,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: borderColor)),
+                    color: whiteColor,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: borderColor),
+                  ),
                   child: Column(
                     children: [
                       Row(
@@ -403,15 +652,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               const Text(
                                 '20',
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                               8.heightBox,
                               const Text(
                                 'Present',
                                 style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500),
+                                  fontFamily: 'Inter',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               )
                             ],
                           ),
@@ -420,16 +672,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               const Text(
                                 '20',
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                               8.heightBox,
                               const Text(
                                 'Absent',
                                 style: TextStyle(
-                                    color: Colors.red,
-                                    fontFamily: 'Inter',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500),
+                                  color: Colors.red,
+                                  fontFamily: 'Inter',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               )
                             ],
                           ),
@@ -438,15 +693,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               const Text(
                                 '20',
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                               8.heightBox,
                               const Text(
                                 'Holidays',
                                 style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500),
+                                  fontFamily: 'Inter',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               )
                             ],
                           ),
@@ -455,15 +713,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               const Text(
                                 '20',
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                               8.heightBox,
                               const Text(
                                 'Leave',
                                 style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500),
+                                  fontFamily: 'Inter',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               )
                             ],
                           ),

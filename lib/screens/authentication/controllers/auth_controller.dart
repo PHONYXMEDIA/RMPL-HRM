@@ -1,26 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rmpl_hrm/models/employee.dart';
 
 import '../../../constants/constants.dart';
-import '../../../remote/data.dart';
+import '../../home_screen.dart';
 import '../exceptions/exceptions.dart';
 import '../login_screen.dart';
-import '../../home_screen.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   late Rx<firebase_auth.User?> firebaseUser;
+  Rx<Employee?> employee = Rx<Employee?>(null);
 
   @override
   void onReady() {
-    super.onReady();
     firebaseUser = Rx<firebase_auth.User?>(auth.currentUser);
     firebaseUser.bindStream(auth.userChanges());
     ever(
       firebaseUser,
       _setInitialScreen,
     );
+    super.onReady();
   }
 
   Future<void> loginWithCredentials({
@@ -73,13 +75,14 @@ class AuthController extends GetxController {
       return;
     }
 
-    final employee = await Data.getEmployee(user.uid);
+    final doc = await FirebaseFirestore.instance
+        .collection("employees")
+        .doc(user.uid)
+        .get();
 
-    if (employee == null) {
-      await logOut();
-      Get.offAll(() => const LoginScreen());
-      return;
-    }
+    final employee = Employee.fromJson(doc.data() as Map<String, dynamic>);
+
+    this.employee.trigger(employee);
 
     if (user.email != employee.email) {
       await logOut();
