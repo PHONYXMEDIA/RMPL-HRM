@@ -3,8 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rmpl_hrm/components/textfield.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
-import 'package:rmpl_hrm/state/login/models/email.dart';
-import 'package:rmpl_hrm/state/login/notifiers/login_notifier.dart';
 
 class EmailTextField extends ConsumerWidget {
   const EmailTextField({
@@ -16,7 +14,6 @@ class EmailTextField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final email = ref.watch(loginNotifierProvider).email;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -34,10 +31,7 @@ class EmailTextField extends ConsumerWidget {
           'DEL122233',
           controller: controller,
           textInputAction: TextInputAction.next,
-          onChanged: (String? value) {
-            ref.read(loginNotifierProvider.notifier).updateEmail(value);
-          },
-          errorText: email.displayError?.text,
+          onChanged: (String? value) {},
         ),
       ],
     );

@@ -3,8 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rmpl_hrm/components/textfield.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
-import 'package:rmpl_hrm/state/login/models/password.dart';
-import 'package:rmpl_hrm/state/login/notifiers/login_notifier.dart';
 
 class PasswordTextField extends ConsumerWidget {
   const PasswordTextField({
@@ -16,7 +14,6 @@ class PasswordTextField extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final password = ref.watch(loginNotifierProvider).password;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -34,10 +31,7 @@ class PasswordTextField extends ConsumerWidget {
           '************',
           controller: controller,
           textInputAction: TextInputAction.done,
-          onChanged: (String? value) {
-            ref.read(loginNotifierProvider.notifier).updatePassword(value);
-          },
-          errorText: password.displayError?.text,
+          onChanged: (String? value) {},
         ),
       ],
     );

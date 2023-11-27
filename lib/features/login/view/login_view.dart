@@ -3,11 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/constants/dimensions.dart';
-import 'package:rmpl_hrm/extensions/object/errorMessage.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/features/login/login.dart';
 import 'package:rmpl_hrm/main.dart';
-import 'package:rmpl_hrm/state/auth/notifiers/auth_state_notifier.dart';
 
 class LoginView extends HookConsumerWidget {
   const LoginView({super.key});
@@ -18,21 +16,6 @@ class LoginView extends HookConsumerWidget {
 
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
-
-    ref.listen(
-      authStateNotifierProvider,
-      (_, state) {
-        if (!state.hasError) return;
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            SnackBar(
-              content: Text(state.error.text),
-              backgroundColor: Colors.red,
-            ),
-          );
-      },
-    );
 
     return Scaffold(
       backgroundColor: primaryColor,

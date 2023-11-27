@@ -12,7 +12,6 @@ import 'package:rmpl_hrm/features/manage_;eave/view/manage_leave_view.dart';
 import 'package:rmpl_hrm/features/notifications/notifications.dart';
 import 'package:rmpl_hrm/features/profile/profile.dart';
 import 'package:rmpl_hrm/main.dart';
-import 'package:rmpl_hrm/state/auth/notifiers/auth_state_notifier.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -142,7 +141,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
           ),
           8.widthBox,
           GestureDetector(
-            onTap: ref.read(authStateNotifierProvider.notifier).logOut,
+            onTap: () {},
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: const BoxDecoration(
