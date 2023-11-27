@@ -17,14 +17,16 @@ Widget drawerList(String text) {
         ),
         12.widthBox,
         Expanded(
-            child: Text(
-          text,
-          style: const TextStyle(
+          child: Text(
+            text,
+            style: const TextStyle(
               color: whiteColor,
               fontFamily: 'Inter',
               fontSize: 20,
-              fontWeight: FontWeight.w500),
-        )),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
         const Icon(
           Icons.arrow_forward_ios,
           color: whiteColor,

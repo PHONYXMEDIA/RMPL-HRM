@@ -3,6 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rmpl_hrm/components/textfield.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
+import 'package:rmpl_hrm/state/login/models/password.dart';
+import 'package:rmpl_hrm/state/login/providers/login.dart';
 
 class PasswordTextField extends ConsumerWidget {
   const PasswordTextField({
@@ -31,7 +33,8 @@ class PasswordTextField extends ConsumerWidget {
           '************',
           controller: controller,
           textInputAction: TextInputAction.done,
-          onChanged: (String? value) {},
+          onChanged: ref.read(loginProvider.notifier).updatePassword,
+          errorText: ref.watch(loginProvider).password.displayError?.text,
         ),
       ],
     );
