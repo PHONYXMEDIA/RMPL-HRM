@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rmpl_hrm/components/button.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/drawer/drawer_list.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/main.dart';
-import 'package:rmpl_hrm/views/drawer/drawer_list.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class WebScreenLayout extends StatelessWidget {
