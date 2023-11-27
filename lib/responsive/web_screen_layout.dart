@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rmpl_hrm/components/button.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/main.dart';
-import 'package:rmpl_hrm/screens/drawer/drawer_list.dart';
+import 'package:rmpl_hrm/views/drawer/drawer_list.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class WebScreenLayout extends StatelessWidget {
   const WebScreenLayout({super.key});
@@ -15,7 +15,7 @@ class WebScreenLayout extends StatelessWidget {
     final List<ChartData> chartData = [
       ChartData('25% Attendance', 25, Colors.purple[300]!),
       ChartData('8% Leave', 38, Colors.red[300]!),
-      ChartData('12% Remaning\nWorking Days', 34, Colors.pink[300]!),
+      ChartData('12% Remaining\nWorking Days', 34, Colors.pink[300]!),
       ChartData('Others', 52, Colors.green[500]!)
     ];
     mq = MediaQuery.of(context).size;
@@ -553,6 +553,7 @@ class WebScreenLayout extends StatelessWidget {
 
 class ChartData {
   ChartData(this.x, this.y, this.color);
+
   final String x;
   final double y;
   Color color;

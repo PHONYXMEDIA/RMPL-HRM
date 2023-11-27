@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show Color, Colors;
 
 const primaryColor = Color(0xff4D23A6);
 const backgroundColor = Color(0xffFCFBFF);

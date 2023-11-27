@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/models/leave.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 Widget manageLeaveCard({
   required Color color,

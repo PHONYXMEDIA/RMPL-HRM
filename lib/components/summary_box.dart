@@ -19,11 +19,12 @@ Widget summaryContainer(String number, String text, context, Color color) {
         Text(
           text,
           style: TextStyle(
-              color: color,
-              fontSize: 16,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w500),
-        )
+            color: color,
+            fontSize: 16,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ],
     ),
   );

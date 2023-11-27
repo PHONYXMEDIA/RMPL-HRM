@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:rmpl_hrm/extensions/widget/box.dart';
 
-Widget notificationContianer(String text) {
+Widget notificationContainer(String text) {
   return Container(
     width: double.infinity,
     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),

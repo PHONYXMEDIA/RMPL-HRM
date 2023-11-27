@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -14,6 +13,7 @@ class _CalendarState extends State<Calendar> {
   final CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+
   @override
   Widget build(BuildContext context) {
     return TableCalendar(

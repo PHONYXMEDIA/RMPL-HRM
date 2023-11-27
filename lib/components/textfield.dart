@@ -4,19 +4,24 @@ import 'package:rmpl_hrm/constants/colors.dart';
 Widget customTextFormField(
   String text, {
   TextEditingController? controller,
-  String? Function(String?)? validator,
+  String? errorText,
   TextInputAction? textInputAction,
   Widget? suffixIcon,
+  void Function(String)? onChanged,
 }) {
   return TextFormField(
     controller: controller,
     decoration: InputDecoration(
       focusedBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderRadius: BorderRadius.all(
+          Radius.circular(8),
+        ),
         borderSide: BorderSide(color: borderColor),
       ),
       enabledBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderRadius: BorderRadius.all(
+          Radius.circular(8),
+        ),
         borderSide: BorderSide(color: borderColor),
       ),
       hintText: text,
@@ -26,8 +31,9 @@ Widget customTextFormField(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
       ),
+      errorText: errorText,
     ),
     textInputAction: textInputAction,
-    validator: validator,
+    onChanged: onChanged,
   );
 }

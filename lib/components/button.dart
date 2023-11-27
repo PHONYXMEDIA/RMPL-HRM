@@ -24,8 +24,12 @@ Widget customButton(
           : const MaterialStatePropertyAll(
               EdgeInsets.symmetric(vertical: 16),
             ),
-      backgroundColor: const MaterialStatePropertyAll(
-        buttonColor,
+      backgroundColor: MaterialStatePropertyAll(
+        onPress == null
+            ? buttonColor.withOpacity(
+                0.6,
+              )
+            : buttonColor,
       ),
       elevation: const MaterialStatePropertyAll(
         3.0,
