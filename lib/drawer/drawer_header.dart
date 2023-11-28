@@ -30,7 +30,7 @@ class CustomDrawerHeader extends StatelessWidget {
               fontSize: 24,
               color: whiteColor,
             ),
-          )
+          ),
         ],
       ),
     );

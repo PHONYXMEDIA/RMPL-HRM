@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rmpl_hrm/features/manage_;eave/manage_;eave.dart';
+import 'package:rmpl_hrm/features/manage_leave/manage_leave.dart';
 
 class ManageLeavePage extends StatelessWidget {
   const ManageLeavePage({super.key});
