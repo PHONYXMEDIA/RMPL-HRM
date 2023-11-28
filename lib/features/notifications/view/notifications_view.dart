@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:rmpl_hrm/components/notification_container.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/state/notifications/providers/notification.dart';
 
-class NotificationView extends StatelessWidget {
+class NotificationView extends ConsumerWidget {
   const NotificationView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: primaryColor,
-      // appBar: AppBar(
-      //   title: Text(
-      //     'Notifications',
-      //     style: TextStyle(
-      //         fontFamily: 'Inter', fontSize: 24, fontWeight: FontWeight.w500),
-      //   ),
-      //   leading: IconButton(
-      //       onPressed: () {
-      //         Get.to(() => HomeScreen());
-      //       },
-      //       icon: Icon(Icons.arrow_back_ios_new_outlined)),
-      // ),
       body: Container(
         margin: const EdgeInsets.only(top: 12),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
@@ -30,20 +21,23 @@ class NotificationView extends StatelessWidget {
             topRight: Radius.circular(16),
           ),
         ),
-        // FixMe
-        // child: KrPaginateFirestore(
-        //   query: db
-        //       .collection('notifications')
-        //       .where('branch', isEqualTo: 'Delhi'),
-        //   itemBuilder: (context, snapshot, index) {
-        //     final notifications = n.Notification.fromJson(
-        //       snapshot[index].data() as Map<String, dynamic>,
-        //     );
-        //     return notificationContainer(notifications.message ?? "");
-        //   },
-        //   itemBuilderType: PaginateBuilderType.listView,
-        //   isLive: true,
-        // ),
+        child: ref.watch(notificationProvider).when(
+              data: (notifications) {
+                return ListView.builder(
+                  itemCount: notifications.length,
+                  itemBuilder: (context, index) {
+                    final notification = notifications.elementAt(index);
+                    return notificationContainer(notification.message ?? '');
+                  },
+                );
+              },
+              error: (error, __) => Center(
+                child: Text('Error $error'),
+              ),
+              loading: () => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
       ),
     );
   }

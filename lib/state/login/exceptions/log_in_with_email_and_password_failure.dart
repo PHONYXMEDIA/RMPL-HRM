@@ -8,6 +8,14 @@ class LogInWithEmailAndPasswordFailure implements Exception {
 
   factory LogInWithEmailAndPasswordFailure.fromCode(String code) {
     switch (code.toLowerCase()) {
+      case 'invalid_email_or_password':
+        return const LogInWithEmailAndPasswordFailure(
+          'Email or password is not valid.',
+        );
+      case 'too-many-requests':
+        return const LogInWithEmailAndPasswordFailure(
+          'Too many requests, please try again later.',
+        );
       case 'invalid-email':
         return const LogInWithEmailAndPasswordFailure(
           'Email is not valid or badly formatted.',

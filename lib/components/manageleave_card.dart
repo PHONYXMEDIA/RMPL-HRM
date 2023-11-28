@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
-import 'package:rmpl_hrm/models/leave.dart';
+import 'package:rmpl_hrm/state/leave/models/leave.dart';
 
 Widget manageLeaveCard({
   required Color color,
@@ -50,7 +50,7 @@ Widget manageLeaveCard({
               child: Text(
                 leave.date != null
                     ? withoutYearFormat.format(leave.date!)
-                    : '${withoutYearFormat.format(leave.from!)} - ${withoutYearFormat.format(leave.to!)}',
+                    : '${withoutYearFormat.format(leave.fromDate!)} - ${withoutYearFormat.format(leave.toDate!)}',
                 style: const TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 14,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:rmpl_hrm/components/dialogs/alert_dialog_model.dart';
+import 'package:rmpl_hrm/components/dialogs/logout_dialog.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/drawer/drawer_header.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
@@ -13,6 +15,7 @@ import 'package:rmpl_hrm/features/notifications/notifications.dart';
 import 'package:rmpl_hrm/features/profile/profile.dart';
 import 'package:rmpl_hrm/main.dart';
 import 'package:rmpl_hrm/state/auth/providers/auth.dart';
+import 'package:rmpl_hrm/state/profile/providers/profile.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -95,27 +98,35 @@ class _HomeViewState extends ConsumerState<HomeView> {
             ),
             pageNumber == 0 || pageNumber == 1 ? 4.heightBox : Container(),
             pageNumber == 0 || pageNumber == 1
-                ? const Text(
-                    'Designation',
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: Colors.white,
-                    ),
-                  )
-                : Container(),
+                ? ref.watch(profileProvider).when(
+                      data: (employee) => Text(
+                        '${employee?.designation}',
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                      error: (_, __) => const SizedBox.shrink(),
+                      loading: () => const SizedBox.shrink(),
+                    )
+                : const SizedBox.shrink(),
           ],
         ),
         actions: [
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push(NotificationsPage.route());
+              Navigator.of(context).push(
+                NotificationsPage.route(),
+              );
             },
             child: Container(
               padding: const EdgeInsets.all(12),
               decoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: whiteColor),
+                shape: BoxShape.circle,
+                color: whiteColor,
+              ),
               child: Stack(
                 children: [
                   Center(
@@ -142,7 +153,15 @@ class _HomeViewState extends ConsumerState<HomeView> {
           ),
           8.widthBox,
           GestureDetector(
-            onTap: ref.read(authProvider.notifier).logout,
+            onTap: () async {
+              final shouldLogOut =
+                  await const LogoutDialog().present(context).then(
+                        (value) => value ?? false,
+                      );
+              if (shouldLogOut) {
+                await ref.read(authProvider.notifier).logout();
+              }
+            },
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: const BoxDecoration(

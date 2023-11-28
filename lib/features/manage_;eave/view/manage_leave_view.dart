@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:rmpl_hrm/components/manageleave_card.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/constants/constants.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/features/apply_leave/apply_leave.dart';
-import 'package:rmpl_hrm/models/leave.dart';
+import 'package:rmpl_hrm/state/leave/models/leave.dart';
+import 'package:rmpl_hrm/state/leave/providers/leave.dart' hide Leave;
 
-import '../../../constants/constants.dart';
-
-class ManageLeaveView extends StatefulWidget {
+class ManageLeaveView extends ConsumerStatefulWidget {
   const ManageLeaveView({super.key});
 
   @override
-  State<ManageLeaveView> createState() => _ManageLeaveViewState();
+  ConsumerState<ManageLeaveView> createState() => _ManageLeaveViewState();
 }
 
-class _ManageLeaveViewState extends State<ManageLeaveView> {
+class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
   final countApproved = db
       .collection('leave')
       .where(
@@ -41,15 +43,6 @@ class _ManageLeaveViewState extends State<ManageLeaveView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primaryColor,
-      // appBar: AppBar(
-      //   backgroundColor: primaryColor,
-      //   elevation: 0,
-      //   title: const Text(
-      //     'Manage Leave',
-      //     style: TextStyle(
-      //         fontFamily: 'Inter', fontSize: 24, fontWeight: FontWeight.w600),
-      //   ),
-      // ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.of(context).push(ApplyLeavePage.route());
@@ -170,7 +163,6 @@ class _ManageLeaveViewState extends State<ManageLeaveView> {
                     ),
                   ],
                 ),
-
                 StreamBuilder(
                   stream: countPending,
                   builder: (context, snapshot) {
@@ -190,36 +182,28 @@ class _ManageLeaveViewState extends State<ManageLeaveView> {
                     );
                   },
                 ),
-
                 const Divider(
                   color: textGreyColor,
                 ),
-                // 16.heightBox,
-                // TODO: Do it properly
-                // KrPaginateFirestore(
-                //   shrinkWrap: true,
-                //   physics: const NeverScrollableScrollPhysics(),
-                //   isLive: true,
-                //   listeners: [
-                //     refreshChangeListener,
-                //   ],
-                //   query: db.collection('leave').where(
-                //         "uid",
-                //         isEqualTo: db.collection('employees').doc(
-                //               authController.firebaseUser.value?.uid,
-                //             ),
-                //       ),
-                //   itemBuilderType: PaginateBuilderType.listView,
-                //   itemBuilder: (context, snapshot, index) {
-                //     final leave = Leave.fromJson(
-                //       snapshot[index].data() as Map<String, dynamic>,
-                //     );
-                //     return manageLeaveCard(
-                //       color: leave.color,
-                //       leave: leave,
-                //     );
-                //   },
-                // ),
+                ref.watch(leaveProvider).when(
+                      data: (leaves) => ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: leaves.length,
+                        itemBuilder: (context, index) {
+                          final leave = leaves.elementAt(index);
+                          return manageLeaveCard(
+                            color: leave.color,
+                            leave: leave,
+                          );
+                        },
+                      ),
+                      error: (err, __) => Center(
+                        child: Text('Error: ${err.toString()}'),
+                      ),
+                      loading: () => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
               ],
             ),
           ),

@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rmpl_hrm/state/app/providers/app_providers.dart';
 import 'package:rmpl_hrm/state/auth/models/auth_state.dart';
 import 'package:rmpl_hrm/state/auth/models/user.dart';
+import 'package:rmpl_hrm/state/login/exceptions/log_in_with_email_and_password_failure.dart';
 
 part 'auth.g.dart';
 
@@ -15,9 +17,7 @@ class Auth extends _$Auth {
         if (currentUser == null) {
           state = AuthState.unauthenticated();
         } else {
-          state = AuthState.authenticated(
-            user: currentUser.toUser!,
-          );
+          state = AuthState.authenticated(user: currentUser.toUser!);
         }
       },
     );
@@ -38,7 +38,11 @@ class Auth extends _$Auth {
             email: email,
             password: password,
           );
-    } catch (e) {}
+    } on FirebaseAuthException catch (e) {
+      throw LogInWithEmailAndPasswordFailure.fromCode(e.code);
+    } catch (_) {
+      throw const LogInWithEmailAndPasswordFailure();
+    }
   }
 
   Future<void> logout() async {

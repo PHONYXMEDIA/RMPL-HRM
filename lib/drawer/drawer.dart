@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/drawer/drawer_list.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/main.dart';
-
-import 'drawer_list.dart';
 
 Widget customDrawer(context) {
   mq = MediaQuery.of(context).size;
@@ -25,16 +24,17 @@ Widget customDrawer(context) {
                 const Text(
                   'Recorded\nMusic\nPrivate\nLimited',
                   style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                      color: whiteColor),
-                )
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                    color: whiteColor,
+                  ),
+                ),
               ],
             ),
           ),
           // 12.heightBox,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
                 // InkWell(
@@ -44,17 +44,17 @@ Widget customDrawer(context) {
                 //   },
                 //   child: drawerList('Dashboard'),
                 // ),
-                drawerList('Dashboard'),
-                drawerList('Notifications'),
-                drawerList('My Attendance'),
-                drawerList('Holidays'),
-                drawerList('Manage Leave'),
-                drawerList('Salary Details'),
-                drawerList('My Profile'),
-                drawerList('Contact Admin')
+                DrawerList(text: 'Dashboard'),
+                DrawerList(text: 'Notifications'),
+                DrawerList(text: 'My Attendance'),
+                DrawerList(text: 'Holidays'),
+                DrawerList(text: 'Manage Leave'),
+                DrawerList(text: 'Salary Details'),
+                DrawerList(text: 'My Profile'),
+                DrawerList(text: 'Contact Admin'),
               ],
             ),
-          )
+          ),
         ],
       ),
     ),

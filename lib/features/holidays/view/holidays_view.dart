@@ -1,34 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:rmpl_hrm/components/holiday_container.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
+import 'package:rmpl_hrm/state/holiday/providers/holiday.dart';
 
-class HolidaysView extends StatefulWidget {
+class HolidaysView extends ConsumerWidget {
   const HolidaysView({super.key});
 
   @override
-  State<HolidaysView> createState() => _HolidaysViewState();
-}
-
-class _HolidaysViewState extends State<HolidaysView> {
-  DateTime selectedDate = DateTime.now();
-  final formatterDate = DateFormat('MMM yyyy');
-  final monthFormatter = DateFormat('MM/yyyy');
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: primaryColor,
-      // appBar: AppBar(
-      //   backgroundColor: primaryColor,
-      //   elevation: 0,
-      //   title: const Text(
-      //     'Holidays',
-      //     style: TextStyle(
-      //         fontFamily: 'Inter', fontSize: 24, fontWeight: FontWeight.w600),
-      //   ),
-      // ),
       body: Container(
         margin: const EdgeInsets.only(top: 12),
         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -57,9 +42,10 @@ class _HolidaysViewState extends State<HolidaysView> {
                   const Text(
                     '01 Sep - 30 Sep',
                     style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                      fontFamily: 'Inter',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                   12.widthBox,
                   TextButton(
@@ -72,58 +58,51 @@ class _HolidaysViewState extends State<HolidaysView> {
               const Text(
                 'Holidays other then Sat/Sun',
                 style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 20,
-                    // color: primaryColor,
-                    fontWeight: FontWeight.w500),
+                  fontFamily: 'Inter',
+                  fontSize: 20,
+                  // color: primaryColor,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
               8.heightBox,
               const Text(
                 '2 holidays this month',
                 style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 12,
-                    color: textGreyColor,
-                    fontWeight: FontWeight.w400),
+                  fontFamily: 'Inter',
+                  fontSize: 12,
+                  color: textGreyColor,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
               const Divider(
                 color: textGreyColor,
               ),
-              // FIXME
-              // Expanded(
-              //   child: KrPaginateFirestore(
-              //     query: db.collection('holidays').where('formattedDate',
-              //         isEqualTo: monthFormatter.format(selectedDate)),
-              //     itemBuilderType: PaginateBuilderType.listView,
-              //     itemBuilder: (context, documentSnapshot, index) {
-              //       final holiday = Holiday.fromJson(
-              //         documentSnapshot[index].data() as Map<String, dynamic>,
-              //       );
-              //       return Column(
-              //         children: [
-              //           holidayContainer(
-              //             '${holiday.formattedDate}',
-              //             '${holiday.title}',
-              //           ),
-              //           12.heightBox,
-              //         ],
-              //       );
-              //     },
-              //     isLive: true,
-              //   ),
-              // ),
+              ref.watch(holidaysProvider).when(
+                    data: (holidays) => Expanded(
+                      child: ListView.separated(
+                        separatorBuilder: (_, __) => 12.heightBox,
+                        itemCount: holidays.length,
+                        itemBuilder: (context, index) {
+                          final holiday = holidays.elementAt(index);
+                          return holidayContainer(
+                            holiday.date.formattedDate,
+                            '${holiday.title}',
+                          );
+                        },
+                      ),
+                    ),
+                    error: (err, __) => Center(
+                      child: Text(
+                        'Error: ${err.toString()}',
+                      ),
+                    ),
+                    loading: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget buildLoader() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: Center(
-        child: CircularProgressIndicator(),
       ),
     );
   }
