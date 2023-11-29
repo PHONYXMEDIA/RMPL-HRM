@@ -6,6 +6,11 @@ import 'package:rmpl_hrm/constants/dimensions.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/main.dart';
 import 'package:rmpl_hrm/responsive/web_screen_layout.dart';
+import 'package:rmpl_hrm/state/attendance/models/attendance_state.dart';
+import 'package:rmpl_hrm/state/attendance/providers/attendance.dart';
+import 'package:rmpl_hrm/state/attendance/providers/punched_in.dart';
+import 'package:rmpl_hrm/state/attendance/providers/punched_out.dart';
+import 'package:rmpl_hrm/state/attendance/providers/working_hours.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DashboardView extends ConsumerStatefulWidget {
@@ -79,6 +84,8 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
       ChartData('12% Remaining\nWorking Days', 34, Colors.pink[300]!),
       ChartData('Others', 52, Colors.green[500]!)
     ];
+    final attendanceStatus = ref.watch(attendanceProvider).status;
+    final punchStatus = ref.watch(attendanceProvider).punchStatus;
     return Scaffold(
       backgroundColor: primaryColor,
       // appBar: AppBar(
@@ -194,189 +201,51 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                           ),
                         ),
                         16.heightBox,
-                        // Hold to punch-in button
-                        disablePunchIn
+                        attendanceStatus.isPunchedOut
                             ? const SizedBox.shrink()
-                            : GestureDetector(
-                                onLongPress: disablePunchIn
-                                    ? null
-                                    : () async {
-                                        // Get.defaultDialog(
-                                        //   title: "Please Wait",
-                                        //   content: const Text(
-                                        //     "Checking if you are punched in",
-                                        //   ),
-                                        //   barrierDismissible: false,
-                                        // );
-
-                                        // final doc = await FirebaseFirestore
-                                        //     .instance
-                                        //     .collection('common')
-                                        //     .doc('attendance')
-                                        //     .collection(DateFormat('yyyy-MM-dd')
-                                        //         .format(DateTime.now()))
-                                        //     .doc(authController
-                                        //         .firebaseUser.value!.uid)
-                                        //     .get();
-                                        //
-                                        // if (Get.isDialogOpen == true) {
-                                        //   Get.back(closeOverlays: true);
-                                        // }
-                                        //
-                                        // if (!doc.exists) {
-                                        //   Get.defaultDialog(
-                                        //     title: 'Please Wait',
-                                        //     content: const Text('Punching in'),
-                                        //     barrierDismissible: false,
-                                        //   );
-                                        //   await FirebaseFirestore.instance
-                                        //       .collection('common')
-                                        //       .doc('attendance')
-                                        //       .collection(
-                                        //           DateFormat('yyyy-MM-dd')
-                                        //               .format(DateTime.now()))
-                                        //       .doc(authController
-                                        //           .firebaseUser.value!.uid)
-                                        //       .set({
-                                        //     'punchedIn':
-                                        //         FieldValue.serverTimestamp(),
-                                        //     'punchedBy': FirebaseFirestore
-                                        //         .instance
-                                        //         .collection('employees')
-                                        //         .doc(authController
-                                        //             .firebaseUser.value!.uid),
-                                        //     'under': FirebaseFirestore.instance
-                                        //         .collection('admin')
-                                        //         .doc(
-                                        //           authController.employee.value!
-                                        //               .creator!.id,
-                                        //         ),
-                                        //     'createdAt':
-                                        //         FieldValue.serverTimestamp(),
-                                        //   });
-
-                                        // if (Get.isDialogOpen == true) {
-                                        //   Get.back(closeOverlays: true);
-                                        // }
-
-                                        // Get.snackbar(
-                                        //   "Punch In",
-                                        //   "You are now punched in",
-                                        //   backgroundColor: Colors.green,
-                                        //   duration:
-                                        //       const Duration(seconds: 2),
-                                        //   snackPosition: SnackPosition.BOTTOM,
-                                        //   margin: const EdgeInsets.all(16),
-                                        //   colorText: Colors.white,
-                                        // );
-
-                                        // setState(() => isPunchedIn = true);
-                                        // } else {
-                                        //   Get.defaultDialog(
-                                        //     title: 'Please Wait',
-                                        //     content: const Text('Punching out'),
-                                        //     barrierDismissible: false,
-                                        //   );
-                                        //   final attendance =
-                                        //       Attendance.fromJson(doc.data()!);
-                                        //
-                                        //   if (attendance.punchedIn != null &&
-                                        //       attendance.punchedOut != null) {
-                                        //     Get.snackbar(
-                                        //       "Punch In",
-                                        //       "You are already punched in",
-                                        //       backgroundColor: Colors.red,
-                                        //       duration:
-                                        //           const Duration(seconds: 2),
-                                        //       snackPosition:
-                                        //           SnackPosition.BOTTOM,
-                                        //       margin: const EdgeInsets.all(16),
-                                        //       colorText: Colors.white,
-                                        //     );
-                                        //   } else if (attendance.punchedIn !=
-                                        //           null &&
-                                        //       attendance.punchedOut == null) {
-                                        //     await FirebaseFirestore.instance
-                                        //         .collection('common')
-                                        //         .doc('attendance')
-                                        //         .collection(
-                                        //             DateFormat('yyyy-MM-dd')
-                                        //                 .format(DateTime.now()))
-                                        //         .doc(authController
-                                        //             .firebaseUser.value!.uid)
-                                        //         .update({
-                                        //       'punchedOut':
-                                        //           FieldValue.serverTimestamp(),
-                                        //     });
-                                        //
-                                        //     if (Get.isDialogOpen == true) {
-                                        //       Get.back(closeOverlays: true);
-                                        //     }
-                                        //
-                                        //     Get.snackbar(
-                                        //       "Punch Out",
-                                        //       "You are now punched out",
-                                        //       backgroundColor: Colors.red,
-                                        //       duration: const Duration(
-                                        //         seconds: 2,
-                                        //       ),
-                                        //       snackPosition:
-                                        //           SnackPosition.BOTTOM,
-                                        //       margin: const EdgeInsets.all(16),
-                                        //       colorText: Colors.white,
-                                        //     );
-                                        //     setState(
-                                        //       () => disablePunchIn = true,
-                                        //     );
-                                        //   } else {
-                                        //     Get.snackbar(
-                                        //       "Punch In",
-                                        //       "You are already punched out",
-                                        //       backgroundColor: Colors.red,
-                                        //       duration:
-                                        //           const Duration(seconds: 2),
-                                        //       snackPosition:
-                                        //           SnackPosition.BOTTOM,
-                                        //       margin: const EdgeInsets.all(16),
-                                        //       colorText: Colors.white,
-                                        //     );
-                                        //   }
-                                        // }
-                                      },
-                                child: Container(
-                                  width: double.infinity,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 12),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 16),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: buttonColor,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.2),
-                                          blurRadius: 4,
-                                          spreadRadius: 2,
+                            : punchStatus.isLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : GestureDetector(
+                                    onLongPress: ref
+                                        .read(attendanceProvider.notifier)
+                                        .createAttendance,
+                                    child: Container(
+                                      width: double.infinity,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 12),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 16),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: buttonColor,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.2),
+                                            blurRadius: 4,
+                                            spreadRadius: 2,
+                                          ),
+                                        ],
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          attendanceStatus.isPunchedIn
+                                              ? 'Hold to punch out'
+                                              : 'Hold to punch in',
+                                          style: const TextStyle(
+                                            color: backgroundColor,
+                                            fontSize: 16,
+                                          ),
                                         ),
-                                      ]),
-                                  child: Center(
-                                    child: Text(
-                                      isPunchedIn
-                                          ? 'Hold to punch out'
-                                          : 'Hold to punch in',
-                                      style: const TextStyle(
-                                        color: backgroundColor,
-                                        fontSize: 16,
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
                         24.heightBox,
-                        // Info table
-                        const Column(
+                        Column(
                           children: [
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Text(
@@ -405,86 +274,41 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                                 ),
                               ],
                             ),
-                            Divider(
+                            const Divider(
                               thickness: 1,
                               color: borderColor,
                               endIndent: 16,
                               indent: 16,
                             ),
-                            // TODO: Add attendance table here.
-                            // StreamBuilder<Attendance>(
-                            //   stream: _getAttendance,
-                            //   builder: (context, snapshots) {
-                            //     if (snapshots.hasData) {
-                            //       final data = snapshots.requireData;
-                            //       final punchedIn = data.punchedIn != null
-                            //           ? DateFormat.jm().format(data.punchedIn!)
-                            //           : 'N/A';
-                            //       final punchedOut = data.punchedOut != null
-                            //           ? DateFormat.jm().format(data.punchedOut!)
-                            //           : 'N/A';
-                            //
-                            //       final f = DateFormat('HH:mm');
-                            //       DateTime? start = data.punchedIn != null
-                            //           ? f.parse(DateFormat('HH:mm')
-                            //               .format(data.punchedIn!))
-                            //           : null;
-                            //       DateTime? end = data.punchedOut != null
-                            //           ? f.parse(DateFormat('HH:mm')
-                            //               .format(data.punchedOut!))
-                            //           : null;
-                            //
-                            //       String workingHours = 'N/A';
-                            //       if ((start != null && end != null) &&
-                            //           end.isAfter(start)) {
-                            //         end = end.add(const Duration(days: 0));
-                            //         final diff = end.difference(start).abs();
-                            //         final hours = diff.inHours;
-                            //         final minutes = diff.inMinutes % 60;
-                            //         workingHours = '$hours:$minutes Hrs';
-                            //       }
-                            //
-                            //       return Row(
-                            //         // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            //         children: [
-                            //           28.widthBox,
-                            //           Expanded(
-                            //             flex: 5,
-                            //             child: Text(
-                            //               punchedIn,
-                            //               style: const TextStyle(
-                            //                 fontFamily: 'Inter',
-                            //                 fontSize: 16,
-                            //                 fontWeight: FontWeight.w500,
-                            //               ),
-                            //             ),
-                            //           ),
-                            //           Expanded(
-                            //             flex: 6,
-                            //             child: Text(
-                            //               punchedOut,
-                            //               style: const TextStyle(
-                            //                 fontFamily: 'Inter',
-                            //                 fontSize: 16,
-                            //                 fontWeight: FontWeight.w500,
-                            //               ),
-                            //             ),
-                            //           ),
-                            //           Text(
-                            //             workingHours,
-                            //             style: const TextStyle(
-                            //               fontFamily: 'Inter',
-                            //               fontSize: 16,
-                            //               fontWeight: FontWeight.w500,
-                            //             ),
-                            //           ),
-                            //           28.widthBox
-                            //         ],
-                            //       );
-                            //     }
-                            //     return const SizedBox.shrink();
-                            //   },
-                            // ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  ref.watch(punchedInProvider),
+                                  style: const TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  ref.watch(punchedOutProvider),
+                                  style: const TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  ref.watch(workingHoursProvider),
+                                  style: const TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                         24.heightBox,
@@ -504,35 +328,30 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                           child: SfCircularChart(
                             legend: const Legend(
                               isResponsive: true,
-                              // toggleSeriesVisibility: false,
                               isVisible: true,
-                              // title: LegendTitle(
-                              //   text: 'Attendance Report',
-                              //   textStyle: TextStyle(
-                              //     fontFamily: 'Inter',
-                              //     fontWeight: FontWeight.w600,
-                              //     fontSize: 14,
-                              //   ),
-                              // ),
                             ),
                             selectionGesture: ActivationMode.singleTap,
                             annotations: <CircularChartAnnotation>[
                               CircularChartAnnotation(
-                                  angle: 300,
-                                  radius: '40%',
-                                  widget: const Text('25%')),
+                                angle: 300,
+                                radius: '40%',
+                                widget: const Text('25%'),
+                              ),
                               CircularChartAnnotation(
-                                  angle: 200,
-                                  radius: '40%',
-                                  widget: const Text('38%')),
+                                angle: 200,
+                                radius: '40%',
+                                widget: const Text('38%'),
+                              ),
                               CircularChartAnnotation(
-                                  angle: 100,
-                                  radius: '40%',
-                                  widget: const Text('34%')),
+                                angle: 100,
+                                radius: '40%',
+                                widget: const Text('34%'),
+                              ),
                               CircularChartAnnotation(
-                                  angle: 0,
-                                  radius: '40%',
-                                  widget: const Text('52%')),
+                                angle: 0,
+                                radius: '40%',
+                                widget: const Text('52%'),
+                              ),
                             ],
                             series: <CircularSeries>[
                               // Render pie chart
@@ -562,36 +381,30 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                           child: SfCircularChart(
                             legend: const Legend(
                               isResponsive: true,
-                              // toggleSeriesVisibility: false,
                               isVisible: true,
-                              // title: LegendTitle(
-                              //   // alignment: ChartAlignment.near,
-                              //   text: 'Salary Insight',
-                              //   textStyle: TextStyle(
-                              //     fontFamily: 'Inter',
-                              //     fontWeight: FontWeight.w600,
-                              //     fontSize: 14,
-                              //   ),
-                              // ),
                             ),
                             selectionGesture: ActivationMode.singleTap,
                             annotations: <CircularChartAnnotation>[
                               CircularChartAnnotation(
-                                  angle: 300,
-                                  radius: '40%',
-                                  widget: const Text('25%')),
+                                angle: 300,
+                                radius: '40%',
+                                widget: const Text('25%'),
+                              ),
                               CircularChartAnnotation(
-                                  angle: 200,
-                                  radius: '40%',
-                                  widget: const Text('38%')),
+                                angle: 200,
+                                radius: '40%',
+                                widget: const Text('38%'),
+                              ),
                               CircularChartAnnotation(
-                                  angle: 100,
-                                  radius: '40%',
-                                  widget: const Text('34%')),
+                                angle: 100,
+                                radius: '40%',
+                                widget: const Text('34%'),
+                              ),
                               CircularChartAnnotation(
-                                  angle: 0,
-                                  radius: '40%',
-                                  widget: const Text('52%')),
+                                angle: 0,
+                                radius: '40%',
+                                widget: const Text('52%'),
+                              ),
                             ],
                             series: <CircularSeries>[
                               // Render pie chart
@@ -601,18 +414,20 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                                     data.color,
                                 xValueMapper: (ChartData data, _) => data.x,
                                 yValueMapper: (ChartData data, _) => data.y,
-                              )
+                              ),
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ),
                 Container(
                   height: 115,
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 14,
+                  ),
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
                     color: whiteColor,
