@@ -6,7 +6,7 @@ part of 'holiday.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$holidaysHash() => r'4a20ea84c2b5df48b25117e82850f8b2a4521f1f';
+String _$holidaysHash() => r'5835378579108509ad385ff924c34dc08556dda6';
 
 /// See also [holidays].
 @ProviderFor(holidays)

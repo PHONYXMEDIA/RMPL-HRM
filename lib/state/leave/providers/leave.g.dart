@@ -6,7 +6,7 @@ part of 'leave.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$leaveHash() => r'6ca211c32480a46ede5a1ae6aa609df72a2223ac';
+String _$leaveHash() => r'c1331d152fe4c44e5b4a56bca3058186820a7997';
 
 /// See also [Leave].
 @ProviderFor(Leave)

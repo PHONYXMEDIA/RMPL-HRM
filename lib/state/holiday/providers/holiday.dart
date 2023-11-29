@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rmpl_hrm/state/app/providers/app_providers.dart';
 import 'package:rmpl_hrm/state/holiday/models/holiday.dart' as model;
+import 'package:rmpl_hrm/state/holiday/providers/selected_holiday.dart';
 import 'package:rmpl_hrm/state/profile/providers/profile.dart';
 
 part 'holiday.g.dart';
@@ -16,12 +17,26 @@ Stream<Iterable<model.Holiday>> holidays(HolidaysRef ref) {
     return const Stream.empty();
   }
 
+  final date = ref.watch(selectedHolidayProvider);
+
   return ref
       .watch(firestoreProvider)
       .collection('holidays')
       .where(
         'creator',
         isEqualTo: profile.requireValue!.creator!,
+      )
+      .where(
+        'date',
+        isGreaterThanOrEqualTo: DateTime(
+          date.year,
+          date.month,
+        ),
+        isLessThanOrEqualTo: DateTime(
+          date.year,
+          date.month + 1,
+          0,
+        ),
       )
       .snapshots()
       .map((snapshots) => snapshots.docs)

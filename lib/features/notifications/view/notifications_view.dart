@@ -23,12 +23,15 @@ class NotificationView extends ConsumerWidget {
         ),
         child: ref.watch(notificationProvider).when(
               data: (notifications) {
-                return ListView.builder(
-                  itemCount: notifications.length,
-                  itemBuilder: (context, index) {
-                    final notification = notifications.elementAt(index);
-                    return notificationContainer(notification.message ?? '');
-                  },
+                return RefreshIndicator(
+                  onRefresh: () => ref.refresh(notificationProvider.future),
+                  child: ListView.builder(
+                    itemCount: notifications.length,
+                    itemBuilder: (context, index) {
+                      final notification = notifications.elementAt(index);
+                      return notificationContainer(notification.message ?? '');
+                    },
+                  ),
                 );
               },
               error: (error, __) => Center(

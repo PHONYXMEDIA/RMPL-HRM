@@ -406,6 +406,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_riverpod:
     dependency: transitive
     description:
@@ -632,6 +637,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  month_picker_dialog:
+    dependency: "direct main"
+    description:
+      name: month_picker_dialog
+      sha256: a00373068fb81a63c6665cb33ea0850822598357ddd3bd702c57c09c72da7c9f
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.1"
   nested:
     dependency: transitive
     description:

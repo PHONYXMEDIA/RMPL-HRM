@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:rmpl_hrm/components/holiday_container.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/state/holiday/providers/holiday.dart';
+import 'package:rmpl_hrm/state/holiday/providers/selected_holiday.dart';
 
-class HolidaysView extends ConsumerWidget {
+class HolidaysView extends HookConsumerWidget {
   const HolidaysView({super.key});
 
   @override
@@ -27,7 +29,7 @@ class HolidaysView extends ConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
                 children: [
@@ -39,9 +41,9 @@ class HolidaysView extends ConsumerWidget {
                     ),
                   ),
                   8.widthBox,
-                  const Text(
-                    '01 Sep - 30 Sep',
-                    style: TextStyle(
+                  Text(
+                    ref.watch(selectedHolidayProvider).onlyMonthAndYear,
+                    style: const TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -49,57 +51,75 @@ class HolidaysView extends ConsumerWidget {
                   ),
                   12.widthBox,
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final month = await showMonthPicker(
+                        context: context,
+                        initialDate: ref.watch(selectedHolidayProvider),
+                      );
+                      if (month != null) {
+                        ref
+                            .read(selectedHolidayProvider.notifier)
+                            .onChange(month);
+                      }
+                    },
                     child: const Text('Change Duration'),
                   ),
                 ],
               ),
               16.heightBox,
-              const Text(
-                'Holidays other then Sat/Sun',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 20,
-                  // color: primaryColor,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              const Text(
-                '2 holidays this month',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 12,
-                  color: textGreyColor,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              const Divider(
-                color: textGreyColor,
-              ),
-              ref.watch(holidaysProvider).when(
-                    data: (holidays) => Expanded(
-                      child: ListView.separated(
-                        separatorBuilder: (_, __) => 12.heightBox,
-                        itemCount: holidays.length,
-                        itemBuilder: (context, index) {
-                          final holiday = holidays.elementAt(index);
-                          return holidayContainer(
-                            holiday.date.formattedDate,
-                            '${holiday.title}',
-                          );
-                        },
+              Expanded(
+                child: ref.watch(holidaysProvider).when(
+                      data: (holidays) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const Text(
+                            'Holidays other then Sat/Sun',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 20,
+                              // color: primaryColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          8.heightBox,
+                          Text(
+                            '${holidays.length} holidays this month',
+                            style: const TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 12,
+                              color: textGreyColor,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          const Divider(
+                            color: textGreyColor,
+                          ),
+                          Expanded(
+                            child: ListView.separated(
+                              separatorBuilder: (_, __) => 12.heightBox,
+                              shrinkWrap: true,
+                              itemCount: holidays.length,
+                              itemBuilder: (context, index) {
+                                final holiday = holidays.elementAt(index);
+                                return holidayContainer(
+                                  holiday.date.formattedDate,
+                                  '${holiday.title}',
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      error: (err, __) => Center(
+                        child: Text(
+                          'Error: ${err.toString()}',
+                        ),
+                      ),
+                      loading: () => const Center(
+                        child: CircularProgressIndicator(),
                       ),
                     ),
-                    error: (err, __) => Center(
-                      child: Text(
-                        'Error: ${err.toString()}',
-                      ),
-                    ),
-                    loading: () => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
+              ),
             ],
           ),
         ),

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:rmpl_hrm/components/manageleave_card.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
-import 'package:rmpl_hrm/constants/constants.dart';
+import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/features/apply_leave/apply_leave.dart';
 import 'package:rmpl_hrm/state/leave/models/leave.dart';
 import 'package:rmpl_hrm/state/leave/providers/leave.dart' hide Leave;
+import 'package:rmpl_hrm/state/leave/providers/selected_leave_date.dart';
 
 class ManageLeaveView extends ConsumerStatefulWidget {
   const ManageLeaveView({super.key});
@@ -17,27 +19,27 @@ class ManageLeaveView extends ConsumerStatefulWidget {
 }
 
 class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
-  final countApproved = db
-      .collection('leave')
-      .where(
-        'status',
-        isEqualTo: 'approved',
-      )
-      .snapshots();
-  final countRejected = db
-      .collection('leave')
-      .where(
-        'status',
-        isEqualTo: 'rejected',
-      )
-      .snapshots();
-  final countPending = db
-      .collection('leave')
-      .where(
-        'status',
-        isEqualTo: 'pending',
-      )
-      .snapshots();
+  // final countApproved = db
+  //     .collection('leave')
+  //     .where(
+  //       'status',
+  //       isEqualTo: 'approved',
+  //     )
+  //     .snapshots();
+  // final countRejected = db
+  //     .collection('leave')
+  //     .where(
+  //       'status',
+  //       isEqualTo: 'rejected',
+  //     )
+  //     .snapshots();
+  // final countPending = db
+  //     .collection('leave')
+  //     .where(
+  //       'status',
+  //       isEqualTo: 'pending',
+  //     )
+  //     .snapshots();
 
   @override
   Widget build(BuildContext context) {
@@ -85,9 +87,9 @@ class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
                       ),
                     ),
                     8.widthBox,
-                    const Text(
-                      '01 Sep - 30 Sep',
-                      style: TextStyle(
+                    Text(
+                      ref.watch(selectedLeaveTimeProvider).onlyMonthAndYear,
+                      style: const TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -96,11 +98,17 @@ class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
                     12.widthBox,
                     TextButton(
                       onPressed: () async {
-                        await showDateRangePicker(
+                        final date = await showMonthPicker(
                           context: context,
-                          firstDate: DateTime(1999),
-                          lastDate: DateTime(3000),
+                          initialDate: ref.watch(
+                            selectedLeaveTimeProvider,
+                          ),
                         );
+                        if (date != null) {
+                          ref
+                              .read(selectedLeaveTimeProvider.notifier)
+                              .onChange(date);
+                        }
                       },
                       child: const Text('Change Duration'),
                     ),
@@ -112,90 +120,61 @@ class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 20,
-                    // color: primaryColor,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 8.heightBox,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    StreamBuilder(
-                      stream: countApproved,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Text('Calculating approved leave');
-                        } else if (snapshot.hasError) {
-                          return const SizedBox.shrink();
-                        }
-                        return Text(
-                          '${snapshot.data?.docs.length} Approved leave',
-                          style: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 12,
-                            color: greenColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        );
-                      },
-                    ),
-                    12.widthBox,
-                    StreamBuilder(
-                      stream: countRejected,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Text('Calculating rejected leave');
-                        } else if (snapshot.hasError) {
-                          return const SizedBox.shrink();
-                        }
-                        return Text(
-                          '${snapshot.data?.docs.length} Rejected leave',
-                          style: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 12,
-                            color: redColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                StreamBuilder(
-                  stream: countPending,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Text('Calculating pending leave');
-                    } else if (snapshot.hasError) {
-                      return const SizedBox.shrink();
-                    }
-                    return Text(
-                      '${snapshot.data?.docs.length} Pending leave',
-                      style: const TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 12,
-                        color: textGreyColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    );
-                  },
-                ),
-                const Divider(
-                  color: textGreyColor,
-                ),
                 ref.watch(leaveProvider).when(
-                      data: (leaves) => ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: leaves.length,
-                        itemBuilder: (context, index) {
-                          final leave = leaves.elementAt(index);
-                          return manageLeaveCard(
-                            color: leave.color,
-                            leave: leave,
-                          );
-                        },
+                      data: (leaves) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Wrap(
+                            spacing: 12.0,
+                            children: [
+                              Text(
+                                '${leaves.where((e) => e.status?.toLowerCase() == 'approved').length} Approved leave',
+                                style: const TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 12,
+                                  color: greenColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                '${leaves.where((e) => e.status?.toLowerCase() == 'rejected').length} Rejected leave',
+                                style: const TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 12,
+                                  color: redColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                '${leaves.where((e) => e.status?.toLowerCase() == 'pending').length} Pending leave',
+                                style: const TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 12,
+                                  color: textGreyColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Divider(
+                            color: textGreyColor,
+                          ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: leaves.length,
+                            itemBuilder: (context, index) {
+                              final leave = leaves.elementAt(index);
+                              return manageLeaveCard(
+                                color: leave.color,
+                                leave: leave,
+                              );
+                            },
+                          ),
+                        ],
                       ),
                       error: (err, __) => Center(
                         child: Text('Error: ${err.toString()}'),

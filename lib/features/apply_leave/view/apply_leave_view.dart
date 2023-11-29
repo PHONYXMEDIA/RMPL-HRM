@@ -1,62 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:rmpl_hrm/components/button.dart';
 import 'package:rmpl_hrm/components/custom_dropdown_field.dart';
 import 'package:rmpl_hrm/components/textfield.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 
-class ApplyLeaveView extends StatefulWidget {
+class ApplyLeaveView extends HookWidget {
   const ApplyLeaveView({super.key});
 
   @override
-  State<ApplyLeaveView> createState() => _ApplyLeaveViewState();
-}
-
-class _ApplyLeaveViewState extends State<ApplyLeaveView> {
-  late final TextEditingController _dateController;
-  late final TextEditingController _dayTypeController;
-  late final TextEditingController _leaveController;
-  late final TextEditingController _reasonController;
-  late final TextEditingController _selectToDateController;
-  late final TextEditingController _selectFromDateController;
-
-  bool isSelected = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _dateController = TextEditingController();
-    _dayTypeController = TextEditingController();
-    _leaveController = TextEditingController();
-    _reasonController = TextEditingController();
-    _selectToDateController = TextEditingController();
-    _selectFromDateController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _dateController.dispose();
-    _dayTypeController.dispose();
-    _leaveController.dispose();
-    _reasonController.dispose();
-    _selectToDateController.dispose();
-    _selectFromDateController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final isSelected = useState(false);
+    final dateController = useTextEditingController();
+    final selectFromDateController = useTextEditingController();
+    final selectToDateController = useTextEditingController();
+    final dayTypeController = useTextEditingController();
+    final leaveController = useTextEditingController();
+    final reasonController = useTextEditingController();
     return Scaffold(
       backgroundColor: primaryColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
         elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
         title: const Text(
           'Apply Leave',
           style: TextStyle(
             fontFamily: 'Inter',
             fontSize: 20,
             fontWeight: FontWeight.w500,
+            color: Colors.white,
           ),
         ),
       ),
@@ -91,12 +67,12 @@ class _ApplyLeaveViewState extends State<ApplyLeaveView> {
                     children: [
                       Expanded(
                         child: GestureDetector(
-                          onTap: () => setState(() => isSelected = true),
+                          onTap: () => isSelected.value = true,
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: isSelected
+                              color: isSelected.value
                                   ? buttonColor.withOpacity(0.3)
                                   : whiteColor,
                             ),
@@ -115,12 +91,12 @@ class _ApplyLeaveViewState extends State<ApplyLeaveView> {
                       ),
                       Expanded(
                         child: GestureDetector(
-                          onTap: () => setState(() => isSelected = false),
+                          onTap: () => isSelected.value = false,
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: isSelected
+                              color: isSelected.value
                                   ? whiteColor
                                   : buttonColor.withOpacity(0.3),
                             ),
@@ -141,22 +117,9 @@ class _ApplyLeaveViewState extends State<ApplyLeaveView> {
                   ),
                 ),
                 20.heightBox,
-                // const Text(
-                //   'Department',
-                //   style: TextStyle(
-                //     fontFamily: 'Inter',
-                //     fontSize: 14,
-                //     fontWeight: FontWeight.w500,
-                //   ),
-                // ),
-                // 8.heightBox,
-                // customTextFormField(
-                //   'Select Department',
-                //   controller: _departmentController,
-                // ),
-                // 12.heightBox,
+
                 Text(
-                  isSelected ? 'Date' : 'Select from date',
+                  isSelected.value ? 'Date' : 'Select from date',
                   style: const TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
@@ -164,10 +127,10 @@ class _ApplyLeaveViewState extends State<ApplyLeaveView> {
                   ),
                 ),
                 8.heightBox,
-                isSelected
+                isSelected.value
                     ? customTextFormField(
                         'Select Date',
-                        controller: _dateController,
+                        controller: dateController,
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.calendar_month),
                           onPressed: () async {
@@ -181,14 +144,14 @@ class _ApplyLeaveViewState extends State<ApplyLeaveView> {
                               lastDate: DateTime(3000),
                             );
                             if (selectedDate != null) {
-                              _dateController.text = selectedDate.toString();
+                              dateController.text = selectedDate.toString();
                             }
                           },
                         ),
                       )
                     : customTextFormField(
                         'Select from Date',
-                        controller: _selectFromDateController,
+                        controller: selectFromDateController,
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.calendar_month),
                           onPressed: () async {
@@ -202,7 +165,7 @@ class _ApplyLeaveViewState extends State<ApplyLeaveView> {
                               lastDate: DateTime(3000),
                             );
                             if (selectedDate != null) {
-                              _selectFromDateController.text =
+                              selectFromDateController.text =
                                   selectedDate.toString();
                             }
                           },
@@ -210,7 +173,7 @@ class _ApplyLeaveViewState extends State<ApplyLeaveView> {
                       ),
                 12.heightBox,
                 Text(
-                  isSelected ? 'Full Day / Half Day' : 'Select to date',
+                  isSelected.value ? 'Full Day / Half Day' : 'Select to date',
                   style: const TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
@@ -218,7 +181,7 @@ class _ApplyLeaveViewState extends State<ApplyLeaveView> {
                   ),
                 ),
                 8.heightBox,
-                isSelected
+                isSelected.value
                     ? CustomDropdownField(
                         hintText: 'Select',
                         items: const {
@@ -226,12 +189,12 @@ class _ApplyLeaveViewState extends State<ApplyLeaveView> {
                           'half': 'Half Day',
                         },
                         onChanged: (value) {
-                          _dayTypeController.text = value ?? '';
+                          dayTypeController.text = value ?? '';
                         },
                       )
                     : customTextFormField(
                         'Select To Date',
-                        controller: _selectToDateController,
+                        controller: selectToDateController,
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.calendar_month),
                           onPressed: () async {
@@ -245,7 +208,7 @@ class _ApplyLeaveViewState extends State<ApplyLeaveView> {
                               lastDate: DateTime(3000),
                             );
                             if (selectedDate != null) {
-                              _selectToDateController.text =
+                              selectToDateController.text =
                                   selectedDate.toString();
                             }
                           },
@@ -268,7 +231,7 @@ class _ApplyLeaveViewState extends State<ApplyLeaveView> {
                     'casual': 'Casual Leave',
                   },
                   onChanged: (value) {
-                    _leaveController.text = value ?? '';
+                    leaveController.text = value ?? '';
                   },
                 ),
 
@@ -284,7 +247,7 @@ class _ApplyLeaveViewState extends State<ApplyLeaveView> {
                 8.heightBox,
                 TextFormField(
                   maxLines: 5,
-                  controller: _reasonController,
+                  controller: reasonController,
                   decoration: InputDecoration(
                     focusedBorder: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(
