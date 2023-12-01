@@ -29,8 +29,8 @@ class EmailTextField extends ConsumerWidget {
           ),
         ),
         8.heightBox,
-        customTextFormField(
-          'DEL122233',
+        CustomTextFormField(
+          hintText: 'DEL122233',
           controller: controller,
           textInputAction: TextInputAction.next,
           onChanged: ref.read(loginProvider.notifier).updateEmail,

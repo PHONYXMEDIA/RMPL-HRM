@@ -20,19 +20,6 @@ class _ProfileViewState extends State<ProfileView> {
     mq = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: primaryColor,
-      // appBar: AppBar(
-      //   backgroundColor: primaryColor,
-      //   centerTitle: false,
-      //   title: const Text(
-      //     'My Profile',
-      //     style: TextStyle(
-      //       fontFamily: 'Inter',
-      //       fontSize: 24,
-      //       fontWeight: FontWeight.w600,
-      //     ),
-      //   ),
-      //   elevation: 0,
-      // ),
       body: Container(
         margin: const EdgeInsets.only(top: 12),
         decoration: const BoxDecoration(
@@ -111,7 +98,10 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
               ),
               12.heightBox,
-              customTextFormField('Field 1', controller: fieldController),
+              CustomTextFormField(
+                hintText: 'Field 1',
+                controller: fieldController,
+              ),
               16.heightBox,
               const Text(
                 'Field 2',
@@ -122,8 +112,8 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
               ),
               12.heightBox,
-              customTextFormField(
-                'Field 1',
+              CustomTextFormField(
+                hintText: 'Field 1',
                 controller: fieldController,
               ),
               16.heightBox,
@@ -136,16 +126,15 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
               ),
               12.heightBox,
-              customTextFormField(
-                'Field 1',
+              CustomTextFormField(
+                hintText: 'Field 1',
                 controller: fieldController,
               ),
               const Spacer(),
-              customButton(
-                () {},
-                'Save Changes',
-                context,
-              )
+              CustomButton(
+                onPress: () {},
+                text: 'Save Changes',
+              ),
             ],
           ),
         ),

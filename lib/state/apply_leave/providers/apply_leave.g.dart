@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'leave.dart';
+part of 'apply_leave.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$leaveHash() => r'1e5b42369ddd724b1cf80df40a98699cc1cf821a';
+String _$applyLeaveHash() => r'b85f5c47cec767e6d95474247d4b50ea675bb93b';
 
-/// See also [Leave].
-@ProviderFor(Leave)
-final leaveProvider =
-    AutoDisposeStreamNotifierProvider<Leave, Iterable<model.Leave>>.internal(
-  Leave.new,
-  name: r'leaveProvider',
+/// See also [ApplyLeave].
+@ProviderFor(ApplyLeave)
+final applyLeaveProvider =
+    AutoDisposeNotifierProvider<ApplyLeave, ApplyLeaveState>.internal(
+  ApplyLeave.new,
+  name: r'applyLeaveProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$leaveHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$applyLeaveHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Leave = AutoDisposeStreamNotifier<Iterable<model.Leave>>;
+typedef _$ApplyLeave = AutoDisposeNotifier<ApplyLeaveState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

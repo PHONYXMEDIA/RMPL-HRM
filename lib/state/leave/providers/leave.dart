@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rmpl_hrm/state/app/providers/app_providers.dart';
+import 'package:rmpl_hrm/state/auth/providers/auth.dart';
 import 'package:rmpl_hrm/state/leave/models/leave.dart' as model;
 import 'package:rmpl_hrm/state/leave/providers/selected_leave_date.dart';
 
@@ -13,6 +14,22 @@ class Leave extends _$Leave {
         firestoreProvider,
       )
       .collection('leave')
+      .where(
+        'uid',
+        isEqualTo: ref
+            .watch(
+              firestoreProvider,
+            )
+            .collection('employees')
+            .doc(
+              ref
+                  .watch(
+                    authProvider,
+                  )
+                  .user
+                  .id,
+            ),
+      )
       .where(
         'date',
         isGreaterThanOrEqualTo: DateTime(

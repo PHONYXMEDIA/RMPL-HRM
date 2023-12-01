@@ -1,39 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 
-Widget customTextFormField(
-  String text, {
-  TextEditingController? controller,
-  String? errorText,
-  TextInputAction? textInputAction,
-  Widget? suffixIcon,
-  void Function(String)? onChanged,
-}) {
-  return TextFormField(
-    controller: controller,
-    decoration: InputDecoration(
-      focusedBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(8),
+class CustomTextFormField extends StatelessWidget {
+  const CustomTextFormField({
+    super.key,
+    this.controller,
+    this.hintText,
+    this.suffixIcon,
+    this.errorText,
+    this.textInputAction,
+    this.onChanged,
+    this.onTap,
+    this.readOnly = false,
+  });
+
+  final TextEditingController? controller;
+  final String? hintText;
+  final Widget? suffixIcon;
+  final String? errorText;
+  final TextInputAction? textInputAction;
+  final Function(String)? onChanged;
+  final bool readOnly;
+  final Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
+          borderSide: BorderSide(color: borderColor),
         ),
-        borderSide: BorderSide(color: borderColor),
-      ),
-      enabledBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(8),
+        enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
+          borderSide: BorderSide(color: borderColor),
         ),
-        borderSide: BorderSide(color: borderColor),
+        hintText: hintText,
+        filled: true,
+        fillColor: lightGreyColor,
+        suffixIcon: suffixIcon,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        errorText: errorText,
       ),
-      hintText: text,
-      filled: true,
-      fillColor: lightGreyColor,
-      suffixIcon: suffixIcon,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      errorText: errorText,
-    ),
-    textInputAction: textInputAction,
-    onChanged: onChanged,
-  );
+      textInputAction: textInputAction,
+      onChanged: onChanged,
+      readOnly: readOnly,
+      onTap: onTap,
+    );
+  }
 }

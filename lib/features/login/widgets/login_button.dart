@@ -13,12 +13,11 @@ class LoginButton extends ConsumerWidget {
         ? const Center(
             child: CircularProgressIndicator(),
           )
-        : customButton(
-            ref.watch(loginProvider).isValid
+        : CustomButton(
+            onPress: ref.watch(loginProvider).isValid
                 ? ref.read(loginProvider.notifier).onSubmit
                 : null,
-            'Login',
-            context,
+            text: 'Login',
           );
   }
 }

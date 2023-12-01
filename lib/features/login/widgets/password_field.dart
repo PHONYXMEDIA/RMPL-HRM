@@ -29,8 +29,8 @@ class PasswordTextField extends ConsumerWidget {
           ),
         ),
         8.heightBox,
-        customTextFormField(
-          '************',
+        CustomTextFormField(
+          hintText: '************',
           controller: controller,
           textInputAction: TextInputAction.done,
           onChanged: ref.read(loginProvider.notifier).updatePassword,

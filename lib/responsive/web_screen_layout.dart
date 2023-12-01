@@ -99,13 +99,19 @@ class WebScreenLayout extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 16),
                     decoration: const BoxDecoration(
-                        border: Border(bottom: BorderSide(color: borderColor)),
-                        boxShadow: [
-                          BoxShadow(
-                              color: borderColor,
-                              blurRadius: 4,
-                              blurStyle: BlurStyle.outer)
-                        ]),
+                      border: Border(
+                        bottom: BorderSide(
+                          color: borderColor,
+                        ),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: borderColor,
+                          blurRadius: 4,
+                          blurStyle: BlurStyle.outer,
+                        ),
+                      ],
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -115,25 +121,31 @@ class WebScreenLayout extends StatelessWidget {
                             const Text(
                               'Hello! NAME',
                               style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 28,
-                                  color: darkColor),
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 28,
+                                color: darkColor,
+                              ),
                             ),
                             8.widthBox,
                             const Text(
                               'Designation',
                               style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20,
-                                  color: darkColor),
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: darkColor,
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(
-                            width: mq.width * 0.1,
-                            child: customButton(() {}, 'Logout', context))
+                          width: mq.width * 0.1,
+                          child: CustomButton(
+                            onPress: () {},
+                            text: 'Logout',
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -148,8 +160,9 @@ class WebScreenLayout extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 40, vertical: 32),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: borderColor)),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: borderColor),
+                              ),
                               child: Column(
                                 children: [
                                   Row(

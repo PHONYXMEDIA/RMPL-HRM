@@ -4,12 +4,14 @@ import '../constants/colors.dart';
 
 class CustomDropdownField extends StatelessWidget {
   final String? hintText;
+  final String? value;
   final Map<String, String>? items;
   final void Function(String?)? onChanged;
 
   const CustomDropdownField({
     super.key,
     this.hintText,
+    this.value,
     required this.items,
     required this.onChanged,
   });
@@ -17,6 +19,7 @@ class CustomDropdownField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
+      value: value,
       decoration: InputDecoration(
         focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
