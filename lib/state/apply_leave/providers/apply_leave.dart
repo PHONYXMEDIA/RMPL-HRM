@@ -5,6 +5,7 @@ import 'package:rmpl_hrm/state/apply_leave/models/date.dart';
 import 'package:rmpl_hrm/state/apply_leave/models/day_type.dart';
 import 'package:rmpl_hrm/state/apply_leave/models/leave_type.dart';
 import 'package:rmpl_hrm/state/apply_leave/models/reason.dart';
+import 'package:rmpl_hrm/state/leave/providers/leave.dart';
 
 part 'apply_leave.g.dart';
 
@@ -125,5 +126,31 @@ class ApplyLeave extends _$ApplyLeave {
     );
   }
 
-  Future<void> submit() async {}
+  Future<void> submit() async {
+    if (!state.oneDayState.isValid || !state.multipleDayState.isValid) return;
+    state = state.copyWith.oneDayState(
+      status: FormzSubmissionStatus.inProgress,
+    );
+    state = state.copyWith.multipleDayState(
+      status: FormzSubmissionStatus.inProgress,
+    );
+    try {
+      await ref.read(leaveProvider.notifier).applyLeave();
+      state = state.copyWith.oneDayState(
+        status: FormzSubmissionStatus.success,
+      );
+      state = state.copyWith.multipleDayState(
+        status: FormzSubmissionStatus.success,
+      );
+    } catch (e) {
+      state = state.copyWith.oneDayState(
+        status: FormzSubmissionStatus.failure,
+        errorMessage: e.toString(),
+      );
+      state = state.copyWith.multipleDayState(
+        status: FormzSubmissionStatus.failure,
+        errorMessage: e.toString(),
+      );
+    }
+  }
 }
