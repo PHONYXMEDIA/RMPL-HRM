@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/state/leave/models/leave.dart';
 
@@ -9,8 +9,6 @@ Widget manageLeaveCard({
   required Color color,
   required Leave leave,
 }) {
-  final format = DateFormat('dd MMMM yyyy');
-  final withoutYearFormat = DateFormat('dd MMM');
   return Container(
     padding: const EdgeInsets.symmetric(
       vertical: 16,
@@ -23,8 +21,7 @@ Widget manageLeaveCard({
       boxShadow: const [
         BoxShadow(
           color: borderColor,
-          blurRadius: 30,
-          // spreadRadius: 12
+          blurRadius: 4,
           blurStyle: BlurStyle.outer,
         )
       ],
@@ -49,8 +46,8 @@ Widget manageLeaveCard({
             Expanded(
               child: Text(
                 leave.date != null
-                    ? withoutYearFormat.format(leave.date!)
-                    : '${withoutYearFormat.format(leave.fromDate!)} - ${withoutYearFormat.format(leave.toDate!)}',
+                    ? leave.date.withoutYear
+                    : '${leave.fromDate.withoutYear} - ${leave.toDate.withoutYear}',
                 style: const TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 14,
@@ -90,7 +87,7 @@ Widget manageLeaveCard({
         ),
         8.heightBox,
         Text(
-          'Applied on: ${format.format(leave.createdAt!)}',
+          'Applied on: ${leave.createdAt.formattedDateSecondary}',
           style: const TextStyle(
             fontFamily: 'Inter',
             fontSize: 12,

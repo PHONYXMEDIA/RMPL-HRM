@@ -127,7 +127,7 @@ class ApplyLeave extends _$ApplyLeave {
   }
 
   Future<void> submit() async {
-    if (!state.oneDayState.isValid || !state.multipleDayState.isValid) return;
+    if (!state.oneDayState.isValid && !state.multipleDayState.isValid) return;
     state = state.copyWith.oneDayState(
       status: FormzSubmissionStatus.inProgress,
     );

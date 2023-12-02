@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:formz/formz.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rmpl_hrm/components/button.dart';
 import 'package:rmpl_hrm/components/custom_dropdown_field.dart';
@@ -19,6 +20,16 @@ class ApplyLeaveView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(
+      applyLeaveProvider,
+      (previous, next) {
+        if (next != previous &&
+            (next.oneDayState.status.isSuccess ||
+                next.multipleDayState.status.isSuccess)) {
+          Navigator.of(context).maybePop();
+        }
+      },
+    );
     return Scaffold(
       backgroundColor: primaryColor,
       appBar: AppBar(
@@ -291,103 +302,16 @@ class _OneDayLeaveForm extends HookConsumerWidget {
           onChanged: ref.read(applyLeaveProvider.notifier).reasonChanged,
         ),
         24.heightBox,
-        CustomButton(
-          onPress: !ref.watch(applyLeaveProvider).oneDayState.isValid
-              ? null
-              : () async {
-                  // if (isSelected) {
-                  //   try {
-                  //     await db.collection("leave").add({
-                  //       "date": Timestamp.fromDate(
-                  //         DateTime.parse(
-                  //           _dateController.text,
-                  //         ),
-                  //       ),
-                  //       "dayType": _dayTypeController.text,
-                  //       "leaveType": _leaveController.text,
-                  //       "reason": _reasonController.text,
-                  //       "createdAt": FieldValue.serverTimestamp(),
-                  //       "status": "pending",
-                  //       "uid": db
-                  //           .collection(
-                  //             'employees',
-                  //           )
-                  //           .doc(
-                  //             authController.firebaseUser.value?.uid,
-                  //           ),
-                  //     });
-                  //     if (mounted) {
-                  //       Navigator.of(context).pop();
-                  //       Get.snackbar(
-                  //         "Success",
-                  //         "Leave Applied",
-                  //         backgroundColor: Colors.green,
-                  //         colorText: Colors.white,
-                  //         snackPosition: SnackPosition.BOTTOM,
-                  //         margin: const EdgeInsets.all(16),
-                  //       );
-                  //     }
-                  //   } catch (e) {
-                  //     Get.snackbar(
-                  //       "Error",
-                  //       e.toString(),
-                  //       backgroundColor: Colors.red,
-                  //       colorText: Colors.white,
-                  //       snackPosition: SnackPosition.BOTTOM,
-                  //       margin: const EdgeInsets.all(16),
-                  //     );
-                  //   }
-                  // } else {
-                  //   try {
-                  //     await db.collection("leave").add({
-                  //       "fromDate": Timestamp.fromDate(
-                  //         DateTime.parse(
-                  //           _selectFromDateController.text,
-                  //         ),
-                  //       ),
-                  //       "toDate": Timestamp.fromDate(
-                  //         DateTime.parse(
-                  //           _selectToDateController.text,
-                  //         ),
-                  //       ),
-                  //       "leaveType": _leaveController.text,
-                  //       "reason": _reasonController.text,
-                  //       "status": "pending",
-                  //       "createdAt": FieldValue.serverTimestamp(),
-                  //       "uid": db
-                  //           .collection(
-                  //             'employees',
-                  //           )
-                  //           .doc(
-                  //             authController.firebaseUser.value?.uid,
-                  //           ),
-                  //     });
-                  //
-                  //     if (mounted) {
-                  //       Navigator.of(context).pop();
-                  //       Get.snackbar(
-                  //         "Success",
-                  //         "Leave Applied",
-                  //         backgroundColor: Colors.green,
-                  //         colorText: Colors.white,
-                  //         snackPosition: SnackPosition.BOTTOM,
-                  //         margin: const EdgeInsets.all(16),
-                  //       );
-                  //     }
-                  //   } catch (e) {
-                  //     Get.snackbar(
-                  //       "Error",
-                  //       e.toString(),
-                  //       backgroundColor: Colors.red,
-                  //       colorText: Colors.white,
-                  //       snackPosition: SnackPosition.BOTTOM,
-                  //       margin: const EdgeInsets.all(16),
-                  //     );
-                  //   }
-                  // }
-                },
-          text: 'Apply Leave',
-        ),
+        ref.watch(applyLeaveProvider).oneDayState.status.isInProgress
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : CustomButton(
+                onPress: !ref.watch(applyLeaveProvider).oneDayState.isValid
+                    ? null
+                    : ref.read(applyLeaveProvider.notifier).submit,
+                text: 'Apply Leave',
+              ),
         12.heightBox,
       ],
     );
@@ -568,103 +492,16 @@ class _MultipleDayLeaveForm extends HookConsumerWidget {
           onChanged: ref.read(applyLeaveProvider.notifier).reasonChanged,
         ),
         24.heightBox,
-        CustomButton(
-          onPress: !ref.watch(applyLeaveProvider).multipleDayState.isValid
-              ? null
-              : () async {
-                  // if (isSelected) {
-                  //   try {
-                  //     await db.collection("leave").add({
-                  //       "date": Timestamp.fromDate(
-                  //         DateTime.parse(
-                  //           _dateController.text,
-                  //         ),
-                  //       ),
-                  //       "dayType": _dayTypeController.text,
-                  //       "leaveType": _leaveController.text,
-                  //       "reason": _reasonController.text,
-                  //       "createdAt": FieldValue.serverTimestamp(),
-                  //       "status": "pending",
-                  //       "uid": db
-                  //           .collection(
-                  //             'employees',
-                  //           )
-                  //           .doc(
-                  //             authController.firebaseUser.value?.uid,
-                  //           ),
-                  //     });
-                  //     if (mounted) {
-                  //       Navigator.of(context).pop();
-                  //       Get.snackbar(
-                  //         "Success",
-                  //         "Leave Applied",
-                  //         backgroundColor: Colors.green,
-                  //         colorText: Colors.white,
-                  //         snackPosition: SnackPosition.BOTTOM,
-                  //         margin: const EdgeInsets.all(16),
-                  //       );
-                  //     }
-                  //   } catch (e) {
-                  //     Get.snackbar(
-                  //       "Error",
-                  //       e.toString(),
-                  //       backgroundColor: Colors.red,
-                  //       colorText: Colors.white,
-                  //       snackPosition: SnackPosition.BOTTOM,
-                  //       margin: const EdgeInsets.all(16),
-                  //     );
-                  //   }
-                  // } else {
-                  //   try {
-                  //     await db.collection("leave").add({
-                  //       "fromDate": Timestamp.fromDate(
-                  //         DateTime.parse(
-                  //           _selectFromDateController.text,
-                  //         ),
-                  //       ),
-                  //       "toDate": Timestamp.fromDate(
-                  //         DateTime.parse(
-                  //           _selectToDateController.text,
-                  //         ),
-                  //       ),
-                  //       "leaveType": _leaveController.text,
-                  //       "reason": _reasonController.text,
-                  //       "status": "pending",
-                  //       "createdAt": FieldValue.serverTimestamp(),
-                  //       "uid": db
-                  //           .collection(
-                  //             'employees',
-                  //           )
-                  //           .doc(
-                  //             authController.firebaseUser.value?.uid,
-                  //           ),
-                  //     });
-                  //
-                  //     if (mounted) {
-                  //       Navigator.of(context).pop();
-                  //       Get.snackbar(
-                  //         "Success",
-                  //         "Leave Applied",
-                  //         backgroundColor: Colors.green,
-                  //         colorText: Colors.white,
-                  //         snackPosition: SnackPosition.BOTTOM,
-                  //         margin: const EdgeInsets.all(16),
-                  //       );
-                  //     }
-                  //   } catch (e) {
-                  //     Get.snackbar(
-                  //       "Error",
-                  //       e.toString(),
-                  //       backgroundColor: Colors.red,
-                  //       colorText: Colors.white,
-                  //       snackPosition: SnackPosition.BOTTOM,
-                  //       margin: const EdgeInsets.all(16),
-                  //     );
-                  //   }
-                  // }
-                },
-          text: 'Apply Leave',
-        ),
+        ref.watch(applyLeaveProvider).multipleDayState.status.isInProgress
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : CustomButton(
+                onPress: !ref.watch(applyLeaveProvider).multipleDayState.isValid
+                    ? null
+                    : ref.read(applyLeaveProvider.notifier).submit,
+                text: 'Apply Leave',
+              ),
         12.heightBox,
       ],
     );

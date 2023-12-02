@@ -19,28 +19,6 @@ class ManageLeaveView extends ConsumerStatefulWidget {
 }
 
 class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
-  // final countApproved = db
-  //     .collection('leave')
-  //     .where(
-  //       'status',
-  //       isEqualTo: 'approved',
-  //     )
-  //     .snapshots();
-  // final countRejected = db
-  //     .collection('leave')
-  //     .where(
-  //       'status',
-  //       isEqualTo: 'rejected',
-  //     )
-  //     .snapshots();
-  // final countPending = db
-  //     .collection('leave')
-  //     .where(
-  //       'status',
-  //       isEqualTo: 'pending',
-  //     )
-  //     .snapshots();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,61 +49,61 @@ class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
             topRight: Radius.circular(16),
           ),
         ),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/Calendar.svg',
-                      colorFilter: const ColorFilter.mode(
-                        primaryColor,
-                        BlendMode.srcIn,
-                      ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/Calendar.svg',
+                    colorFilter: const ColorFilter.mode(
+                      primaryColor,
+                      BlendMode.srcIn,
                     ),
-                    8.widthBox,
-                    Text(
-                      ref.watch(selectedLeaveTimeProvider).onlyMonthAndYear,
-                      style: const TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    12.widthBox,
-                    TextButton(
-                      onPressed: () async {
-                        final date = await showMonthPicker(
-                          context: context,
-                          initialDate: ref.watch(
-                            selectedLeaveTimeProvider,
-                          ),
-                        );
-                        if (date != null) {
-                          ref
-                              .read(selectedLeaveTimeProvider.notifier)
-                              .onChange(date);
-                        }
-                      },
-                      child: const Text('Change Duration'),
-                    ),
-                  ],
-                ),
-                12.heightBox,
-                const Text(
-                  'Leave Application',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
                   ),
+                  8.widthBox,
+                  Text(
+                    ref.watch(selectedLeaveTimeProvider).onlyMonthAndYear,
+                    style: const TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  12.widthBox,
+                  TextButton(
+                    onPressed: () async {
+                      final date = await showMonthPicker(
+                        context: context,
+                        initialDate: ref.watch(
+                          selectedLeaveTimeProvider,
+                        ),
+                      );
+                      if (date != null) {
+                        ref
+                            .read(selectedLeaveTimeProvider.notifier)
+                            .onChange(date);
+                      }
+                    },
+                    child: const Text('Change Duration'),
+                  ),
+                ],
+              ),
+              12.heightBox,
+              const Text(
+                'Leave Application',
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
                 ),
-                8.heightBox,
-                ref.watch(leaveProvider).when(
-                      data: (leaves) => Column(
+              ),
+              8.heightBox,
+              ref.watch(leaveProvider).when(
+                    data: (leaves) => Expanded(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Wrap(
@@ -163,28 +141,32 @@ class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
                           const Divider(
                             color: textGreyColor,
                           ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: leaves.length,
-                            itemBuilder: (context, index) {
-                              final leave = leaves.elementAt(index);
-                              return manageLeaveCard(
-                                color: leave.color,
-                                leave: leave,
-                              );
-                            },
+                          Expanded(
+                            child: ListView.builder(
+                              padding: const EdgeInsets.only(bottom: 65.0),
+                              shrinkWrap: true,
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              itemCount: leaves.length,
+                              itemBuilder: (context, index) {
+                                final leave = leaves.elementAt(index);
+                                return manageLeaveCard(
+                                  color: leave.color,
+                                  leave: leave,
+                                );
+                              },
+                            ),
                           ),
                         ],
                       ),
-                      error: (err, __) => Center(
-                        child: Text('Error: ${err.toString()}'),
-                      ),
-                      loading: () => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
                     ),
-              ],
-            ),
+                    error: (err, __) => Center(
+                      child: Text('Error: ${err.toString()}'),
+                    ),
+                    loading: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+            ],
           ),
         ),
       ),
