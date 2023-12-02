@@ -23,10 +23,21 @@ class ApplyLeaveView extends ConsumerWidget {
     ref.listen(
       applyLeaveProvider,
       (previous, next) {
-        if (next != previous &&
-            (next.oneDayState.status.isSuccess ||
-                next.multipleDayState.status.isSuccess)) {
-          Navigator.of(context).maybePop();
+        if (next != previous) {
+          if (next.oneDayState.status.isSuccess ||
+              next.multipleDayState.status.isSuccess) {
+            Navigator.of(context).maybePop();
+          }
+          if (next.oneDayState.status.isFailure ||
+              next.multipleDayState.status.isFailure) {
+            ScaffoldMessenger.maybeOf(context)
+              ?..removeCurrentSnackBar()
+              ..showSnackBar(
+                const SnackBar(
+                  content: Text('Something went wrong'),
+                ),
+              );
+          }
         }
       },
     );
