@@ -8,12 +8,15 @@ import 'package:rmpl_hrm/components/textfield.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
-import 'package:rmpl_hrm/state/apply_leave/models/day_type.dart';
-import 'package:rmpl_hrm/state/apply_leave/models/leave_type.dart';
-import 'package:rmpl_hrm/state/apply_leave/models/reason.dart';
-import 'package:rmpl_hrm/state/apply_leave/providers/apply_leave.dart';
-import 'package:rmpl_hrm/state/leave/providers/selected_day_type.dart'
+import 'package:rmpl_hrm/features/apply_leave/models/leave_type.dart';
+import 'package:rmpl_hrm/features/apply_leave/providers/apply_leave.dart';
+import 'package:rmpl_hrm/features/manage_leave/providers/selected_day_type.dart'
     as day_type;
+import 'package:rmpl_hrm/features/manage_leave/providers/selected_day_type.dart'
+    hide DayType;
+
+import '../models/day_type.dart';
+import '../models/reason.dart';
 
 class ApplyLeaveView extends ConsumerWidget {
   const ApplyLeaveView({super.key});
@@ -91,7 +94,7 @@ class ApplyLeaveView extends ConsumerWidget {
                       Expanded(
                         child: GestureDetector(
                           onTap: () => ref
-                              .read(day_type.selectedDayTypeProvider.notifier)
+                              .read(selectedDayTypeProvider.notifier)
                               .onChange(day_type.DayType.oneDay),
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 8),

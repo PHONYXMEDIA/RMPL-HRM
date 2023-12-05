@@ -6,8 +6,8 @@ import 'package:rmpl_hrm/components/holiday_container.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
-import 'package:rmpl_hrm/state/holiday/providers/holiday.dart';
-import 'package:rmpl_hrm/state/holiday/providers/selected_holiday.dart';
+import 'package:rmpl_hrm/features/holidays/providers/holiday.dart';
+import 'package:rmpl_hrm/features/holidays/providers/selected_holiday.dart';
 
 class HolidaysView extends HookConsumerWidget {
   const HolidaysView({super.key});

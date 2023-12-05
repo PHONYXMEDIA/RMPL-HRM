@@ -4,13 +4,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/constants/dimensions.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
+import 'package:rmpl_hrm/features/attendance/attendance.dart';
+import 'package:rmpl_hrm/features/attendance/providers/attendance.dart';
+import 'package:rmpl_hrm/features/attendance/providers/punched_in.dart';
+import 'package:rmpl_hrm/features/attendance/providers/punched_out.dart';
+import 'package:rmpl_hrm/features/attendance/providers/working_hours.dart';
 import 'package:rmpl_hrm/main.dart';
 import 'package:rmpl_hrm/responsive/web_screen_layout.dart';
-import 'package:rmpl_hrm/state/attendance/models/attendance_state.dart';
-import 'package:rmpl_hrm/state/attendance/providers/attendance.dart';
-import 'package:rmpl_hrm/state/attendance/providers/punched_in.dart';
-import 'package:rmpl_hrm/state/attendance/providers/punched_out.dart';
-import 'package:rmpl_hrm/state/attendance/providers/working_hours.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DashboardView extends ConsumerStatefulWidget {

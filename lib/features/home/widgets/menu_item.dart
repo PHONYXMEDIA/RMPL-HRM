@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
-import 'package:rmpl_hrm/state/navigation/models/navigation_screen.dart';
-import 'package:rmpl_hrm/state/navigation/providers/navigation.dart';
+import 'package:rmpl_hrm/features/navigation/models/navigation_screen.dart';
+import 'package:rmpl_hrm/features/navigation/providers/navigation.dart';
 
 class MenuItem extends ConsumerWidget {
   const MenuItem({

@@ -15,10 +15,10 @@ import 'package:rmpl_hrm/features/manage_leave/manage_leave.dart';
 import 'package:rmpl_hrm/features/notifications/notifications.dart';
 import 'package:rmpl_hrm/features/profile/profile.dart';
 import 'package:rmpl_hrm/features/salary_details/salary_details.dart';
-import 'package:rmpl_hrm/state/auth/providers/auth.dart';
-import 'package:rmpl_hrm/state/navigation/models/navigation_screen.dart';
-import 'package:rmpl_hrm/state/navigation/providers/navigation.dart';
-import 'package:rmpl_hrm/state/profile/providers/profile.dart';
+import 'package:rmpl_hrm/features/auth/providers/auth.dart';
+import 'package:rmpl_hrm/features/navigation/models/navigation_screen.dart';
+import 'package:rmpl_hrm/features/navigation/providers/navigation.dart';
+import 'package:rmpl_hrm/features/profile/providers/profile.dart';
 
 const Iterable<Widget> screens = [
   DashboardPage(),
