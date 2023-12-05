@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
-import 'package:rmpl_hrm/components/holiday_container.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
-import 'package:rmpl_hrm/features/holidays/providers/holiday.dart';
-import 'package:rmpl_hrm/features/holidays/providers/selected_holiday.dart';
+import 'package:rmpl_hrm/features/holidays/holidays.dart';
 
 class HolidaysView extends HookConsumerWidget {
   const HolidaysView({super.key});
@@ -101,9 +99,9 @@ class HolidaysView extends HookConsumerWidget {
                               itemCount: holidays.length,
                               itemBuilder: (context, index) {
                                 final holiday = holidays.elementAt(index);
-                                return holidayContainer(
-                                  holiday.date.formattedDate,
-                                  '${holiday.title}',
+                                return HolidayContainer(
+                                  date: holiday.date.formattedDate,
+                                  reason: '${holiday.title}',
                                 );
                               },
                             ),
