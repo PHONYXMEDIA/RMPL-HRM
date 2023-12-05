@@ -1,10 +1,6 @@
 import 'package:formz/formz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import 'date.dart';
-import 'day_type.dart';
-import 'leave_type.dart';
-import 'reason.dart';
+import 'package:rmpl_hrm/features/apply_leave/apply_leave.dart';
 
 part 'apply_leave_state.freezed.dart';
 

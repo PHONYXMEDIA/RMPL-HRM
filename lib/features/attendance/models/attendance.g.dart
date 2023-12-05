@@ -14,9 +14,8 @@ _$AttendanceImpl _$$AttendanceImplFromJson(Map<String, dynamic> json) =>
           const TimestampConverter().fromJson(json['punchedIn'] as Timestamp?),
       punchedOut:
           const TimestampConverter().fromJson(json['punchedOut'] as Timestamp?),
-      punchedBy:
-          const DocumentReferenceJsonConverter().fromJson(json['punchedBy']),
-      under: const DocumentReferenceJsonConverter().fromJson(json['under']),
+      punchedBy: const DocumentReferenceConverter().fromJson(json['punchedBy']),
+      under: const DocumentReferenceConverter().fromJson(json['under']),
     );
 
 Map<String, dynamic> _$$AttendanceImplToJson(_$AttendanceImpl instance) =>
@@ -25,6 +24,6 @@ Map<String, dynamic> _$$AttendanceImplToJson(_$AttendanceImpl instance) =>
       'punchedIn': const TimestampConverter().toJson(instance.punchedIn),
       'punchedOut': const TimestampConverter().toJson(instance.punchedOut),
       'punchedBy':
-          const DocumentReferenceJsonConverter().toJson(instance.punchedBy),
-      'under': const DocumentReferenceJsonConverter().toJson(instance.under),
+          const DocumentReferenceConverter().toJson(instance.punchedBy),
+      'under': const DocumentReferenceConverter().toJson(instance.under),
     };

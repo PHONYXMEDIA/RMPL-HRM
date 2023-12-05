@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:rmpl_hrm/models/document_reference_converter.dart';
-import 'package:rmpl_hrm/models/timestamp_converter.dart';
+import 'package:rmpl_hrm/converters/converters.dart';
 
 part 'leave.freezed.dart';
 part 'leave.g.dart';

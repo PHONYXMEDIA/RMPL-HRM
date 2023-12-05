@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
-import 'package:rmpl_hrm/features/root/view/root_view.dart';
+import 'package:rmpl_hrm/features/root/root.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -15,7 +15,7 @@ class App extends StatelessWidget {
           seedColor: primaryColor,
         ),
       ),
-      home: const RootView(),
+      home: const RootPage(),
     );
   }
 }

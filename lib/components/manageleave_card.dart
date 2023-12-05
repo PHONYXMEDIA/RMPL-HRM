@@ -4,7 +4,6 @@ import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/features/manage_leave/manage_leave.dart';
-import 'package:rmpl_hrm/features/manage_leave/models/leave.dart';
 
 class ManageLeaveCard extends StatelessWidget {
   const ManageLeaveCard({

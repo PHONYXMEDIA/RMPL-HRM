@@ -148,7 +148,7 @@ class __$$HolidayImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 @TimestampConverter()
-@DocumentReferenceJsonConverter()
+@DocumentReferenceConverter()
 class _$HolidayImpl implements _Holiday {
   const _$HolidayImpl(
       {this.id, this.title, this.date, this.creator, this.createdAt});

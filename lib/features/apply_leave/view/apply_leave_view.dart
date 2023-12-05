@@ -8,15 +8,8 @@ import 'package:rmpl_hrm/components/textfield.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
-import 'package:rmpl_hrm/features/apply_leave/models/leave_type.dart';
-import 'package:rmpl_hrm/features/apply_leave/providers/apply_leave.dart';
-import 'package:rmpl_hrm/features/manage_leave/providers/selected_day_type.dart'
-    as day_type;
-import 'package:rmpl_hrm/features/manage_leave/providers/selected_day_type.dart'
-    hide DayType;
-
-import '../models/day_type.dart';
-import '../models/reason.dart';
+import 'package:rmpl_hrm/features/apply_leave/apply_leave.dart';
+import 'package:rmpl_hrm/features/manage_leave/manage_leave.dart';
 
 class ApplyLeaveView extends ConsumerWidget {
   const ApplyLeaveView({super.key});
@@ -95,14 +88,12 @@ class ApplyLeaveView extends ConsumerWidget {
                         child: GestureDetector(
                           onTap: () => ref
                               .read(selectedDayTypeProvider.notifier)
-                              .onChange(day_type.DayType.oneDay),
+                              .onChange(DayTypeStatus.oneDay),
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: ref
-                                      .watch(day_type.selectedDayTypeProvider)
-                                      .isOneDay
+                              color: ref.watch(selectedDayTypeProvider).isOneDay
                                   ? buttonColor.withOpacity(0.3)
                                   : whiteColor,
                             ),
@@ -122,15 +113,13 @@ class ApplyLeaveView extends ConsumerWidget {
                       Expanded(
                         child: GestureDetector(
                           onTap: () => ref
-                              .read(day_type.selectedDayTypeProvider.notifier)
-                              .onChange(day_type.DayType.multipleDay),
+                              .read(selectedDayTypeProvider.notifier)
+                              .onChange(DayTypeStatus.multipleDay),
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              color: ref
-                                      .watch(day_type.selectedDayTypeProvider)
-                                      .isOneDay
+                              color: ref.watch(selectedDayTypeProvider).isOneDay
                                   ? whiteColor
                                   : buttonColor.withOpacity(0.3),
                             ),
@@ -151,7 +140,7 @@ class ApplyLeaveView extends ConsumerWidget {
                   ),
                 ),
                 20.heightBox,
-                ref.watch(day_type.selectedDayTypeProvider).isOneDay
+                ref.watch(selectedDayTypeProvider).isOneDay
                     ? const _OneDayLeaveForm()
                     : const _MultipleDayLeaveForm(),
               ],

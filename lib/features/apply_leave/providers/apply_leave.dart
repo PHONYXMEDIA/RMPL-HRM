@@ -1,7 +1,7 @@
 import 'package:formz/formz.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rmpl_hrm/features/apply_leave/apply_leave.dart';
-import 'package:rmpl_hrm/features/manage_leave/providers/leave.dart';
+import 'package:rmpl_hrm/features/manage_leave/manage_leave.dart';
 
 part 'apply_leave.g.dart';
 

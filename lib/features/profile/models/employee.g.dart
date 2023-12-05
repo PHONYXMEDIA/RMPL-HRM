@@ -14,7 +14,7 @@ _$EmployeeImpl _$$EmployeeImplFromJson(Map<String, dynamic> json) =>
       branch: json['branch'] as String?,
       createdAt:
           const TimestampConverter().fromJson(json['createdAt'] as Timestamp?),
-      creator: const DocumentReferenceJsonConverter().fromJson(json['creator']),
+      creator: const DocumentReferenceConverter().fromJson(json['creator']),
       dateJoined:
           const TimestampConverter().fromJson(json['dateJoined'] as Timestamp?),
       designation: json['designation'] as String?,
@@ -43,8 +43,7 @@ Map<String, dynamic> _$$EmployeeImplToJson(_$EmployeeImpl instance) =>
       'basicSalary': instance.basicSalary,
       'branch': instance.branch,
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
-      'creator':
-          const DocumentReferenceJsonConverter().toJson(instance.creator),
+      'creator': const DocumentReferenceConverter().toJson(instance.creator),
       'dateJoined': const TimestampConverter().toJson(instance.dateJoined),
       'designation': instance.designation,
       'dob': const TimestampConverter().toJson(instance.dob),

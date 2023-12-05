@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rmpl_hrm/components/notification_container.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
-import 'package:rmpl_hrm/features/notifications/providers/notification.dart';
+import 'package:rmpl_hrm/features/notifications/notifications.dart';
 
 class NotificationView extends ConsumerWidget {
   const NotificationView({super.key});

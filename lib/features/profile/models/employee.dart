@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:rmpl_hrm/models/leave.dart';
+import 'package:rmpl_hrm/converters/converters.dart';
 
 part 'employee.freezed.dart';
 part 'employee.g.dart';
@@ -10,7 +10,7 @@ class Employee with _$Employee {
   const Employee._();
 
   @TimestampConverter()
-  @DocumentReferenceJsonConverter()
+  @DocumentReferenceConverter()
   const factory Employee({
     String? aadharNumber,
     String? address,

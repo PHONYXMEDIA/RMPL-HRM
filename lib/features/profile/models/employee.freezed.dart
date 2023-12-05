@@ -384,7 +384,7 @@ class __$$EmployeeImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 @TimestampConverter()
-@DocumentReferenceJsonConverter()
+@DocumentReferenceConverter()
 class _$EmployeeImpl extends _Employee {
   const _$EmployeeImpl(
       {this.aadharNumber,

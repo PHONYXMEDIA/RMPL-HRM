@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:rmpl_hrm/features/app/providers/app_providers.dart';
-import 'package:rmpl_hrm/features/attendance/attendance.dart';
-import 'package:rmpl_hrm/features/attendance/models/attendance.dart' as model;
+import 'package:rmpl_hrm/features/app/app.dart';
+import 'package:rmpl_hrm/features/attendance/attendance.dart' as a;
 import 'package:rmpl_hrm/features/auth/providers/auth.dart';
 import 'package:rmpl_hrm/features/profile/providers/profile.dart';
 
@@ -12,7 +11,7 @@ part 'attendance.g.dart';
 @riverpod
 class Attendance extends _$Attendance {
   @override
-  AttendanceState build() {
+  a.AttendanceState build() {
     final stream = ref
         .watch(firestoreProvider)
         .collection('common')
@@ -24,22 +23,22 @@ class Attendance extends _$Attendance {
     final sub = stream.listen(
       (snapshots) {
         if (!snapshots.exists || snapshots.data() == null) {
-          state = const AttendanceState();
+          state = const a.AttendanceState();
         } else {
-          final attendance = model.Attendance.fromJson(
+          final attendance = a.Attendance.fromJson(
             snapshots.data()!,
           );
 
           state = state.copyWith(
             status:
                 (attendance.punchedIn != null && attendance.punchedOut == null)
-                    ? AttendanceStatus.punchedIn
+                    ? a.AttendanceStatus.punchedIn
                     : (attendance.punchedIn != null &&
                             attendance.punchedOut != null)
-                        ? AttendanceStatus.punchedOut
-                        : AttendanceStatus.nothing,
+                        ? a.AttendanceStatus.punchedOut
+                        : a.AttendanceStatus.nothing,
             attendance: attendance,
-            punchStatus: PunchStatus.success,
+            punchStatus: a.PunchStatus.success,
           );
         }
       },
@@ -47,11 +46,11 @@ class Attendance extends _$Attendance {
 
     ref.onDispose(sub.cancel);
 
-    return const AttendanceState(punchStatus: PunchStatus.loading);
+    return const a.AttendanceState(punchStatus: a.PunchStatus.loading);
   }
 
   Future<void> createAttendance() async {
-    state = state.copyWith(punchStatus: PunchStatus.loading);
+    state = state.copyWith(punchStatus: a.PunchStatus.loading);
 
     try {
       final doc = await ref
@@ -63,7 +62,7 @@ class Attendance extends _$Attendance {
           .get();
 
       if (doc.exists) {
-        final attendance = model.Attendance.fromJson(doc.data()!);
+        final attendance = a.Attendance.fromJson(doc.data()!);
         if (attendance.punchedIn != null && attendance.punchedOut == null) {
           await ref
               .read(firestoreProvider)
@@ -104,9 +103,9 @@ class Attendance extends _$Attendance {
           },
         );
       }
-      state = state.copyWith(punchStatus: PunchStatus.success);
+      state = state.copyWith(punchStatus: a.PunchStatus.success);
     } catch (_) {
-      state = state.copyWith(punchStatus: PunchStatus.failure);
+      state = state.copyWith(punchStatus: a.PunchStatus.failure);
     }
   }
 }

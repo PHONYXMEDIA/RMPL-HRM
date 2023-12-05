@@ -177,7 +177,7 @@ class __$$NotificationImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 @TimestampConverter()
-@DocumentReferenceJsonConverter()
+@DocumentReferenceConverter()
 class _$NotificationImpl implements _Notification {
   const _$NotificationImpl(
       {this.id,

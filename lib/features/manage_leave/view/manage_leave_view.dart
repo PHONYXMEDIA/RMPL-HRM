@@ -7,9 +7,7 @@ import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/features/apply_leave/apply_leave.dart';
-import 'package:rmpl_hrm/features/manage_leave/models/leave.dart';
-import 'package:rmpl_hrm/features/manage_leave/providers/leave.dart' hide Leave;
-import 'package:rmpl_hrm/features/manage_leave/providers/selected_leave_date.dart';
+import 'package:rmpl_hrm/features/manage_leave/manage_leave.dart';
 
 class ManageLeaveView extends ConsumerStatefulWidget {
   const ManageLeaveView({super.key});

@@ -2,21 +2,21 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'selected_day_type.g.dart';
 
-enum DayType {
+enum DayTypeStatus {
   oneDay,
   multipleDay,
 }
 
-extension DayTypeX on DayType {
-  bool get isOneDay => this == DayType.oneDay;
+extension DayTypeStatusX on DayTypeStatus {
+  bool get isOneDay => this == DayTypeStatus.oneDay;
 
-  bool get isMultipleDay => this == DayType.multipleDay;
+  bool get isMultipleDay => this == DayTypeStatus.multipleDay;
 }
 
 @riverpod
 class SelectedDayType extends _$SelectedDayType {
   @override
-  DayType build() => DayType.oneDay;
+  DayTypeStatus build() => DayTypeStatus.oneDay;
 
-  void onChange(DayType type) => state = type;
+  void onChange(DayTypeStatus type) => state = type;
 }

@@ -152,7 +152,7 @@ class __$$AttendanceImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 @TimestampConverter()
-@DocumentReferenceJsonConverter()
+@DocumentReferenceConverter()
 class _$AttendanceImpl implements _Attendance {
   const _$AttendanceImpl(
       {this.createdAt,
