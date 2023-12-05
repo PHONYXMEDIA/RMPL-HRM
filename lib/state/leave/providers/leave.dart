@@ -88,7 +88,7 @@ class Leave extends _$Leave {
     if (ref.read(selectedDayTypeProvider).isMultipleDay) {
       await ref.read(firestoreProvider).collection('leave').add(
         {
-          'fromDate': Timestamp.fromDate(
+          'date': Timestamp.fromDate(
             DateTime.parse(
               ref.read(applyLeaveProvider).multipleDayState.fromDate.value!,
             ),

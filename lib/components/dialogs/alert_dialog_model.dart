@@ -19,8 +19,8 @@ extension Present<T> on AlertDialogModel<T> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(title),
-          content: Text(message),
+          title: Text(title, textAlign: TextAlign.center),
+          content: Text(message, textAlign: TextAlign.center),
           actions: buttons.entries.map(
             (button) {
               return TextButton(

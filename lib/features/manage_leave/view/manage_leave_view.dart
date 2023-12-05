@@ -149,8 +149,7 @@ class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
                               itemCount: leaves.length,
                               itemBuilder: (context, index) {
                                 final leave = leaves.elementAt(index);
-                                return manageLeaveCard(
-                                  color: leave.color,
+                                return ManageLeaveCard(
                                   leave: leave,
                                 );
                               },

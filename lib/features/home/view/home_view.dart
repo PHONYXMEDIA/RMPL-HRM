@@ -6,28 +6,29 @@ import 'package:rmpl_hrm/components/dialogs/logout_dialog.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/drawer/drawer_header.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
-import 'package:rmpl_hrm/features/apply_leave/apply_leave.dart';
 import 'package:rmpl_hrm/features/attendance/attendance.dart';
+import 'package:rmpl_hrm/features/contact/contact.dart';
 import 'package:rmpl_hrm/features/dashboard/dashboard.dart';
 import 'package:rmpl_hrm/features/holidays/holidays.dart';
 import 'package:rmpl_hrm/features/home/home.dart';
 import 'package:rmpl_hrm/features/manage_leave/manage_leave.dart';
 import 'package:rmpl_hrm/features/notifications/notifications.dart';
 import 'package:rmpl_hrm/features/profile/profile.dart';
+import 'package:rmpl_hrm/features/salary_details/salary_details.dart';
 import 'package:rmpl_hrm/state/auth/providers/auth.dart';
 import 'package:rmpl_hrm/state/navigation/models/navigation_screen.dart';
 import 'package:rmpl_hrm/state/navigation/providers/navigation.dart';
 import 'package:rmpl_hrm/state/profile/providers/profile.dart';
 
 const Iterable<Widget> screens = [
-  DashboardView(),
+  DashboardPage(),
   NotificationsPage(),
   AttendancePage(),
-  HolidaysView(),
-  ManageLeaveView(),
-  ApplyLeaveView(),
-  ProfileView(),
-  DashboardView(),
+  HolidaysPage(),
+  ManageLeavePage(),
+  SalaryDetailsPage(),
+  ProfilePage(),
+  ContactPage(),
 ];
 
 class HomeView extends ConsumerWidget {
