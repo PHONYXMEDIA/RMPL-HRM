@@ -5,10 +5,8 @@ import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/constants/dimensions.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/features/attendance/attendance.dart';
-import 'package:rmpl_hrm/features/attendance/providers/attendance.dart';
-import 'package:rmpl_hrm/features/attendance/providers/punched_in.dart';
-import 'package:rmpl_hrm/features/attendance/providers/punched_out.dart';
-import 'package:rmpl_hrm/features/attendance/providers/working_hours.dart';
+import 'package:rmpl_hrm/features/holidays/holidays.dart';
+import 'package:rmpl_hrm/features/manage_leave/manage_leave.dart';
 import 'package:rmpl_hrm/main.dart';
 import 'package:rmpl_hrm/responsive/web_screen_layout.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -53,7 +51,6 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Probation Bar
                         Container(
                           width: double.infinity,
                           color: Colors.red[800],
@@ -87,16 +84,20 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                                     child: Container(
                                       width: double.infinity,
                                       margin: const EdgeInsets.symmetric(
-                                          horizontal: 12),
+                                        horizontal: 12,
+                                      ),
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 12, vertical: 16),
+                                        horizontal: 12,
+                                        vertical: 16,
+                                      ),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(12),
                                         color: buttonColor,
                                         boxShadow: [
                                           BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.2),
+                                            color: Colors.black.withOpacity(
+                                              0.2,
+                                            ),
                                             blurRadius: 4,
                                             spreadRadius: 2,
                                           ),
@@ -374,9 +375,9 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                           ),
                           Column(
                             children: [
-                              const Text(
-                                '20',
-                                style: TextStyle(
+                              Text(
+                                '${ref.watch(countHolidaysProvider)}',
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -394,13 +395,29 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                           ),
                           Column(
                             children: [
-                              const Text(
-                                '20',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                              ref.watch(countLeaveProvider).when(
+                                    data: (count) => Text(
+                                      '$count',
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    error: (_, __) => const Text(
+                                      '0',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    loading: () => const Text(
+                                      '0',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
                               8.heightBox,
                               const Text(
                                 'Leave',

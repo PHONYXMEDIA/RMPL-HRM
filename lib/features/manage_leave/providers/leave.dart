@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:rmpl_hrm/core/providers/current_date.dart';
 import 'package:rmpl_hrm/features/app/providers/app_providers.dart';
 import 'package:rmpl_hrm/features/apply_leave/providers/apply_leave.dart';
 import 'package:rmpl_hrm/features/auth/providers/auth.dart';
@@ -115,4 +116,54 @@ class Leave extends _$Leave {
       );
     }
   }
+}
+
+@riverpod
+Future<int> countLeave(CountLeaveRef ref) async {
+  int leaveCount = 0;
+  try {
+    final result = await ref
+        .watch(
+          firestoreProvider,
+        )
+        .collection('leave')
+        .where(
+          'uid',
+          isEqualTo: ref
+              .watch(
+                firestoreProvider,
+              )
+              .collection('employees')
+              .doc(
+                ref
+                    .watch(
+                      authProvider,
+                    )
+                    .user
+                    .id,
+              ),
+        )
+        .where(
+          'date',
+          isGreaterThanOrEqualTo: DateTime(
+            ref.watch(currentDateProvider).year,
+            ref.watch(currentDateProvider).month,
+          ),
+          isLessThanOrEqualTo: DateTime(
+            ref.watch(currentDateProvider).year,
+            ref.watch(currentDateProvider).month + 1,
+            0,
+          ),
+        )
+        .get();
+
+    leaveCount = result.docs
+        .map((e) => model.Leave.fromJson(e.data()))
+        .where((e) => e.status?.toLowerCase() == 'approved')
+        .length;
+  } catch (_) {
+    leaveCount = 0;
+  }
+
+  return leaveCount;
 }

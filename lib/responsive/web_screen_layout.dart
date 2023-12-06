@@ -26,12 +26,10 @@ class WebScreenLayout extends StatelessWidget {
       // color: Colors.blue,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        // mainAxisAlignment: mainaxialignme,
         children: [
           Expanded(
             flex: 1,
             child: Container(
-              // width: mq.width*0.25,
               color: primaryColor,
               child: SingleChildScrollView(
                 child: Column(
@@ -39,7 +37,9 @@ class WebScreenLayout extends StatelessWidget {
                     Container(
                       color: primaryColor,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 32),
+                        horizontal: 20,
+                        vertical: 32,
+                      ),
                       child: Row(
                         children: [
                           Image.asset(
