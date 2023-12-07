@@ -22,24 +22,29 @@ class _CalendarState extends State<Calendar> {
       firstDay: DateTime(2023),
       lastDay: DateTime(2024),
       startingDayOfWeek: StartingDayOfWeek.monday,
-      // rowHeight: 50,
       daysOfWeekHeight: 20,
       headerStyle: HeaderStyle(
         formatButtonVisible: false,
         formatButtonDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.grey)),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.grey),
+        ),
       ),
       daysOfWeekStyle: const DaysOfWeekStyle(
-          weekendStyle: TextStyle(color: Colors.red),
-          weekdayStyle: TextStyle(color: primaryColor)),
+        weekendStyle: TextStyle(color: Colors.red),
+        weekdayStyle: TextStyle(color: primaryColor),
+      ),
       calendarStyle: const CalendarStyle(
-          // canMarkersOverflow: true
-          weekendTextStyle: TextStyle(color: Colors.red),
-          todayDecoration:
-              BoxDecoration(color: buttonColor, shape: BoxShape.circle),
-          selectedDecoration:
-              BoxDecoration(color: borderColor, shape: BoxShape.circle)),
+        weekendTextStyle: TextStyle(color: Colors.red),
+        todayDecoration: BoxDecoration(
+          color: buttonColor,
+          shape: BoxShape.circle,
+        ),
+        selectedDecoration: BoxDecoration(
+          color: borderColor,
+          shape: BoxShape.circle,
+        ),
+      ),
       onDaySelected: (selectedDay, focusedDay) {
         if (!isSameDay(_selectedDay, selectedDay)) {
           setState(() {

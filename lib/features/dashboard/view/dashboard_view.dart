@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/constants/dimensions.dart';
+import 'package:rmpl_hrm/core/providers/date.dart';
+import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/features/attendance/attendance.dart';
 import 'package:rmpl_hrm/features/holidays/holidays.dart';
@@ -11,16 +13,11 @@ import 'package:rmpl_hrm/main.dart';
 import 'package:rmpl_hrm/responsive/web_screen_layout.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class DashboardView extends ConsumerStatefulWidget {
+class DashboardView extends ConsumerWidget {
   const DashboardView({super.key});
 
   @override
-  ConsumerState<DashboardView> createState() => _DashboardViewState();
-}
-
-class _DashboardViewState extends ConsumerState<DashboardView> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     mq = MediaQuery.of(context).size;
     final List<ChartData> chartData = [
       ChartData('25% Attendance', 25, Colors.purple[300]!),
@@ -318,9 +315,9 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                             width: 28,
                           ),
                           12.widthBox,
-                          const Text(
-                            '01 Sep - 30 Sep',
-                            style: TextStyle(
+                          Text(
+                            '${ref.watch(firstDayOfMonthProvider).withoutYear} - ${ref.watch(lastDayOfMonthProvider).withoutYear}',
+                            style: const TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
@@ -395,29 +392,13 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                           ),
                           Column(
                             children: [
-                              ref.watch(countLeaveProvider).when(
-                                    data: (count) => Text(
-                                      '$count',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    error: (_, __) => const Text(
-                                      '0',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    loading: () => const Text(
-                                      '0',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
+                              Text(
+                                '${ref.watch(countLeaveProvider)}',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                               8.heightBox,
                               const Text(
                                 'Leave',

@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:rmpl_hrm/components/calendar.dart';
 import 'package:rmpl_hrm/components/summary_box.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/core/core.dart';
+import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
+import 'package:rmpl_hrm/features/holidays/holidays.dart';
+import 'package:rmpl_hrm/features/manage_leave/manage_leave.dart';
 
-class AttendanceView extends StatefulWidget {
+class AttendanceView extends ConsumerWidget {
   const AttendanceView({super.key});
 
   @override
-  State<AttendanceView> createState() => _AttendanceViewState();
-}
-
-class _AttendanceViewState extends State<AttendanceView> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: primaryColor,
       body: Container(
@@ -48,9 +49,9 @@ class _AttendanceViewState extends State<AttendanceView> {
                       ),
                     ),
                     8.widthBox,
-                    const Text(
-                      '01 Sep - 30 Sep',
-                      style: TextStyle(
+                    Text(
+                      '${ref.watch(firstDayOfMonthProvider).withoutYear} - ${ref.watch(lastDayOfMonthProvider).withoutYear}',
+                      style: const TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -58,7 +59,9 @@ class _AttendanceViewState extends State<AttendanceView> {
                     ),
                     12.widthBox,
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        final date = await showMonthPicker(context: context);
+                      },
                       child: const Text(
                         'Change Duration',
                       ),
@@ -99,13 +102,13 @@ class _AttendanceViewState extends State<AttendanceView> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         summaryContainer(
-                          '8',
+                          '${ref.watch(countHolidaysProvider)}',
                           'Holidays',
                           context,
                           primaryColor,
                         ),
                         summaryContainer(
-                          '2',
+                          '${ref.watch(countLeaveProvider)}',
                           'Leave',
                           context,
                           Colors.grey,

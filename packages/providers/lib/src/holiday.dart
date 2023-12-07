@@ -1,10 +1,8 @@
 import 'dart:async';
 
+import 'package:models/models.dart';
+import 'package:providers/providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:rmpl_hrm/core/providers/date.dart';
-import 'package:rmpl_hrm/features/app/app.dart';
-import 'package:rmpl_hrm/features/holidays/holidays.dart';
-import 'package:rmpl_hrm/features/profile/profile.dart';
 
 part 'holiday.g.dart';
 
@@ -59,9 +57,9 @@ int countHolidays(CountHolidaysRef ref) {
   final firstDayOfMonth = DateTime(year, month, 1);
   final lastDayOfMonth = DateTime(year, month + 1, 0);
 
-  int holidays = 0;
+  var holidays = 0;
 
-  for (DateTime date = firstDayOfMonth;
+  for (var date = firstDayOfMonth;
       date.isBefore(lastDayOfMonth.add(const Duration(days: 1)));
       date = date.add(const Duration(days: 1))) {
     if ((date.weekday == DateTime.sunday) ||

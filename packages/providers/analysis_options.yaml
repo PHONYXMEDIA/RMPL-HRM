@@ -1,0 +1,16 @@
+include: package:very_good_analysis/analysis_options.5.1.0.yaml
+
+linter:
+  rules:
+    unnecessary_library_directive: false
+    public_member_api_docs: false
+    depend_on_referenced_packages: false
+
+analyzer:
+  plugins:
+    - custom_lint
+  exclude:
+    - '**/*.g.dart'
+    - '**/*.freezed.dart'
+  errors:
+    invalid_annotation_target: ignore

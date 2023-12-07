@@ -1,1 +1,1 @@
-export 'current_date.dart' hide currentDate;
+export 'date.dart' hide currentDate, lastDayOfMonth, firstDayOfMonth;
