@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/extensions/widget/box.dart';
+import 'package:rmpl_hrm/features/salary_details/salary_details.dart';
 
 class SalaryDetailsView extends StatelessWidget {
   const SalaryDetailsView({super.key});
@@ -18,12 +20,166 @@ class SalaryDetailsView extends StatelessWidget {
             topRight: Radius.circular(16),
           ),
         ),
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('Contact Admin Page'),
+              12.heightBox,
+              const Text(
+                'Total Salary',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w500,
+                  height: 0,
+                ),
+              ),
+              8.heightBox,
+              const Text(
+                'INR 22000.00',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xFF4D23A6),
+                  fontSize: 20.0,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              8.heightBox,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 26.0,
+                    height: 4.0,
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFFD9D9D9),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(17),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              8.heightBox,
+              const Text.rich(
+                textAlign: TextAlign.center,
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Basic Salary: ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                        height: 0,
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'INR 20000.00',
+                      style: TextStyle(
+                        color: Color(0xFF4D23A6),
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              8.heightBox,
+              const Text.rich(
+                textAlign: TextAlign.center,
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'HRA: ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                        height: 0,
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'INR 2000.00',
+                      style: TextStyle(
+                        color: Color(0xFF4D23A6),
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                        height: 0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              8.heightBox,
+              const Divider(),
+              4.heightBox,
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: Text(
+                      'S.NO.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      'Date',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      'Amount',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              4.heightBox,
+              const Divider(),
+              Expanded(
+                child: ListView.separated(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  separatorBuilder: (context, index) => 8.heightBox,
+                  itemCount: 100,
+                  itemBuilder: (context, index) {
+                    return SalaryItem(
+                      serialNumber: '${index + 1}',
+                      date: '05-12-2023',
+                      amount: '22000.00',
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
