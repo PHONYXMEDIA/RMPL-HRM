@@ -42,7 +42,7 @@ class SalaryDetailsView extends StatelessWidget {
                 'INR 22000.00',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Color(0xFF4D23A6),
+                  color: primaryColor,
                   fontSize: 20.0,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w600,
@@ -82,7 +82,7 @@ class SalaryDetailsView extends StatelessWidget {
                     TextSpan(
                       text: 'INR 20000.00',
                       style: TextStyle(
-                        color: Color(0xFF4D23A6),
+                        color: primaryColor,
                         fontSize: 14,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
@@ -110,7 +110,7 @@ class SalaryDetailsView extends StatelessWidget {
                     TextSpan(
                       text: 'INR 2000.00',
                       style: TextStyle(
-                        color: Color(0xFF4D23A6),
+                        color: primaryColor,
                         fontSize: 14,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,

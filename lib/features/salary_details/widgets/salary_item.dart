@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rmpl_hrm/constants/colors.dart';
 
 class SalaryItem extends StatelessWidget {
   const SalaryItem({
@@ -40,7 +41,7 @@ class SalaryItem extends StatelessWidget {
         Text(
           'INR $amount',
           style: const TextStyle(
-            color: Color(0xFF4D23A6),
+            color: primaryColor,
             fontSize: 14.0,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w500,
