@@ -6,7 +6,7 @@ part of 'holiday.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$holidaysHash() => r'4b24e101640f81368aa837fc2c4851036f76f2c1';
+String _$holidaysHash() => r'd5bdccb39d562406425cde5045a36a0552c69632';
 
 /// See also [holidays].
 @ProviderFor(holidays)
@@ -20,7 +20,7 @@ final holidaysProvider = AutoDisposeStreamProvider<Iterable<Holiday>>.internal(
 );
 
 typedef HolidaysRef = AutoDisposeStreamProviderRef<Iterable<Holiday>>;
-String _$countHolidaysHash() => r'02fac094ab0970a81ded1d1666caf85f90c7b6d3';
+String _$countHolidaysHash() => r'bd9bdcf075595e039d03fa0f0f0afb9fe885b816';
 
 /// See also [countHolidays].
 @ProviderFor(countHolidays)

@@ -70,19 +70,15 @@ class HomeView extends ConsumerWidget {
                 : Container(),
             navigation.screen == Screen.dashboard ||
                     navigation.screen == Screen.notifications
-                ? ref.watch(profileProvider).when(
-                      data: (employee) => Text(
-                        '${employee?.designation}',
-                        style: const TextStyle(
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          color: Colors.white,
-                        ),
-                      ),
-                      error: (_, __) => const SizedBox.shrink(),
-                      loading: () => const SizedBox.shrink(),
-                    )
+                ? Text(
+                    '${ref.watch(profileProvider)?.designation}',
+                    style: const TextStyle(
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      color: Colors.white,
+                    ),
+                  )
                 : const SizedBox.shrink(),
           ],
         ),

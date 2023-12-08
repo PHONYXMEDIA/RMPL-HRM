@@ -6,7 +6,7 @@ part of 'working_hours.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$workingHoursHash() => r'568a3a952efa1c18b8d0bb83dcf55e245e69860a';
+String _$workingHoursHash() => r'1ce129bfd67ac0b2f58b9e23fd57ac25613038c2';
 
 /// See also [workingHours].
 @ProviderFor(workingHours)

@@ -96,7 +96,7 @@ class Attendance extends _$Attendance {
                 .read(firestoreProvider)
                 .collection('employees')
                 .doc(ref.read(authProvider).user.id),
-            'under': ref.read(profileProvider).value?.creator,
+            'under': ref.read(profileProvider)?.creator,
             'createdAt': FieldValue.serverTimestamp(),
           },
         );

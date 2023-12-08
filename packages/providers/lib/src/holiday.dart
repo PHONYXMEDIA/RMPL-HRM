@@ -9,9 +9,7 @@ part 'holiday.g.dart';
 @riverpod
 Stream<Iterable<Holiday>> holidays(HolidaysRef ref) {
   final profile = ref.watch(profileProvider);
-  if (!profile.hasValue &&
-      profile.value == null &&
-      profile.value?.creator == null) {
+  if (profile == null && profile?.creator == null) {
     return const Stream.empty();
   }
 
@@ -22,7 +20,7 @@ Stream<Iterable<Holiday>> holidays(HolidaysRef ref) {
       .collection('holidays')
       .where(
         'creator',
-        isEqualTo: profile.requireValue!.creator!,
+        isEqualTo: profile?.creator,
       )
       .where(
         'date',
@@ -54,7 +52,7 @@ int countHolidays(CountHolidaysRef ref) {
   final year = now.year;
   final month = now.month;
 
-  final firstDayOfMonth = DateTime(year, month, 1);
+  final firstDayOfMonth = DateTime(year, month);
   final lastDayOfMonth = DateTime(year, month + 1, 0);
 
   var holidays = 0;

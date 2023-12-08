@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:providers/providers.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
+import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/features/salary_details/salary_details.dart';
 
-class SalaryDetailsView extends StatelessWidget {
+class SalaryDetailsView extends ConsumerWidget {
   const SalaryDetailsView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: primaryColor,
       body: Container(
@@ -38,10 +41,10 @@ class SalaryDetailsView extends StatelessWidget {
                 ),
               ),
               8.heightBox,
-              const Text(
-                'INR 22000.00',
+              Text(
+                'INR ${ref.watch(totalSalaryProvider)}',
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: primaryColor,
                   fontSize: 20.0,
                   fontFamily: 'Inter',
@@ -65,11 +68,11 @@ class SalaryDetailsView extends StatelessWidget {
                 ],
               ),
               8.heightBox,
-              const Text.rich(
+              Text.rich(
                 textAlign: TextAlign.center,
                 TextSpan(
                   children: [
-                    TextSpan(
+                    const TextSpan(
                       text: 'Basic Salary: ',
                       style: TextStyle(
                         color: Colors.black,
@@ -80,8 +83,8 @@ class SalaryDetailsView extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: 'INR 20000.00',
-                      style: TextStyle(
+                      text: 'INR ${ref.watch(profileProvider)?.basicSalary}',
+                      style: const TextStyle(
                         color: primaryColor,
                         fontSize: 14,
                         fontFamily: 'Inter',
@@ -93,11 +96,11 @@ class SalaryDetailsView extends StatelessWidget {
                 ),
               ),
               8.heightBox,
-              const Text.rich(
+              Text.rich(
                 textAlign: TextAlign.center,
                 TextSpan(
                   children: [
-                    TextSpan(
+                    const TextSpan(
                       text: 'HRA: ',
                       style: TextStyle(
                         color: Colors.black,
@@ -108,8 +111,8 @@ class SalaryDetailsView extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: 'INR 2000.00',
-                      style: TextStyle(
+                      text: 'INR ${ref.watch(profileProvider)?.hra}',
+                      style: const TextStyle(
                         color: primaryColor,
                         fontSize: 14,
                         fontFamily: 'Inter',
@@ -166,20 +169,40 @@ class SalaryDetailsView extends StatelessWidget {
               ),
               4.heightBox,
               const Divider(),
-              Expanded(
-                child: ListView.separated(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  separatorBuilder: (context, index) => 8.heightBox,
-                  itemCount: 100,
-                  itemBuilder: (context, index) {
-                    return SalaryItem(
-                      serialNumber: '${index + 1}',
-                      date: '05-12-2023',
-                      amount: '22000.00',
-                    );
-                  },
-                ),
-              ),
+              ref.watch(salaryDetailsProvider).when(
+                    data: (details) => details.isEmpty
+                        ? const Center(
+                            child: Text(
+                              'No Salary Details',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16.0,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          )
+                        : Expanded(
+                            child: ListView.separated(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              separatorBuilder: (context, index) => 8.heightBox,
+                              itemCount: details.length,
+                              itemBuilder: (context, index) {
+                                final detail = details.elementAt(index);
+                                return SalaryItem(
+                                  serialNumber: '${index + 1}',
+                                  date: detail.createdAt.formattedDate,
+                                  amount: '${detail.amount}',
+                                );
+                              },
+                            ),
+                          ),
+                    error: (_, __) => const Text('Error'),
+                    loading: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
             ],
           ),
         ),
