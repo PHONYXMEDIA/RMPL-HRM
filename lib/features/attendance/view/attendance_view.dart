@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:providers/providers.dart';
 import 'package:rmpl_hrm/components/calendar.dart';
 import 'package:rmpl_hrm/components/summary_box.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
-import 'package:rmpl_hrm/core/core.dart';
 import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
-import 'package:rmpl_hrm/features/holidays/holidays.dart';
-import 'package:rmpl_hrm/features/manage_leave/manage_leave.dart';
 
 class AttendanceView extends ConsumerWidget {
   const AttendanceView({super.key});
@@ -60,7 +58,7 @@ class AttendanceView extends ConsumerWidget {
                     12.widthBox,
                     TextButton(
                       onPressed: () async {
-                        final date = await showMonthPicker(context: context);
+                        await showMonthPicker(context: context);
                       },
                       child: const Text(
                         'Change Duration',

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:models/models.dart';
+import 'package:providers/providers.dart';
 import 'package:rmpl_hrm/components/textfield.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
-import 'package:rmpl_hrm/features/login/models/password.dart';
-import 'package:rmpl_hrm/features/login/providers/login.dart';
 
 class PasswordTextField extends ConsumerWidget {
   const PasswordTextField({

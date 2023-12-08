@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:providers/providers.dart';
 import 'package:rmpl_hrm/features/login/login.dart';
-import 'package:rmpl_hrm/features/login/providers/login.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
