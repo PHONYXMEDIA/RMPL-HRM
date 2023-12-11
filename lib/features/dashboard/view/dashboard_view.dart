@@ -349,9 +349,9 @@ class DashboardView extends ConsumerWidget {
                           ),
                           Column(
                             children: [
-                              const Text(
-                                '20',
-                                style: TextStyle(
+                              Text(
+                                '${ref.watch(absenceCountProvider)}',
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                 ),

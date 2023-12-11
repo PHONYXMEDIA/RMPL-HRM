@@ -6,6 +6,35 @@ part of 'attendance.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$workingDayCountHash() => r'2cebea2633a5923cdc562a7adf5f38a3abb5415c';
+
+/// See also [workingDayCount].
+@ProviderFor(workingDayCount)
+final workingDayCountProvider = AutoDisposeProvider<int>.internal(
+  workingDayCount,
+  name: r'workingDayCountProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$workingDayCountHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef WorkingDayCountRef = AutoDisposeProviderRef<int>;
+String _$absenceCountHash() => r'a7917c5a30b9a60e49e54e7bec3bb2e2bbaf6fae';
+
+/// See also [absenceCount].
+@ProviderFor(absenceCount)
+final absenceCountProvider = AutoDisposeProvider<int>.internal(
+  absenceCount,
+  name: r'absenceCountProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$absenceCountHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef AbsenceCountRef = AutoDisposeProviderRef<int>;
 String _$attendanceHash() => r'01d951f0ed918226033c4a38e0c0e98c0ecd4f49';
 
 /// See also [Attendance].

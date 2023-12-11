@@ -134,3 +134,24 @@ class AttendanceCount extends _$AttendanceCount {
     return 0;
   }
 }
+
+@riverpod
+int workingDayCount(WorkingDayCountRef ref) {
+  final totalDays = ref.watch(totalDaysInMonthProvider);
+  final holidays = ref.watch(countHolidaysProvider);
+  final leave = ref.watch(countLeaveProvider);
+  final remaining = totalDays - holidays - leave;
+  return remaining < 0 ? 0 : remaining;
+}
+
+@riverpod
+int absenceCount(AbsenceCountRef ref) {
+  final totalWorkingDays = ref.watch(workingDayCountProvider);
+  final presentDays = ref.watch(attendanceCountProvider);
+  final holidays = ref.watch(countHolidaysProvider);
+  final leaves = ref.watch(countLeaveProvider);
+
+  final absent = totalWorkingDays - presentDays - holidays - leaves;
+
+  return absent;
+}

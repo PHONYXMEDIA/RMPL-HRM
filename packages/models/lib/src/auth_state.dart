@@ -21,6 +21,5 @@ class AuthState with _$AuthState {
 
   factory AuthState.unauthenticated() => const AuthState(
         status: AuthStatus.unauthenticated,
-        user: User.empty,
       );
 }

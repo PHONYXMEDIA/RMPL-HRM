@@ -50,5 +50,36 @@ final lastDayOfMonthProvider = AutoDisposeProvider<DateTime>.internal(
 );
 
 typedef LastDayOfMonthRef = AutoDisposeProviderRef<DateTime>;
+String _$totalDaysInMonthHash() => r'3003723efe88bd94347406188901a90fb2802212';
+
+/// See also [totalDaysInMonth].
+@ProviderFor(totalDaysInMonth)
+final totalDaysInMonthProvider = AutoDisposeProvider<int>.internal(
+  totalDaysInMonth,
+  name: r'totalDaysInMonthProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$totalDaysInMonthHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef TotalDaysInMonthRef = AutoDisposeProviderRef<int>;
+String _$remainingDaysInMonthHash() =>
+    r'92024a61efebc2515d8ce039759466d1d8f20afc';
+
+/// See also [remainingDaysInMonth].
+@ProviderFor(remainingDaysInMonth)
+final remainingDaysInMonthProvider = AutoDisposeProvider<int>.internal(
+  remainingDaysInMonth,
+  name: r'remainingDaysInMonthProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$remainingDaysInMonthHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef RemainingDaysInMonthRef = AutoDisposeProviderRef<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -46,25 +46,28 @@ Stream<Iterable<Holiday>> holidays(HolidaysRef ref) {
 }
 
 @riverpod
-int countHolidays(CountHolidaysRef ref) {
-  final now = ref.watch(currentDateProvider);
+class CountHolidays extends _$CountHolidays {
+  @override
+  int build() {
+    final now = ref.watch(currentDateProvider);
 
-  final year = now.year;
-  final month = now.month;
+    final year = now.year;
+    final month = now.month;
 
-  final firstDayOfMonth = DateTime(year, month);
-  final lastDayOfMonth = DateTime(year, month + 1, 0);
+    final firstDayOfMonth = DateTime(year, month);
+    final lastDayOfMonth = DateTime(year, month + 1, 0);
 
-  var holidays = 0;
+    var holidays = 0;
 
-  for (var date = firstDayOfMonth;
-      date.isBefore(lastDayOfMonth.add(const Duration(days: 1)));
-      date = date.add(const Duration(days: 1))) {
-    if ((date.weekday == DateTime.sunday) ||
-        (date.weekday == DateTime.saturday)) {
-      holidays++;
+    for (var date = firstDayOfMonth;
+        date.isBefore(lastDayOfMonth.add(const Duration(days: 1)));
+        date = date.add(const Duration(days: 1))) {
+      if ((date.weekday == DateTime.sunday) ||
+          (date.weekday == DateTime.saturday)) {
+        holidays++;
+      }
     }
-  }
 
-  return holidays;
+    return holidays;
+  }
 }

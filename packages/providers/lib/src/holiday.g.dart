@@ -20,12 +20,13 @@ final holidaysProvider = AutoDisposeStreamProvider<Iterable<Holiday>>.internal(
 );
 
 typedef HolidaysRef = AutoDisposeStreamProviderRef<Iterable<Holiday>>;
-String _$countHolidaysHash() => r'bd9bdcf075595e039d03fa0f0f0afb9fe885b816';
+String _$countHolidaysHash() => r'254455e10379323f95c3f6f77b06b378b12981be';
 
-/// See also [countHolidays].
-@ProviderFor(countHolidays)
-final countHolidaysProvider = AutoDisposeProvider<int>.internal(
-  countHolidays,
+/// See also [CountHolidays].
+@ProviderFor(CountHolidays)
+final countHolidaysProvider =
+    AutoDisposeNotifierProvider<CountHolidays, int>.internal(
+  CountHolidays.new,
   name: r'countHolidaysProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
@@ -34,6 +35,6 @@ final countHolidaysProvider = AutoDisposeProvider<int>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef CountHolidaysRef = AutoDisposeProviderRef<int>;
+typedef _$CountHolidays = AutoDisposeNotifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
