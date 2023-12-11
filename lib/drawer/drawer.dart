@@ -12,7 +12,7 @@ Widget customDrawer(context) {
       child: Column(
         children: [
           Container(
-            color: primaryColor,
+            color: AppColor.primaryColor,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 28),
             child: Row(
               children: [
@@ -26,7 +26,7 @@ Widget customDrawer(context) {
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 20,
-                    color: whiteColor,
+                    color: AppColor.whiteColor,
                   ),
                 ),
               ],

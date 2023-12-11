@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 import 'package:models/models.dart' as a;
 import 'package:providers/providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -10,12 +9,15 @@ part 'attendance.g.dart';
 class Attendance extends _$Attendance {
   @override
   a.AttendanceState build() {
+    final date = ref.watch(currentDateProvider);
     final stream = ref
         .watch(firestoreProvider)
         .collection('common')
         .doc('attendance')
-        .collection(DateFormat('yyyy-MM-dd').format(DateTime.now()))
-        .doc(ref.watch(authProvider).user.id)
+        .collection(ref.watch(authProvider).user.id)
+        .doc('${date.year}')
+        .collection('${date.month}')
+        .doc('${date.day}')
         .snapshots();
 
     final sub = stream.listen(
@@ -51,12 +53,16 @@ class Attendance extends _$Attendance {
     state = state.copyWith(punchStatus: a.PunchStatus.loading);
 
     try {
+      final date = ref.watch(currentDateProvider);
+
       final doc = await ref
           .watch(firestoreProvider)
           .collection('common')
           .doc('attendance')
-          .collection(DateFormat('yyyy-MM-dd').format(DateTime.now()))
-          .doc(ref.read(authProvider).user.id)
+          .collection(ref.watch(authProvider).user.id)
+          .doc('${date.year}')
+          .collection('${date.month}')
+          .doc('${date.day}')
           .get();
 
       if (doc.exists) {
@@ -66,12 +72,10 @@ class Attendance extends _$Attendance {
               .read(firestoreProvider)
               .collection('common')
               .doc('attendance')
-              .collection(
-                DateFormat('yyyy-MM-dd').format(
-                  DateTime.now(),
-                ),
-              )
-              .doc(ref.read(authProvider).user.id)
+              .collection(ref.watch(authProvider).user.id)
+              .doc('${date.year}')
+              .collection('${date.month}')
+              .doc('${date.day}')
               .update(
             {
               'punchedOut': FieldValue.serverTimestamp(),
@@ -83,12 +87,10 @@ class Attendance extends _$Attendance {
             .read(firestoreProvider)
             .collection('common')
             .doc('attendance')
-            .collection(
-              DateFormat('yyyy-MM-dd').format(
-                DateTime.now(),
-              ),
-            )
-            .doc(ref.read(authProvider).user.id)
+            .collection(ref.watch(authProvider).user.id)
+            .doc('${date.year}')
+            .collection('${date.month}')
+            .doc('${date.day}')
             .set(
           {
             'punchedIn': FieldValue.serverTimestamp(),
@@ -105,5 +107,30 @@ class Attendance extends _$Attendance {
     } catch (_) {
       state = state.copyWith(punchStatus: a.PunchStatus.failure);
     }
+  }
+}
+
+@riverpod
+class AttendanceCount extends _$AttendanceCount {
+  @override
+  int build() {
+    final date = ref.watch(currentDateProvider);
+
+    final stream = ref
+        .watch(firestoreProvider)
+        .collection('common')
+        .doc('attendance')
+        .collection(ref.watch(authProvider).user.id)
+        .doc('${date.year}')
+        .collection('${date.month}')
+        .snapshots();
+
+    final sub = stream.listen((event) {
+      state = event.docs.length;
+    });
+
+    ref.onDispose(sub.cancel);
+
+    return 0;
   }
 }

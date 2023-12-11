@@ -27,14 +27,14 @@ class ManageLeaveCard extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: const [
           BoxShadow(
-            color: borderColor,
+            color: AppColor.borderColor,
             blurRadius: 4,
             blurStyle: BlurStyle.outer,
           )
         ],
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: borderColor,
+          color: AppColor.borderColor,
         ),
       ),
       child: Column(
@@ -45,7 +45,7 @@ class ManageLeaveCard extends StatelessWidget {
               SvgPicture.asset(
                 'assets/icons/Calendar.svg',
                 colorFilter: const ColorFilter.mode(
-                  primaryColor,
+                  AppColor.primaryColor,
                   BlendMode.srcIn,
                 ),
               ),

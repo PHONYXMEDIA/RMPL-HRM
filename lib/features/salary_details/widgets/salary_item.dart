@@ -41,7 +41,7 @@ class SalaryItem extends StatelessWidget {
         Text(
           'INR $amount',
           style: const TextStyle(
-            color: primaryColor,
+            color: AppColor.primaryColor,
             fontSize: 14.0,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w500,

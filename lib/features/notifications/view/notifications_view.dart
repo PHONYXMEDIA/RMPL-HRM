@@ -10,12 +10,12 @@ class NotificationView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: AppColor.primaryColor,
       body: Container(
         margin: const EdgeInsets.only(top: 12),
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
         decoration: const BoxDecoration(
-          color: whiteColor,
+          color: AppColor.whiteColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16),
             topRight: Radius.circular(16),

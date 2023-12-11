@@ -24,7 +24,7 @@ class CustomButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        padding: mq.width > webScreenSize
+        padding: mq.width > Dimensions.webScreenSize
             ? const MaterialStatePropertyAll(
                 EdgeInsets.symmetric(vertical: 20),
               )
@@ -33,10 +33,10 @@ class CustomButton extends StatelessWidget {
               ),
         backgroundColor: MaterialStatePropertyAll(
           onPress == null
-              ? buttonColor.withOpacity(
+              ? AppColor.buttonColor.withOpacity(
                   0.6,
                 )
-              : buttonColor,
+              : AppColor.buttonColor,
         ),
         elevation: const MaterialStatePropertyAll(
           3.0,

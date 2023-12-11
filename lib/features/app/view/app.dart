@@ -12,7 +12,7 @@ class App extends StatelessWidget {
       title: 'RMPL HRM',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: primaryColor,
+          seedColor: AppColor.primaryColor,
         ),
       ),
       home: const RootPage(),

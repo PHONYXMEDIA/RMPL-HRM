@@ -30,12 +30,12 @@ class WebScreenLayout extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Container(
-              color: primaryColor,
+              color: AppColor.primaryColor,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     Container(
-                      color: primaryColor,
+                      color: AppColor.primaryColor,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 32,
@@ -51,16 +51,17 @@ class WebScreenLayout extends StatelessWidget {
                             child: Text(
                               'Recorded\nMusic\nPrivate\nLimited',
                               style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 28,
-                                  color: whiteColor),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 28,
+                                color: AppColor.whiteColor,
+                              ),
                             ),
                           )
                         ],
                       ),
                     ),
                     const Divider(
-                      color: whiteColor,
+                      color: AppColor.whiteColor,
                     ),
                     const DrawerList(text: 'Dashboard'),
                     const DrawerList(text: 'Notifications'),
@@ -88,10 +89,11 @@ class WebScreenLayout extends StatelessWidget {
                       child: Text(
                         'You are under probation which will last till 2.04.2024',
                         style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            color: whiteColor),
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: AppColor.whiteColor,
+                        ),
                       ),
                     ),
                   ),
@@ -101,12 +103,12 @@ class WebScreenLayout extends StatelessWidget {
                     decoration: const BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
-                          color: borderColor,
+                          color: AppColor.borderColor,
                         ),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: borderColor,
+                          color: AppColor.borderColor,
                           blurRadius: 4,
                           blurStyle: BlurStyle.outer,
                         ),
@@ -124,7 +126,7 @@ class WebScreenLayout extends StatelessWidget {
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w700,
                                 fontSize: 28,
-                                color: darkColor,
+                                color: AppColor.darkColor,
                               ),
                             ),
                             8.widthBox,
@@ -134,7 +136,7 @@ class WebScreenLayout extends StatelessWidget {
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w500,
                                 fontSize: 20,
-                                color: darkColor,
+                                color: AppColor.darkColor,
                               ),
                             ),
                           ],
@@ -156,12 +158,18 @@ class WebScreenLayout extends StatelessWidget {
                           children: [
                             Container(
                               margin: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 20),
+                                horizontal: 20,
+                                vertical: 20,
+                              ),
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 32),
+                                horizontal: 40,
+                                vertical: 32,
+                              ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: borderColor),
+                                border: Border.all(
+                                  color: AppColor.borderColor,
+                                ),
                               ),
                               child: Column(
                                 children: [
@@ -176,7 +184,7 @@ class WebScreenLayout extends StatelessWidget {
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w500,
                                             fontSize: 20,
-                                            color: darkColor),
+                                            color: AppColor.darkColor),
                                       ),
                                     ],
                                   ),
@@ -191,16 +199,18 @@ class WebScreenLayout extends StatelessWidget {
                                             height: 50,
                                             width: 50,
                                             decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: greenColor),
+                                              shape: BoxShape.circle,
+                                              color: AppColor.greenColor,
+                                            ),
                                             child: const Center(
                                               child: Text(
                                                 '20',
                                                 style: TextStyle(
-                                                    fontFamily: 'Inter',
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16,
-                                                    color: whiteColor),
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                  color: AppColor.whiteColor,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -211,7 +221,7 @@ class WebScreenLayout extends StatelessWidget {
                                                 fontFamily: 'Inter',
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 20,
-                                                color: darkColor),
+                                                color: AppColor.darkColor),
                                           ),
                                         ],
                                       ),
@@ -221,16 +231,18 @@ class WebScreenLayout extends StatelessWidget {
                                             height: 50,
                                             width: 50,
                                             decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: redColor),
+                                              shape: BoxShape.circle,
+                                              color: AppColor.redColor,
+                                            ),
                                             child: const Center(
                                               child: Text(
                                                 '20',
                                                 style: TextStyle(
-                                                    fontFamily: 'Inter',
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16,
-                                                    color: whiteColor),
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                  color: AppColor.whiteColor,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -241,7 +253,7 @@ class WebScreenLayout extends StatelessWidget {
                                                 fontFamily: 'Inter',
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 20,
-                                                color: darkColor),
+                                                color: AppColor.darkColor),
                                           ),
                                         ],
                                       ),
@@ -258,16 +270,18 @@ class WebScreenLayout extends StatelessWidget {
                                             height: 50,
                                             width: 50,
                                             decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: buttonColor),
+                                              shape: BoxShape.circle,
+                                              color: AppColor.buttonColor,
+                                            ),
                                             child: const Center(
                                               child: Text(
                                                 '20',
                                                 style: TextStyle(
-                                                    fontFamily: 'Inter',
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16,
-                                                    color: whiteColor),
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                  color: AppColor.whiteColor,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -278,7 +292,7 @@ class WebScreenLayout extends StatelessWidget {
                                                 fontFamily: 'Inter',
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 20,
-                                                color: darkColor),
+                                                color: AppColor.darkColor),
                                           ),
                                         ],
                                       ),
@@ -288,16 +302,18 @@ class WebScreenLayout extends StatelessWidget {
                                             height: 50,
                                             width: 50,
                                             decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: textGreyColor),
+                                              shape: BoxShape.circle,
+                                              color: AppColor.textGreyColor,
+                                            ),
                                             child: const Center(
                                               child: Text(
                                                 '20',
                                                 style: TextStyle(
-                                                    fontFamily: 'Inter',
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16,
-                                                    color: whiteColor),
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                  color: AppColor.whiteColor,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -308,7 +324,7 @@ class WebScreenLayout extends StatelessWidget {
                                                 fontFamily: 'Inter',
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 20,
-                                                color: darkColor),
+                                                color: AppColor.darkColor),
                                           ),
                                         ],
                                       ),
@@ -323,18 +339,22 @@ class WebScreenLayout extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 20),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: borderColor)),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: AppColor.borderColor,
+                                ),
+                              ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text(
                                     'Attendance Report',
                                     style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 24,
-                                        color: darkColor),
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 24,
+                                      color: AppColor.darkColor,
+                                    ),
                                   ),
                                   SfCircularChart(
                                       legend: const Legend(
@@ -391,8 +411,11 @@ class WebScreenLayout extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 20),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: borderColor)),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: AppColor.borderColor,
+                                ),
+                              ),
                               child: Row(
                                 children: [
                                   Container(
@@ -400,8 +423,9 @@ class WebScreenLayout extends StatelessWidget {
                                         horizontal: 28, vertical: 28),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(16),
-                                        color: primaryColor,
-                                        border: Border.all(color: borderColor)),
+                                        color: AppColor.primaryColor,
+                                        border: Border.all(
+                                            color: AppColor.borderColor)),
                                     // width: 100,
                                     child: Column(
                                       children: [
@@ -415,10 +439,11 @@ class WebScreenLayout extends StatelessWidget {
                                         const Text(
                                           ' Click to\nPunch In',
                                           style: TextStyle(
-                                              fontFamily: 'Inter',
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 24,
-                                              color: whiteColor),
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 24,
+                                            color: AppColor.whiteColor,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -435,7 +460,7 @@ class WebScreenLayout extends StatelessWidget {
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w400,
                                             fontSize: 16,
-                                            color: darkColor),
+                                            color: AppColor.darkColor),
                                       ),
                                       8.heightBox,
                                       const Text(
@@ -444,7 +469,7 @@ class WebScreenLayout extends StatelessWidget {
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w600,
                                             fontSize: 24,
-                                            color: darkColor),
+                                            color: AppColor.darkColor),
                                       ),
                                       8.heightBox,
                                       const Text(
@@ -453,7 +478,7 @@ class WebScreenLayout extends StatelessWidget {
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w400,
                                             fontSize: 16,
-                                            color: darkColor),
+                                            color: AppColor.darkColor),
                                       ),
                                       8.heightBox,
                                       const Text(
@@ -462,7 +487,7 @@ class WebScreenLayout extends StatelessWidget {
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w600,
                                             fontSize: 24,
-                                            color: darkColor),
+                                            color: AppColor.darkColor),
                                       ),
                                       8.heightBox,
                                       const Text(
@@ -471,7 +496,7 @@ class WebScreenLayout extends StatelessWidget {
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w400,
                                             fontSize: 16,
-                                            color: darkColor),
+                                            color: AppColor.darkColor),
                                       ),
                                       8.heightBox,
                                       const Text(
@@ -480,7 +505,7 @@ class WebScreenLayout extends StatelessWidget {
                                             fontFamily: 'Inter',
                                             fontWeight: FontWeight.w600,
                                             fontSize: 24,
-                                            color: darkColor),
+                                            color: AppColor.darkColor),
                                       ),
                                     ],
                                   )
@@ -495,7 +520,8 @@ class WebScreenLayout extends StatelessWidget {
                                   horizontal: 16, vertical: 20),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: borderColor)),
+                                  border:
+                                      Border.all(color: AppColor.borderColor)),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -505,7 +531,7 @@ class WebScreenLayout extends StatelessWidget {
                                         fontFamily: 'Inter',
                                         fontWeight: FontWeight.w600,
                                         fontSize: 24,
-                                        color: darkColor),
+                                        color: AppColor.darkColor),
                                   ),
                                   SfCircularChart(
                                       legend: const Legend(

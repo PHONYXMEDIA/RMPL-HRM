@@ -20,7 +20,7 @@ class DrawerList extends StatelessWidget {
           SvgPicture.asset(
             'assets/icons/Home.svg',
             colorFilter: const ColorFilter.mode(
-              whiteColor,
+              AppColor.whiteColor,
               BlendMode.srcIn,
             ),
           ),
@@ -29,7 +29,7 @@ class DrawerList extends StatelessWidget {
             child: Text(
               text,
               style: const TextStyle(
-                color: whiteColor,
+                color: AppColor.whiteColor,
                 fontFamily: 'Inter',
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
@@ -38,7 +38,7 @@ class DrawerList extends StatelessWidget {
           ),
           const Icon(
             Icons.arrow_forward_ios,
-            color: whiteColor,
+            color: AppColor.whiteColor,
           ),
         ],
       ),

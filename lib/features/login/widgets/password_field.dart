@@ -23,7 +23,7 @@ class PasswordTextField extends ConsumerWidget {
           'Enter your password',
           style: TextStyle(
             fontFamily: 'Inter',
-            color: darkColor,
+            color: AppColor.darkColor,
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),

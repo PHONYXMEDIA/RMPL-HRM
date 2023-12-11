@@ -1,6 +1,6 @@
 export 'app_providers.dart' hide firebaseAuth, firestore;
 export 'apply_leave.dart' hide ApplyLeave;
-export 'attendance.dart' hide Attendance;
+export 'attendance.dart' hide Attendance, AttendanceCount;
 export 'auth.dart' hide Auth;
 export 'date.dart' hide currentDate, firstDayOfMonth, lastDayOfMonth;
 export 'holiday.dart' hide countHolidays, holidays;

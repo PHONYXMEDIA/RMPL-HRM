@@ -11,7 +11,7 @@ class SplashView extends StatelessWidget {
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: AppColor.primaryColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -26,7 +26,7 @@ class SplashView extends StatelessWidget {
             'RMPL',
             style: TextStyle(
               fontFamily: 'Inter',
-              color: whiteColor,
+              color: AppColor.whiteColor,
               fontWeight: FontWeight.bold,
               letterSpacing: 4,
               fontSize: 40,
@@ -42,7 +42,7 @@ class SplashView extends StatelessWidget {
               width: double.infinity,
               height: 4,
               decoration: BoxDecoration(
-                color: lightGreyColor,
+                color: AppColor.lightGreyColor,
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
@@ -52,7 +52,7 @@ class SplashView extends StatelessWidget {
             'Recorded Music Private Limited',
             style: TextStyle(
               fontFamily: 'Inter',
-              color: whiteColor,
+              color: AppColor.whiteColor,
               fontWeight: FontWeight.w500,
               // letterSpacing: 4,
               fontSize: 20,
@@ -64,7 +64,7 @@ class SplashView extends StatelessWidget {
             'Feel the beat',
             style: TextStyle(
               fontFamily: 'Inter',
-              color: whiteColor,
+              color: AppColor.whiteColor,
               fontSize: 18,
             ),
           ),
@@ -75,7 +75,7 @@ class SplashView extends StatelessWidget {
             height: 40,
             child: LoadingIndicator(
               indicatorType: Indicator.lineScale,
-              colors: [whiteColor],
+              colors: [AppColor.whiteColor],
             ),
           ),
           const Spacer(
@@ -85,7 +85,7 @@ class SplashView extends StatelessWidget {
             'Powered by Quickgick',
             style: TextStyle(
               fontFamily: 'Inter',
-              color: whiteColor,
+              color: AppColor.whiteColor,
               fontWeight: FontWeight.w500,
               fontSize: 20,
               // height: 2

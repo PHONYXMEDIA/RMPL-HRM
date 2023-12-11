@@ -21,13 +21,13 @@ class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: AppColor.primaryColor,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.of(context).push(ApplyLeavePage.route());
         },
         isExtended: true,
-        backgroundColor: primaryColor,
+        backgroundColor: AppColor.primaryColor,
         label: const Text(
           'Apply Leave',
           style: TextStyle(color: Colors.white),
@@ -42,7 +42,7 @@ class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
         padding: const EdgeInsets.symmetric(vertical: 8),
         height: double.infinity,
         decoration: const BoxDecoration(
-          color: whiteColor,
+          color: AppColor.whiteColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16),
             topRight: Radius.circular(16),
@@ -58,7 +58,7 @@ class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
                   SvgPicture.asset(
                     'assets/icons/Calendar.svg',
                     colorFilter: const ColorFilter.mode(
-                      primaryColor,
+                      AppColor.primaryColor,
                       BlendMode.srcIn,
                     ),
                   ),
@@ -113,7 +113,7 @@ class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
                                 style: const TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 12,
-                                  color: greenColor,
+                                  color: AppColor.greenColor,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -122,7 +122,7 @@ class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
                                 style: const TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 12,
-                                  color: redColor,
+                                  color: AppColor.redColor,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -131,14 +131,14 @@ class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
                                 style: const TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 12,
-                                  color: textGreyColor,
+                                  color: AppColor.textGreyColor,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ],
                           ),
                           const Divider(
-                            color: textGreyColor,
+                            color: AppColor.textGreyColor,
                           ),
                           Expanded(
                             child: ListView.builder(
@@ -175,11 +175,11 @@ class _ManageLeaveViewState extends ConsumerState<ManageLeaveView> {
 extension LeaveStatusColor on Leave {
   Color get color {
     if (status?.toLowerCase() == 'approved') {
-      return greenColor;
+      return AppColor.greenColor;
     } else if (status?.toLowerCase() == 'rejected') {
-      return redColor;
+      return AppColor.redColor;
     } else {
-      return borderColor;
+      return AppColor.borderColor;
     }
   }
 }

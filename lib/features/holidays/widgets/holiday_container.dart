@@ -17,7 +17,7 @@ class HolidayContainer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: primaryColor),
+        border: Border.all(color: AppColor.primaryColor),
       ),
       child: Row(
         children: [
@@ -44,7 +44,7 @@ class HolidayContainer extends StatelessWidget {
             style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 16,
-              color: textGreyColor,
+              color: AppColor.textGreyColor,
               fontWeight: FontWeight.w500,
             ),
           ),

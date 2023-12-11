@@ -32,16 +32,16 @@ class _CalendarState extends State<Calendar> {
       ),
       daysOfWeekStyle: const DaysOfWeekStyle(
         weekendStyle: TextStyle(color: Colors.red),
-        weekdayStyle: TextStyle(color: primaryColor),
+        weekdayStyle: TextStyle(color:AppColor. primaryColor),
       ),
       calendarStyle: const CalendarStyle(
         weekendTextStyle: TextStyle(color: Colors.red),
         todayDecoration: BoxDecoration(
-          color: buttonColor,
+          color: AppColor.buttonColor,
           shape: BoxShape.circle,
         ),
         selectedDecoration: BoxDecoration(
-          color: borderColor,
+          color: AppColor.borderColor,
           shape: BoxShape.circle,
         ),
       ),

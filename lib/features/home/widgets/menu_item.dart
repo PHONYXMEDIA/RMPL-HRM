@@ -26,7 +26,9 @@ class MenuItem extends ConsumerWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: selected ? primaryColor.withOpacity(0.3) : Colors.transparent,
+        color: selected
+            ? AppColor.primaryColor.withOpacity(0.3)
+            : Colors.transparent,
       ),
       child: InkWell(
         onTap: () {
@@ -43,7 +45,7 @@ class MenuItem extends ConsumerWidget {
               SvgPicture.asset(
                 'assets/icons/Home.svg',
                 colorFilter: const ColorFilter.mode(
-                  darkColor,
+                  AppColor.darkColor,
                   BlendMode.srcIn,
                 ),
               ),

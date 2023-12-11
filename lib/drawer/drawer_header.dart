@@ -10,7 +10,7 @@ class CustomDrawerHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
     return Container(
-      color: primaryColor,
+      color: AppColor.primaryColor,
       padding: EdgeInsets.only(
         left: 16,
         top: mq.width * 0.15,
@@ -28,7 +28,7 @@ class CustomDrawerHeader extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 24,
-              color: whiteColor,
+              color: AppColor.whiteColor,
             ),
           ),
         ],

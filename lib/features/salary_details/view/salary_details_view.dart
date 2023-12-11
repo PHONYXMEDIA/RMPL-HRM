@@ -12,12 +12,12 @@ class SalaryDetailsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: AppColor.primaryColor,
       body: Container(
         margin: const EdgeInsets.only(top: 12),
         padding: const EdgeInsets.symmetric(vertical: 8),
         decoration: const BoxDecoration(
-          color: whiteColor,
+          color: AppColor.whiteColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16),
             topRight: Radius.circular(16),
@@ -45,7 +45,7 @@ class SalaryDetailsView extends ConsumerWidget {
                 'INR ${ref.watch(totalSalaryProvider)}',
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  color: primaryColor,
+                  color: AppColor.primaryColor,
                   fontSize: 20.0,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w600,
@@ -85,7 +85,7 @@ class SalaryDetailsView extends ConsumerWidget {
                     TextSpan(
                       text: 'INR ${ref.watch(profileProvider)?.basicSalary}',
                       style: const TextStyle(
-                        color: primaryColor,
+                        color: AppColor.primaryColor,
                         fontSize: 14,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
@@ -113,7 +113,7 @@ class SalaryDetailsView extends ConsumerWidget {
                     TextSpan(
                       text: 'INR ${ref.watch(profileProvider)?.hra}',
                       style: const TextStyle(
-                        color: primaryColor,
+                        color: AppColor.primaryColor,
                         fontSize: 14,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,

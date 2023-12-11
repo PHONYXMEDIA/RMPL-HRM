@@ -18,7 +18,7 @@ class NotificationContainer extends StatelessWidget {
       margin: const EdgeInsets.only(top: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: borderColor),
+        border: Border.all(color: AppColor.borderColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +28,7 @@ class NotificationContainer extends StatelessWidget {
             style: const TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 15,
-                color: darkColor,
+                color: AppColor.darkColor,
                 fontWeight: FontWeight.w500),
           ),
           6.heightBox,
@@ -37,7 +37,7 @@ class NotificationContainer extends StatelessWidget {
             style: TextStyle(
               fontFamily: 'Inter',
               fontSize: 12,
-              color: textGreyColor,
+              color: AppColor.textGreyColor,
               fontWeight: FontWeight.w400,
             ),
           ),

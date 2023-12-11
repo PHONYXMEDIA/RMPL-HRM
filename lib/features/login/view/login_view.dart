@@ -18,7 +18,7 @@ class LoginView extends HookConsumerWidget {
     final passwordController = useTextEditingController();
 
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: AppColor.primaryColor,
       body: SafeArea(
         bottom: false,
         child: Column(
@@ -36,7 +36,7 @@ class LoginView extends HookConsumerWidget {
             Container(
               // height: mq.height * 0.6,
               width: double.infinity,
-              padding: mq.width > webScreenSize
+              padding: mq.width > Dimensions.webScreenSize
                   ? EdgeInsets.symmetric(
                       horizontal: mq.width * 0.3,
                       vertical: 20,
@@ -46,7 +46,7 @@ class LoginView extends HookConsumerWidget {
                       vertical: 20,
                     ),
               decoration: const BoxDecoration(
-                color: whiteColor,
+                color:AppColor. whiteColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(28),
                   topRight: Radius.circular(28),
@@ -65,7 +65,7 @@ class LoginView extends HookConsumerWidget {
                         'LOGIN',
                         style: TextStyle(
                           fontFamily: 'Inter',
-                          color: darkColor,
+                          color:AppColor. darkColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 24,
                         ),

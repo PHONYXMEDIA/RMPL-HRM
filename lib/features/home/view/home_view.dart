@@ -36,9 +36,9 @@ class HomeView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final navigation = ref.watch(navigationProvider);
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: AppColor.primaryColor,
       appBar: AppBar(
-        backgroundColor: primaryColor,
+        backgroundColor: AppColor.primaryColor,
         elevation: 0,
         leading: Builder(
           builder: (context) {
@@ -91,7 +91,7 @@ class HomeView extends ConsumerWidget {
               padding: const EdgeInsets.all(12),
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: whiteColor,
+                color: AppColor.whiteColor,
               ),
               child: Stack(
                 children: [
@@ -131,7 +131,7 @@ class HomeView extends ConsumerWidget {
               padding: const EdgeInsets.all(10),
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: whiteColor,
+                color: AppColor.whiteColor,
               ),
               child: SvgPicture.asset(
                 'assets/icons/Logout.svg',

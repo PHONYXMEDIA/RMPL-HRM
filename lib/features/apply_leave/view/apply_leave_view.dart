@@ -38,9 +38,9 @@ class ApplyLeaveView extends ConsumerWidget {
       },
     );
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: AppColor.primaryColor,
       appBar: AppBar(
-        backgroundColor: primaryColor,
+        backgroundColor: AppColor.primaryColor,
         elevation: 0,
         iconTheme: const IconThemeData(
           color: Colors.white,
@@ -60,7 +60,7 @@ class ApplyLeaveView extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(vertical: 8),
         height: double.infinity,
         decoration: const BoxDecoration(
-          color: whiteColor,
+          color: AppColor.whiteColor,
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(20),
           ),
@@ -79,7 +79,7 @@ class ApplyLeaveView extends ConsumerWidget {
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: borderColor),
+                    border: Border.all(color: AppColor.borderColor),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,8 +94,8 @@ class ApplyLeaveView extends ConsumerWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               color: ref.watch(selectedDayTypeProvider).isOneDay
-                                  ? buttonColor.withOpacity(0.3)
-                                  : whiteColor,
+                                  ? AppColor.buttonColor.withOpacity(0.3)
+                                  : AppColor.whiteColor,
                             ),
                             child: const Center(
                               child: Text(
@@ -120,8 +120,8 @@ class ApplyLeaveView extends ConsumerWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               color: ref.watch(selectedDayTypeProvider).isOneDay
-                                  ? whiteColor
-                                  : buttonColor.withOpacity(0.3),
+                                  ? AppColor.whiteColor
+                                  : AppColor.buttonColor.withOpacity(0.3),
                             ),
                             child: const Center(
                               child: Text(
@@ -287,17 +287,17 @@ class _OneDayLeaveForm extends HookConsumerWidget {
               borderRadius: BorderRadius.all(
                 Radius.circular(8),
               ),
-              borderSide: BorderSide(color: borderColor),
+              borderSide: BorderSide(color: AppColor.borderColor),
             ),
             enabledBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(8),
               ),
-              borderSide: BorderSide(color: borderColor),
+              borderSide: BorderSide(color: AppColor.borderColor),
             ),
             hintText: 'Write your reason in 100 characters',
             filled: true,
-            fillColor: lightGreyColor,
+            fillColor: AppColor.lightGreyColor,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
             ),
@@ -477,17 +477,17 @@ class _MultipleDayLeaveForm extends HookConsumerWidget {
               borderRadius: BorderRadius.all(
                 Radius.circular(8),
               ),
-              borderSide: BorderSide(color: borderColor),
+              borderSide: BorderSide(color: AppColor.borderColor),
             ),
             enabledBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(8),
               ),
-              borderSide: BorderSide(color: borderColor),
+              borderSide: BorderSide(color: AppColor.borderColor),
             ),
             hintText: 'Write your reason in 100 characters',
             filled: true,
-            fillColor: lightGreyColor,
+            fillColor: AppColor.lightGreyColor,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
             ),

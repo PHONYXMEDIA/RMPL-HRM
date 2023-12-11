@@ -26,8 +26,8 @@ class DashboardView extends ConsumerWidget {
     final attendanceStatus = ref.watch(attendanceProvider).status;
     final punchStatus = ref.watch(attendanceProvider).punchStatus;
     return Scaffold(
-      backgroundColor: primaryColor,
-      body: mq.width > webScreenSize
+      backgroundColor: AppColor.primaryColor,
+      body: mq.width > Dimensions.webScreenSize
           ? const WebScreenLayout()
           : Stack(
               children: [
@@ -36,7 +36,7 @@ class DashboardView extends ConsumerWidget {
                   padding: const EdgeInsets.only(top: 86),
                   margin: const EdgeInsets.only(top: 48),
                   decoration: const BoxDecoration(
-                    color: whiteColor,
+                    color: AppColor.whiteColor,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16),
@@ -60,7 +60,7 @@ class DashboardView extends ConsumerWidget {
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w500,
-                                color: whiteColor,
+                                color: AppColor.whiteColor,
                               ),
                             ),
                           ),
@@ -87,7 +87,7 @@ class DashboardView extends ConsumerWidget {
                                       ),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(12),
-                                        color: buttonColor,
+                                        color: AppColor.buttonColor,
                                         boxShadow: [
                                           BoxShadow(
                                             color: Colors.black.withOpacity(
@@ -104,7 +104,7 @@ class DashboardView extends ConsumerWidget {
                                               ? 'Hold to punch out'
                                               : 'Hold to punch in',
                                           style: const TextStyle(
-                                            color: backgroundColor,
+                                            color: AppColor.backgroundColor,
                                             fontSize: 16,
                                           ),
                                         ),
@@ -145,7 +145,7 @@ class DashboardView extends ConsumerWidget {
                             ),
                             const Divider(
                               thickness: 1,
-                              color: borderColor,
+                              color: AppColor.borderColor,
                               endIndent: 16,
                               indent: 16,
                             ),
@@ -299,9 +299,9 @@ class DashboardView extends ConsumerWidget {
                   ),
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
-                    color: whiteColor,
+                    color: AppColor.whiteColor,
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: borderColor),
+                    border: Border.all(color: AppColor.borderColor),
                   ),
                   child: Column(
                     children: [
@@ -329,9 +329,9 @@ class DashboardView extends ConsumerWidget {
                         children: [
                           Column(
                             children: [
-                              const Text(
-                                '20',
-                                style: TextStyle(
+                              Text(
+                                '${ref.watch(attendanceCountProvider)}',
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                 ),

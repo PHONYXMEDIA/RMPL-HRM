@@ -19,11 +19,11 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: AppColor.primaryColor,
       body: Container(
         margin: const EdgeInsets.only(top: 12),
         decoration: const BoxDecoration(
-          color: whiteColor,
+          color: AppColor.whiteColor,
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(16),
           ),
@@ -40,7 +40,7 @@ class _ProfileViewState extends State<ProfileView> {
                     height: mq.width * 0.3,
                     width: mq.width * 0.25,
                     decoration: BoxDecoration(
-                      color: lightGreyColor,
+                      color: AppColor.lightGreyColor,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Image.network(

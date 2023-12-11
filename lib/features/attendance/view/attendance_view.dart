@@ -15,14 +15,14 @@ class AttendanceView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: AppColor.primaryColor,
       body: Container(
         margin: const EdgeInsets.only(top: 12),
         padding: const EdgeInsets.symmetric(
           vertical: 8,
         ),
         decoration: const BoxDecoration(
-          color: whiteColor,
+          color: AppColor.whiteColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16),
             topRight: Radius.circular(16),
@@ -42,7 +42,7 @@ class AttendanceView extends ConsumerWidget {
                     SvgPicture.asset(
                       'assets/icons/Calendar.svg',
                       colorFilter: const ColorFilter.mode(
-                        primaryColor,
+                        AppColor.primaryColor,
                         BlendMode.srcIn,
                       ),
                     ),
@@ -103,7 +103,7 @@ class AttendanceView extends ConsumerWidget {
                           '${ref.watch(countHolidaysProvider)}',
                           'Holidays',
                           context,
-                          primaryColor,
+                          AppColor.primaryColor,
                         ),
                         summaryContainer(
                           '${ref.watch(countLeaveProvider)}',
@@ -121,7 +121,7 @@ class AttendanceView extends ConsumerWidget {
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 20,
-                    // color: primaryColor,
+                    // color: AppColor.primaryColor,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -132,19 +132,19 @@ class AttendanceView extends ConsumerWidget {
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    color: textGreyColor,
+                    color: AppColor.textGreyColor,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 const Divider(
-                  color: textGreyColor,
+                  color: AppColor.textGreyColor,
                 ),
                 const Text(
                   'Emblems:',
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 16,
-                    // color: textGreyColor,
+                    // color: AppColor.textGreyColor,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -158,7 +158,7 @@ class AttendanceView extends ConsumerWidget {
                           height: 10,
                           width: 10,
                           decoration: const BoxDecoration(
-                            color: greenColor,
+                            color: AppColor.greenColor,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -168,7 +168,7 @@ class AttendanceView extends ConsumerWidget {
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 12,
-                            // color: textGreyColor,
+                            // color: AppColor.textGreyColor,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -180,7 +180,7 @@ class AttendanceView extends ConsumerWidget {
                           height: 10,
                           width: 10,
                           decoration: const BoxDecoration(
-                            color: redColor,
+                            color: AppColor.redColor,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -201,7 +201,7 @@ class AttendanceView extends ConsumerWidget {
                           height: 10,
                           width: 10,
                           decoration: const BoxDecoration(
-                            color: primaryColor,
+                            color: AppColor.primaryColor,
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -222,7 +222,7 @@ class AttendanceView extends ConsumerWidget {
                           height: 10,
                           width: 10,
                           decoration: const BoxDecoration(
-                            color: borderColor,
+                            color: AppColor.borderColor,
                             shape: BoxShape.circle,
                           ),
                         ),
