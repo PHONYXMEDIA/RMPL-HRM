@@ -46,7 +46,7 @@ class LoginView extends HookConsumerWidget {
                       vertical: 20,
                     ),
               decoration: const BoxDecoration(
-                color:AppColor. whiteColor,
+                color: AppColor.whiteColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(28),
                   topRight: Radius.circular(28),
@@ -65,7 +65,7 @@ class LoginView extends HookConsumerWidget {
                         'LOGIN',
                         style: TextStyle(
                           fontFamily: 'Inter',
-                          color:AppColor. darkColor,
+                          color: AppColor.darkColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 24,
                         ),

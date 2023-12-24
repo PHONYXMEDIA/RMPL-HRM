@@ -18,8 +18,11 @@ DateTime lastDayOfMonth(LastDayOfMonthRef ref) {
 }
 
 @riverpod
-int totalDaysInMonth(TotalDaysInMonthRef ref) =>
-    ref.watch(lastDayOfMonthProvider).day;
+int totalDaysInMonth(TotalDaysInMonthRef ref) {
+  final date = DateTime.now();
+  return DateTime(date.year, date.month + 1, 0).day;
+}
+// ref.watch(lastDayOfMonthProvider).day;
 
 @riverpod
 int remainingDaysInMonth(RemainingDaysInMonthRef ref) =>

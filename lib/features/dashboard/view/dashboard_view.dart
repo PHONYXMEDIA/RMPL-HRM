@@ -10,21 +10,65 @@ import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/main.dart';
 import 'package:rmpl_hrm/responsive/web_screen_layout.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class DashboardView extends ConsumerWidget {
-  const DashboardView({super.key});
+  const DashboardView({Key? key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     mq = MediaQuery.of(context).size;
-    final List<ChartData> chartData = [
-      ChartData('25% Attendance', 25, Colors.purple[300]!),
-      ChartData('8% Leave', 38, Colors.red[300]!),
-      ChartData('12% Remaining\nWorking Days', 34, Colors.pink[300]!),
-      ChartData('Others', 52, Colors.green[500]!)
-    ];
+
+    final attendanceCount = ref.watch(attendanceCountProvider);
+    final absenceCount = ref.watch(absenceCountProvider);
+    final holidaysCount = ref.watch(countHolidaysProvider);
+    final leaveCount = ref.watch(countLeaveProvider);
+
+    final firstDayOfMonthProvider = Provider<DateTime>((ref) {
+      final now = DateTime.now();
+      return DateTime(now.year, now.month, 1); // First day of the current month
+    });
+
+    final lastDayOfMonthProvider = Provider<DateTime>((ref) {
+      final now = DateTime.now();
+      final lastDay =
+          DateTime(now.year, now.month + 1, 0); // Last day of the current month
+      return lastDay.isAfter(now) ? now : lastDay;
+    });
+
+    final totalDaysOfMonthProvider = Provider<int>((ref) {
+      final firstDayOfMonth = ref.watch(firstDayOfMonthProvider);
+      final lastDayOfMonth = ref.watch(lastDayOfMonthProvider);
+
+      final difference = lastDayOfMonth.difference(firstDayOfMonth);
+
+      final totalDays = difference.inDays + 1;
+
+      return totalDays;
+    });
+
+    final _attendancePercentage = 0;
+    final _leavePercentage = 0;
+    final _remainingPercentage = 0;
+    final _otherPercentage = 0;
+
+    final List<ChartData> chartData = _generateChartData(
+      attendanceCount: attendanceCount,
+      absenceCount: absenceCount,
+      holidaysCount: holidaysCount,
+      leaveCount: leaveCount,
+      totalDaysCount: ref.watch(totalDaysInMonthProvider),
+    );
+
+    final remainingDay = ref.watch(totalDaysInMonthProvider) -
+        absenceCount -
+        attendanceCount -
+        leaveCount -
+        holidaysCount;
+
     final attendanceStatus = ref.watch(attendanceProvider).status;
     final punchStatus = ref.watch(attendanceProvider).punchStatus;
+
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       body: mq.width > Dimensions.webScreenSize
@@ -194,97 +238,12 @@ class DashboardView extends ConsumerWidget {
                         ),
                         SizedBox(
                           height: 220,
-                          child: SfCircularChart(
-                            legend: const Legend(
-                              isResponsive: true,
-                              isVisible: true,
+                          child: PieChart(
+                            PieChartData(
+                              sections: _getSections(chartData),
+                              borderData: FlBorderData(show: false),
+                              sectionsSpace: 0,
                             ),
-                            selectionGesture: ActivationMode.singleTap,
-                            annotations: <CircularChartAnnotation>[
-                              CircularChartAnnotation(
-                                angle: 300,
-                                radius: '40%',
-                                widget: const Text('25%'),
-                              ),
-                              CircularChartAnnotation(
-                                angle: 200,
-                                radius: '40%',
-                                widget: const Text('38%'),
-                              ),
-                              CircularChartAnnotation(
-                                angle: 100,
-                                radius: '40%',
-                                widget: const Text('34%'),
-                              ),
-                              CircularChartAnnotation(
-                                angle: 0,
-                                radius: '40%',
-                                widget: const Text('52%'),
-                              ),
-                            ],
-                            series: <CircularSeries>[
-                              // Render pie chart
-                              PieSeries<ChartData, String>(
-                                dataSource: chartData,
-                                pointColorMapper: (ChartData data, _) =>
-                                    data.color,
-                                xValueMapper: (ChartData data, _) => data.x,
-                                yValueMapper: (ChartData data, _) => data.y,
-                              )
-                            ],
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Text(
-                            'Salary Insight',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 220,
-                          child: SfCircularChart(
-                            legend: const Legend(
-                              isResponsive: true,
-                              isVisible: true,
-                            ),
-                            selectionGesture: ActivationMode.singleTap,
-                            annotations: <CircularChartAnnotation>[
-                              CircularChartAnnotation(
-                                angle: 300,
-                                radius: '40%',
-                                widget: const Text('25%'),
-                              ),
-                              CircularChartAnnotation(
-                                angle: 200,
-                                radius: '40%',
-                                widget: const Text('38%'),
-                              ),
-                              CircularChartAnnotation(
-                                angle: 100,
-                                radius: '40%',
-                                widget: const Text('34%'),
-                              ),
-                              CircularChartAnnotation(
-                                angle: 0,
-                                radius: '40%',
-                                widget: const Text('52%'),
-                              ),
-                            ],
-                            series: <CircularSeries>[
-                              // Render pie chart
-                              PieSeries<ChartData, String>(
-                                dataSource: chartData,
-                                pointColorMapper: (ChartData data, _) =>
-                                    data.color,
-                                xValueMapper: (ChartData data, _) => data.x,
-                                yValueMapper: (ChartData data, _) => data.y,
-                              ),
-                            ],
                           ),
                         ),
                       ],
@@ -292,7 +251,7 @@ class DashboardView extends ConsumerWidget {
                   ),
                 ),
                 Container(
-                  height: 115,
+                  height: 120,
                   margin: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 14,
@@ -330,19 +289,20 @@ class DashboardView extends ConsumerWidget {
                           Column(
                             children: [
                               Text(
-                                '${ref.watch(attendanceCountProvider)}',
+                                '$attendanceCount',
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                               8.heightBox,
-                              const Text(
+                              Text(
                                 'Present',
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
+                                  color: Colors.green[500],
                                 ),
                               )
                             ],
@@ -350,7 +310,7 @@ class DashboardView extends ConsumerWidget {
                           Column(
                             children: [
                               Text(
-                                '${ref.watch(absenceCountProvider)}',
+                                '$absenceCount',
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
@@ -371,27 +331,7 @@ class DashboardView extends ConsumerWidget {
                           Column(
                             children: [
                               Text(
-                                '${ref.watch(countHolidaysProvider)}',
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              8.heightBox,
-                              const Text(
-                                'Holidays',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                '${ref.watch(countLeaveProvider)}',
+                                '$leaveCount',
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
@@ -401,6 +341,47 @@ class DashboardView extends ConsumerWidget {
                               const Text(
                                 'Leave',
                                 style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.orange),
+                              )
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                '${holidaysCount}',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              8.heightBox,
+                              const Text(
+                                'Holidays',
+                                style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.purple),
+                              )
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                '$remainingDay',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              8.heightBox,
+                              const Text(
+                                'Remaining',
+                                style: TextStyle(
+                                  color: Colors.pink,
                                   fontFamily: 'Inter',
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -417,12 +398,67 @@ class DashboardView extends ConsumerWidget {
             ),
     );
   }
+
+  List<ChartData> _generateChartData({
+    required int attendanceCount,
+    required int absenceCount,
+    required int holidaysCount,
+    required int leaveCount,
+    required int totalDaysCount,
+  }) {
+    final int remainingDaysCount = totalDaysCount -
+        (attendanceCount + leaveCount + holidaysCount + absenceCount);
+    final double attendancePercentage =
+        (attendanceCount / totalDaysCount) * 100;
+    final double leavePercentage = (leaveCount / totalDaysCount) * 100;
+    final double remainingPercentage =
+        (remainingDaysCount / totalDaysCount) * 100;
+    final double absentPercentage = (absenceCount / totalDaysCount) * 100;
+    final double otherPercentage = (holidaysCount / totalDaysCount) * 100;
+
+    print('Total Days: $totalDaysCount');
+    print('Attendance Percentage: $attendancePercentage%');
+    print('Leave Percentage: $leavePercentage%');
+    print('Remaining Percentage: $remainingPercentage%');
+    print('Other Percentage: $otherPercentage%');
+    print('Absent Percentage: $absentPercentage%');
+
+    return [
+      ChartData('Attendance', attendancePercentage, Colors.green[500]!,
+          attendancePercentage),
+      ChartData('Absent', absentPercentage, Colors.red, absentPercentage),
+      ChartData('Leave', leavePercentage, Colors.orange, leavePercentage),
+      ChartData(
+          'Holidays', otherPercentage, Colors.purple[500]!, otherPercentage),
+      ChartData('Remaining\nWorking Days', remainingPercentage,
+          Colors.pink[300]!, remainingPercentage),
+    ];
+  }
+}
+
+List<PieChartSectionData> _getSections(List<ChartData> chartData) {
+  return chartData.map(
+    (data) {
+      return PieChartSectionData(
+        color: data.color,
+        value: data.y,
+        title: '${data.y.toStringAsFixed(1)}%',
+        radius: 80,
+        titleStyle: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      );
+    },
+  ).toList();
 }
 
 class ChartData {
-  ChartData(this.x, this.y, this.color);
+  ChartData(this.x, this.y, this.color, this.percentage);
 
   final String x;
   final double y;
-  Color color;
+  final Color color;
+  final double percentage;
 }

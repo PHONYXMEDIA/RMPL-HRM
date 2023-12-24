@@ -208,7 +208,7 @@ class _$OneDayStateImpl implements _OneDayState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OneDayStateImpl &&
@@ -458,7 +458,7 @@ class _$MultipleDayStateImpl implements _MultipleDayState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MultipleDayStateImpl &&
@@ -646,7 +646,7 @@ class _$ApplyLeaveStateImpl implements _ApplyLeaveState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ApplyLeaveStateImpl &&

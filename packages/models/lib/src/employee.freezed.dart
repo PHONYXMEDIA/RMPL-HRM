@@ -28,6 +28,8 @@ mixin _$Employee {
   DocumentReference<Object?>? get creator => throw _privateConstructorUsedError;
   DateTime? get dateJoined => throw _privateConstructorUsedError;
   String? get designation => throw _privateConstructorUsedError;
+  Map<String, Map<String, SalaryDetail>>? get salaryDetails =>
+      throw _privateConstructorUsedError;
   DateTime? get dob => throw _privateConstructorUsedError;
   String? get eid => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
@@ -64,6 +66,7 @@ abstract class $EmployeeCopyWith<$Res> {
       DocumentReference<Object?>? creator,
       DateTime? dateJoined,
       String? designation,
+      Map<String, Map<String, SalaryDetail>>? salaryDetails,
       DateTime? dob,
       String? eid,
       String? email,
@@ -102,6 +105,7 @@ class _$EmployeeCopyWithImpl<$Res, $Val extends Employee>
     Object? creator = freezed,
     Object? dateJoined = freezed,
     Object? designation = freezed,
+    Object? salaryDetails = freezed,
     Object? dob = freezed,
     Object? eid = freezed,
     Object? email = freezed,
@@ -151,6 +155,10 @@ class _$EmployeeCopyWithImpl<$Res, $Val extends Employee>
           ? _value.designation
           : designation // ignore: cast_nullable_to_non_nullable
               as String?,
+      salaryDetails: freezed == salaryDetails
+          ? _value.salaryDetails
+          : salaryDetails // ignore: cast_nullable_to_non_nullable
+              as Map<String, Map<String, SalaryDetail>>?,
       dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
@@ -232,6 +240,7 @@ abstract class _$$EmployeeImplCopyWith<$Res>
       DocumentReference<Object?>? creator,
       DateTime? dateJoined,
       String? designation,
+      Map<String, Map<String, SalaryDetail>>? salaryDetails,
       DateTime? dob,
       String? eid,
       String? email,
@@ -268,6 +277,7 @@ class __$$EmployeeImplCopyWithImpl<$Res>
     Object? creator = freezed,
     Object? dateJoined = freezed,
     Object? designation = freezed,
+    Object? salaryDetails = freezed,
     Object? dob = freezed,
     Object? eid = freezed,
     Object? email = freezed,
@@ -317,6 +327,10 @@ class __$$EmployeeImplCopyWithImpl<$Res>
           ? _value.designation
           : designation // ignore: cast_nullable_to_non_nullable
               as String?,
+      salaryDetails: freezed == salaryDetails
+          ? _value._salaryDetails
+          : salaryDetails // ignore: cast_nullable_to_non_nullable
+              as Map<String, Map<String, SalaryDetail>>?,
       dob: freezed == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
@@ -395,6 +409,7 @@ class _$EmployeeImpl extends _Employee {
       this.creator,
       this.dateJoined,
       this.designation,
+      final Map<String, Map<String, SalaryDetail>>? salaryDetails,
       this.dob,
       this.eid,
       this.email,
@@ -410,7 +425,8 @@ class _$EmployeeImpl extends _Employee {
       this.probationTill,
       this.profilePic,
       this.uid})
-      : super._();
+      : _salaryDetails = salaryDetails,
+        super._();
 
   factory _$EmployeeImpl.fromJson(Map<String, dynamic> json) =>
       _$$EmployeeImplFromJson(json);
@@ -431,6 +447,16 @@ class _$EmployeeImpl extends _Employee {
   final DateTime? dateJoined;
   @override
   final String? designation;
+  final Map<String, Map<String, SalaryDetail>>? _salaryDetails;
+  @override
+  Map<String, Map<String, SalaryDetail>>? get salaryDetails {
+    final value = _salaryDetails;
+    if (value == null) return null;
+    if (_salaryDetails is EqualUnmodifiableMapView) return _salaryDetails;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   @override
   final DateTime? dob;
   @override
@@ -464,11 +490,11 @@ class _$EmployeeImpl extends _Employee {
 
   @override
   String toString() {
-    return 'Employee(aadharNumber: $aadharNumber, address: $address, basicSalary: $basicSalary, branch: $branch, createdAt: $createdAt, creator: $creator, dateJoined: $dateJoined, designation: $designation, dob: $dob, eid: $eid, email: $email, fathersName: $fathersName, fieldWorkAllowance: $fieldWorkAllowance, firstName: $firstName, hra: $hra, isActive: $isActive, lastName: $lastName, panNumber: $panNumber, password: $password, probation: $probation, probationTill: $probationTill, profilePic: $profilePic, uid: $uid)';
+    return 'Employee(aadharNumber: $aadharNumber, address: $address, basicSalary: $basicSalary, branch: $branch, createdAt: $createdAt, creator: $creator, dateJoined: $dateJoined, designation: $designation, salaryDetails: $salaryDetails, dob: $dob, eid: $eid, email: $email, fathersName: $fathersName, fieldWorkAllowance: $fieldWorkAllowance, firstName: $firstName, hra: $hra, isActive: $isActive, lastName: $lastName, panNumber: $panNumber, password: $password, probation: $probation, probationTill: $probationTill, profilePic: $profilePic, uid: $uid)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EmployeeImpl &&
@@ -485,6 +511,8 @@ class _$EmployeeImpl extends _Employee {
                 other.dateJoined == dateJoined) &&
             (identical(other.designation, designation) ||
                 other.designation == designation) &&
+            const DeepCollectionEquality()
+                .equals(other._salaryDetails, _salaryDetails) &&
             (identical(other.dob, dob) || other.dob == dob) &&
             (identical(other.eid, eid) || other.eid == eid) &&
             (identical(other.email, email) || other.email == email) &&
@@ -524,6 +552,7 @@ class _$EmployeeImpl extends _Employee {
         creator,
         dateJoined,
         designation,
+        const DeepCollectionEquality().hash(_salaryDetails),
         dob,
         eid,
         email,
@@ -565,6 +594,7 @@ abstract class _Employee extends Employee {
       final DocumentReference<Object?>? creator,
       final DateTime? dateJoined,
       final String? designation,
+      final Map<String, Map<String, SalaryDetail>>? salaryDetails,
       final DateTime? dob,
       final String? eid,
       final String? email,
@@ -602,6 +632,8 @@ abstract class _Employee extends Employee {
   @override
   String? get designation;
   @override
+  Map<String, Map<String, SalaryDetail>>? get salaryDetails;
+  @override
   DateTime? get dob;
   @override
   String? get eid;
@@ -634,5 +666,160 @@ abstract class _Employee extends Employee {
   @override
   @JsonKey(ignore: true)
   _$$EmployeeImplCopyWith<_$EmployeeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+SalaryDetail _$SalaryDetailFromJson(Map<String, dynamic> json) {
+  return _SalaryDetail.fromJson(json);
+}
+
+/// @nodoc
+mixin _$SalaryDetail {
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  double? get amount => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SalaryDetailCopyWith<SalaryDetail> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SalaryDetailCopyWith<$Res> {
+  factory $SalaryDetailCopyWith(
+          SalaryDetail value, $Res Function(SalaryDetail) then) =
+      _$SalaryDetailCopyWithImpl<$Res, SalaryDetail>;
+  @useResult
+  $Res call({DateTime? createdAt, double? amount});
+}
+
+/// @nodoc
+class _$SalaryDetailCopyWithImpl<$Res, $Val extends SalaryDetail>
+    implements $SalaryDetailCopyWith<$Res> {
+  _$SalaryDetailCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? createdAt = freezed,
+    Object? amount = freezed,
+  }) {
+    return _then(_value.copyWith(
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      amount: freezed == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$SalaryDetailImplCopyWith<$Res>
+    implements $SalaryDetailCopyWith<$Res> {
+  factory _$$SalaryDetailImplCopyWith(
+          _$SalaryDetailImpl value, $Res Function(_$SalaryDetailImpl) then) =
+      __$$SalaryDetailImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({DateTime? createdAt, double? amount});
+}
+
+/// @nodoc
+class __$$SalaryDetailImplCopyWithImpl<$Res>
+    extends _$SalaryDetailCopyWithImpl<$Res, _$SalaryDetailImpl>
+    implements _$$SalaryDetailImplCopyWith<$Res> {
+  __$$SalaryDetailImplCopyWithImpl(
+      _$SalaryDetailImpl _value, $Res Function(_$SalaryDetailImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? createdAt = freezed,
+    Object? amount = freezed,
+  }) {
+    return _then(_$SalaryDetailImpl(
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      amount: freezed == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+@TimestampConverter()
+class _$SalaryDetailImpl implements _SalaryDetail {
+  const _$SalaryDetailImpl({this.createdAt, this.amount});
+
+  factory _$SalaryDetailImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SalaryDetailImplFromJson(json);
+
+  @override
+  final DateTime? createdAt;
+  @override
+  final double? amount;
+
+  @override
+  String toString() {
+    return 'SalaryDetail(createdAt: $createdAt, amount: $amount)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SalaryDetailImpl &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.amount, amount) || other.amount == amount));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, createdAt, amount);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SalaryDetailImplCopyWith<_$SalaryDetailImpl> get copyWith =>
+      __$$SalaryDetailImplCopyWithImpl<_$SalaryDetailImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$SalaryDetailImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _SalaryDetail implements SalaryDetail {
+  const factory _SalaryDetail(
+      {final DateTime? createdAt, final double? amount}) = _$SalaryDetailImpl;
+
+  factory _SalaryDetail.fromJson(Map<String, dynamic> json) =
+      _$SalaryDetailImpl.fromJson;
+
+  @override
+  DateTime? get createdAt;
+  @override
+  double? get amount;
+  @override
+  @JsonKey(ignore: true)
+  _$$SalaryDetailImplCopyWith<_$SalaryDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

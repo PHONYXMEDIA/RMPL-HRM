@@ -17,6 +17,7 @@ import 'package:rmpl_hrm/features/manage_leave/manage_leave.dart';
 import 'package:rmpl_hrm/features/notifications/notifications.dart';
 import 'package:rmpl_hrm/features/profile/profile.dart';
 import 'package:rmpl_hrm/features/salary_details/salary_details.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 const Iterable<Widget> screens = [
   DashboardPage(),
@@ -30,8 +31,19 @@ const Iterable<Widget> screens = [
 ];
 
 class HomeView extends ConsumerWidget {
-  const HomeView({super.key});
+  HomeView({super.key});
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
+  Future<void> _requestNotificationPermission() async {
+    NotificationSettings settings = await _firebaseMessaging.requestPermission(
+      alert: true,
+      badge: true,
+      provisional: false,
+      sound: true,
+    );
+
+    print('User granted permission: ${settings.authorizationStatus}');
+  }
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final navigation = ref.watch(navigationProvider);

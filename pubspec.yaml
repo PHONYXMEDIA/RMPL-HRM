@@ -9,29 +9,41 @@ environment:
 
 dependencies:
   calendar_date_picker2: ^0.5.3
+  cloud_firestore: ^4.13.0
   cupertino_icons: ^1.0.2
+  equatable: ^2.0.5
+  firebase_auth: ^4.10.1
+  firebase_core: ^2.17.0
+  firebase_database: ^10.3.8
+  firebase_messaging: ^14.7.9
+  firebase_storage: ^11.2.8
+  fl_chart: ^0.65.0
   flutter:
     sdk: flutter
+  flutter_background_service: ^5.0.5
+  flutter_background_service_android: ^6.2.2
+  flutter_calendar_carousel: ^2.4.2
+  flutter_hooks: ^0.20.3
+  flutter_local_notifications: ^16.2.0
+  flutter_map: ^6.1.0
   flutter_svg: ^2.0.7
+  fluttertoast: ^8.2.4
+  formz: ^0.6.1
+  geolocator: ^10.1.0
+  google_maps_flutter: ^2.5.0
+  hooks_riverpod: ^2.4.8
+  intl: ^0.18.1
   loading_indicator: ^3.1.1
+  models:
+    path: packages/models
+  month_picker_dialog: ^2.2.1
+  providers:
+    path: packages/providers
   swipe_to_complete: ^0.0.1
   syncfusion_flutter_charts: ^23.1.39
   table_calendar: ^3.0.9
-  firebase_core: ^2.17.0
-  firebase_auth: ^4.10.1
-  firebase_storage: ^11.2.8
-  cloud_firestore: ^4.13.0
-  formz: ^0.6.1
-  equatable: ^2.0.5
-  intl: ^0.18.1
-  hooks_riverpod: ^2.4.8
-  flutter_hooks: ^0.20.3
+  url_launcher: ^6.2.2
   validators: ^3.0.0
-  month_picker_dialog: ^2.2.1
-  models:
-    path: packages/models
-  providers:
-    path: packages/providers
 
 dev_dependencies:
   flutter_lints: ^3.0.1

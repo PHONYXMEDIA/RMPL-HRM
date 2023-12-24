@@ -50,7 +50,7 @@ final lastDayOfMonthProvider = AutoDisposeProvider<DateTime>.internal(
 );
 
 typedef LastDayOfMonthRef = AutoDisposeProviderRef<DateTime>;
-String _$totalDaysInMonthHash() => r'3003723efe88bd94347406188901a90fb2802212';
+String _$totalDaysInMonthHash() => r'e8308d2e5b848a70f568b3d9e9a915a44d6ab093';
 
 /// See also [totalDaysInMonth].
 @ProviderFor(totalDaysInMonth)

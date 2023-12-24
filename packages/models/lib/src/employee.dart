@@ -18,6 +18,7 @@ class Employee with _$Employee {
     DocumentReference? creator,
     DateTime? dateJoined,
     String? designation,
+    Map<String, Map<String, SalaryDetail>>? salaryDetails,
     DateTime? dob,
     String? eid,
     String? email,
@@ -41,4 +42,16 @@ class Employee with _$Employee {
 
   factory Employee.fromJson(Map<String, dynamic> json) =>
       _$EmployeeFromJson(json);
+}
+
+@freezed
+class SalaryDetail with _$SalaryDetail {
+  @TimestampConverter()
+  const factory SalaryDetail({
+    DateTime? createdAt,
+    double? amount,
+  }) = _SalaryDetail;
+
+  factory SalaryDetail.fromJson(Map<String, dynamic> json) =>
+      _$SalaryDetailFromJson(json);
 }

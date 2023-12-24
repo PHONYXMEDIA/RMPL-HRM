@@ -16,5 +16,5 @@ export 'navigation_screen.dart';
 export 'notification.dart';
 export 'password.dart';
 export 'reason.dart';
-export 'salary_detail.dart';
+// export 'salary_detail.dart';
 export 'user.dart';

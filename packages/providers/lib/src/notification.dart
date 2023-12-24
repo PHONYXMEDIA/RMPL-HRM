@@ -12,6 +12,10 @@ class Notification extends _$Notification {
         firestoreProvider,
       )
       .collection('notifications')
+      .where(
+        'isVisible',
+        isEqualTo: true,
+      )
       .snapshots()
       .map(
         (snapshot) => snapshot.docs.map(

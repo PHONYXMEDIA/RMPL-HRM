@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:providers/providers.dart';
+import 'package:models/models.dart';
+import 'package:intl/intl.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/features/salary_details/salary_details.dart';
+import 'package:providers/providers.dart';
 
 class SalaryDetailsView extends ConsumerWidget {
-  const SalaryDetailsView({super.key});
+  const SalaryDetailsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final profile = ref.watch(profileProvider);
+
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       body: Container(
         margin: const EdgeInsets.only(top: 12),
         padding: const EdgeInsets.symmetric(vertical: 8),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: AppColor.whiteColor,
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(16),
             topRight: Radius.circular(16),
           ),
@@ -28,7 +32,7 @@ class SalaryDetailsView extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              12.heightBox,
+              const SizedBox(height: 12),
               const Text(
                 'Total Salary',
                 textAlign: TextAlign.center,
@@ -37,175 +41,189 @@ class SalaryDetailsView extends ConsumerWidget {
                   fontSize: 16.0,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w500,
-                  height: 0,
                 ),
               ),
-              8.heightBox,
+              const SizedBox(height: 8),
               Text(
                 'INR ${ref.watch(totalSalaryProvider)}',
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: AppColor.primaryColor,
-                  fontSize: 20.0,
+                  fontSize: 24.0,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              8.heightBox,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 26.0,
-                    height: 4.0,
-                    decoration: ShapeDecoration(
-                      color: const Color(0xFFD9D9D9),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(17),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              8.heightBox,
-              Text.rich(
-                textAlign: TextAlign.center,
-                TextSpan(
-                  children: [
-                    const TextSpan(
-                      text: 'Basic Salary: ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w500,
-                        height: 0,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'INR ${ref.watch(profileProvider)?.basicSalary}',
-                      style: const TextStyle(
-                        color: AppColor.primaryColor,
-                        fontSize: 14,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                        height: 0,
-                      ),
-                    ),
-                  ],
+              const SizedBox(height: 12),
+              Container(
+                width: 26.0,
+                height: 4.0,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFD9D9D9),
+                  borderRadius: BorderRadius.circular(17),
                 ),
               ),
-              8.heightBox,
-              Text.rich(
-                textAlign: TextAlign.center,
-                TextSpan(
-                  children: [
-                    const TextSpan(
-                      text: 'HRA: ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w500,
-                        height: 0,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'INR ${ref.watch(profileProvider)?.hra}',
-                      style: const TextStyle(
-                        color: AppColor.primaryColor,
-                        fontSize: 14,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                        height: 0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              8.heightBox,
+              const SizedBox(height: 12),
               const Divider(),
-              4.heightBox,
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: Text(
-                      'S.NO.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Date',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Amount',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              4.heightBox,
-              const Divider(),
-              ref.watch(salaryDetailsProvider).when(
-                    data: (details) => details.isEmpty
-                        ? const Center(
-                            child: Text(
-                              'No Salary Details',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16.0,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          )
-                        : Expanded(
-                            child: ListView.separated(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              separatorBuilder: (context, index) => 8.heightBox,
-                              itemCount: details.length,
-                              itemBuilder: (context, index) {
-                                final detail = details.elementAt(index);
-                                return SalaryItem(
-                                  serialNumber: '${index + 1}',
-                                  date: detail.createdAt.formattedDate,
-                                  amount: '${detail.amount}',
-                                );
-                              },
-                            ),
-                          ),
-                    error: (_, __) => const Text('Error'),
-                    loading: () => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
+              const SizedBox(height: 8),
+              _buildTableHeader(),
+              const SizedBox(height: 8),
+              _buildSalaryDetails(profile?.salaryDetails ?? {}),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTableHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Expanded(
+          child: _buildHeaderItem('S.NO.'),
+        ),
+        SizedBox(
+          width: 20,
+        ),
+        Expanded(
+          child: _buildHeaderItem('Date', textAlign: TextAlign.left),
+        ),
+        SizedBox(
+          width: 20,
+        ),
+        Expanded(
+          child: _buildHeaderItem('Amount', textAlign: TextAlign.left),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHeaderItem(String text, {TextAlign? textAlign}) {
+    return Text(
+      text,
+      textAlign: textAlign ?? TextAlign.center,
+      style: const TextStyle(
+        color: Colors.black,
+        fontSize: 16.0,
+        fontFamily: 'Inter',
+        fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+
+  Widget _buildSalaryDetails(
+    Map<Object?, Map<Object?, SalaryDetail>> salaryDetails,
+  ) {
+    return Expanded(
+      child: ListView.builder(
+        padding: const EdgeInsets.only(top: 8.0),
+        itemCount: salaryDetails.length,
+        itemBuilder: (context, yearIndex) {
+          final year = salaryDetails.keys.elementAt(yearIndex);
+          final monthDetails = Map<String, SalaryDetail>.fromEntries(
+            (salaryDetails[year] ?? {})
+                .entries
+                .map((entry) => MapEntry(entry.key as String, entry.value)),
+          );
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Text(
+              //   '$year',
+              //   style: const TextStyle(
+              //     color: Colors.black,
+              //     fontSize: 20.0,
+              //     fontFamily: 'Inter',
+              //     fontWeight: FontWeight.w800,
+              //   ),
+              // ),
+              const SizedBox(height: 8),
+              ListView.builder(
+                shrinkWrap: true,
+                reverse: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: monthDetails.length,
+                itemBuilder: (context, monthIndex) {
+                  final month = monthDetails.keys.elementAt(monthIndex);
+                  final amount = salaryDetails[year]?[month]?.amount ?? 0;
+                  final create =
+                      salaryDetails[year]?[month]?.createdAt as DateTime? ??
+                          DateTime.now();
+                  final formattedDate = DateFormat.yMMMMd().format(create);
+
+                  return SalaryItemWidget(
+                    serialNumber: '${salaryDetails.length - monthIndex + 1}',
+                    date: formattedDate,
+                    amount: '₹ $amount',
+                  );
+                },
+              ),
+              const Divider(),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class SalaryItemWidget extends StatelessWidget {
+  final String serialNumber;
+  final String date;
+  final String amount;
+
+  const SalaryItemWidget({
+    Key? key,
+    required this.serialNumber,
+    required this.date,
+    required this.amount,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Expanded(
+            child: Text(
+              serialNumber,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              date,
+              textAlign: TextAlign.left,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              amount,
+              textAlign: TextAlign.left,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 16.0,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

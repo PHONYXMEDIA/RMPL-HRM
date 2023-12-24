@@ -181,7 +181,7 @@ class _$AttendanceImpl implements _Attendance {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AttendanceImpl &&
