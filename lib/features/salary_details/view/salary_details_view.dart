@@ -20,9 +20,9 @@ class SalaryDetailsView extends ConsumerWidget {
       body: Container(
         margin: const EdgeInsets.only(top: 12),
         padding: const EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColor.whiteColor,
-          borderRadius: const BorderRadius.only(
+          borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16),
             topRight: Radius.circular(16),
           ),
@@ -38,9 +38,9 @@ class SalaryDetailsView extends ConsumerWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 16.0,
+                  fontSize: 20.0,
                   fontFamily: 'Inter',
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               const SizedBox(height: 8),
@@ -49,23 +49,14 @@ class SalaryDetailsView extends ConsumerWidget {
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: AppColor.primaryColor,
-                  fontSize: 24.0,
+                  fontSize: 28.0,
                   fontFamily: 'Inter',
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
-              const SizedBox(height: 12),
-              Container(
-                width: 26.0,
-                height: 4.0,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFD9D9D9),
-                  borderRadius: BorderRadius.circular(17),
-                ),
-              ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               const Divider(),
-              const SizedBox(height: 8),
+              const SizedBox(height: 16),
               _buildTableHeader(),
               const SizedBox(height: 8),
               _buildSalaryDetails(profile?.salaryDetails ?? {}),
@@ -77,34 +68,38 @@ class SalaryDetailsView extends ConsumerWidget {
   }
 
   Widget _buildTableHeader() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Expanded(
-          child: _buildHeaderItem('S.NO.'),
-        ),
-        SizedBox(
-          width: 20,
-        ),
-        Expanded(
-          child: _buildHeaderItem('Date', textAlign: TextAlign.left),
-        ),
-        SizedBox(
-          width: 20,
-        ),
-        Expanded(
-          child: _buildHeaderItem('Amount', textAlign: TextAlign.left),
-        ),
-      ],
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: AppColor.primaryColor,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: _buildHeaderItem('S.NO.', alignment: TextAlign.center),
+          ),
+          Expanded(
+            flex: 3,
+            child: _buildHeaderItem('Date', alignment: TextAlign.center),
+          ),
+          Expanded(
+            flex: 2,
+            child: _buildHeaderItem('Amount', alignment: TextAlign.left),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildHeaderItem(String text, {TextAlign? textAlign}) {
+  Widget _buildHeaderItem(String text, {TextAlign? alignment}) {
     return Text(
       text,
-      textAlign: textAlign ?? TextAlign.center,
+      textAlign: alignment,
       style: const TextStyle(
-        color: Colors.black,
+        color: Colors.white,
         fontSize: 16.0,
         fontFamily: 'Inter',
         fontWeight: FontWeight.w600,
@@ -122,23 +117,23 @@ class SalaryDetailsView extends ConsumerWidget {
         itemBuilder: (context, yearIndex) {
           final year = salaryDetails.keys.elementAt(yearIndex);
           final monthDetails = Map<String, SalaryDetail>.fromEntries(
-            (salaryDetails[year] ?? {})
-                .entries
-                .map((entry) => MapEntry(entry.key as String, entry.value)),
+            (salaryDetails[year] ?? {}).entries.map(
+                  (entry) => MapEntry(entry.key as String, entry.value),
+                ),
           );
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Text(
-              //   '$year',
-              //   style: const TextStyle(
-              //     color: Colors.black,
-              //     fontSize: 20.0,
-              //     fontFamily: 'Inter',
-              //     fontWeight: FontWeight.w800,
-              //   ),
-              // ),
+              Text(
+                '$year',
+                style: const TextStyle(
+                  color: AppColor.primaryColor,
+                  fontSize: 20.0,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
               const SizedBox(height: 8),
               ListView.builder(
                 shrinkWrap: true,

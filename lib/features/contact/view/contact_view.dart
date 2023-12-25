@@ -66,10 +66,13 @@ class _ContactViewState extends State<ContactView> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double maxHeight = screenHeight;
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       body: SingleChildScrollView(
         child: Container(
+          constraints: BoxConstraints(maxHeight: maxHeight),
           margin: const EdgeInsets.only(top: 12),
           decoration: const BoxDecoration(
             color: AppColor.whiteColor,

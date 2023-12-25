@@ -51,6 +51,8 @@ class Attendance extends _$Attendance {
 
   Future<void> createAttendance() async {
     state = state.copyWith(punchStatus: a.PunchStatus.loading);
+    
+   
 
     try {
       final date = ref.watch(currentDateProvider);

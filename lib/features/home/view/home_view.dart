@@ -31,7 +31,7 @@ const Iterable<Widget> screens = [
 ];
 
 class HomeView extends ConsumerWidget {
-  HomeView({super.key});
+  HomeView({Key? key}) : super(key: key);
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   Future<void> _requestNotificationPermission() async {
@@ -44,9 +44,11 @@ class HomeView extends ConsumerWidget {
 
     print('User granted permission: ${settings.authorizationStatus}');
   }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final navigation = ref.watch(navigationProvider);
+
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       appBar: AppBar(
@@ -76,22 +78,19 @@ class HomeView extends ConsumerWidget {
                 color: Colors.white,
               ),
             ),
-            navigation.screen == Screen.dashboard ||
-                    navigation.screen == Screen.notifications
-                ? 4.heightBox
-                : Container(),
-            navigation.screen == Screen.dashboard ||
-                    navigation.screen == Screen.notifications
-                ? Text(
-                    '${ref.watch(profileProvider)?.designation}',
-                    style: const TextStyle(
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: Colors.white,
-                    ),
-                  )
-                : const SizedBox.shrink(),
+            if (navigation.screen == Screen.dashboard ||
+                navigation.screen == Screen.notifications) ...[
+              4.heightBox,
+              Text(
+                '${ref.watch(profileProvider)?.designation}',
+                style: const TextStyle(
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ],
         ),
         actions: [
@@ -107,10 +106,11 @@ class HomeView extends ConsumerWidget {
               ),
               child: Stack(
                 children: [
-                  Center(
-                    child: SvgPicture.asset(
-                      'assets/icons/Notification.svg',
-                      width: 16,
+                  const Center(
+                    child: Icon(
+                      Icons.notifications,
+                      size: 16,
+                      color: AppColor.darkColor,
                     ),
                   ),
                   Positioned(
@@ -145,13 +145,14 @@ class HomeView extends ConsumerWidget {
                 shape: BoxShape.circle,
                 color: AppColor.whiteColor,
               ),
-              child: SvgPicture.asset(
-                'assets/icons/Logout.svg',
-                width: 20,
+              child: const Icon(
+                Icons.logout,
+                size: 20,
+                color: AppColor.darkColor,
               ),
             ),
           ),
-          16.widthBox
+          16.widthBox,
         ],
       ),
       drawer: Drawer(
@@ -163,15 +164,37 @@ class HomeView extends ConsumerWidget {
                 (screen) => MenuItem(
                   screen: screen,
                   selected: navigation.screen == screen,
+                  iconData: getIconDataForScreen(screen),
                 ),
               ),
             ],
           ),
         ),
       ),
-      body: screens.elementAt(
-        navigation.screen.index,
-      ),
+      body: screens.elementAt(navigation.screen.index),
     );
+  }
+
+  IconData getIconDataForScreen(Screen screen) {
+    switch (screen) {
+      case Screen.dashboard:
+        return Icons.dashboard;
+      case Screen.notifications:
+        return Icons.notifications;
+      case Screen.myAttendance:
+        return Icons.access_time;
+      case Screen.holidays:
+        return Icons.calendar_today;
+      case Screen.manageLeave:
+        return Icons.event_note;
+      case Screen.salaryDetails:
+        return Icons.attach_money;
+      case Screen.myProfile:
+        return Icons.person;
+      case Screen.contactAdmin:
+        return Icons.contacts;
+      default:
+        return Icons.error;
+    }
   }
 }

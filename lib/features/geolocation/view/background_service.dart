@@ -3,11 +3,15 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
+import 'package:rmpl_hrm/extensions/object/log.dart';
+import 'package:rmpl_hrm/firebase_options.dart';
 
 Future<void> initializeService() async {
   final service = FlutterBackgroundService();
@@ -44,6 +48,7 @@ Future<void> initializeService() async {
       onStart: onStart,
       autoStart: true,
       isForegroundMode: true,
+      autoStartOnBoot: true,
       notificationChannelId: 'location_service',
       initialNotificationTitle: 'AWESOME SERVICE',
       initialNotificationContent: 'Initializing',
@@ -70,7 +75,53 @@ Future<void> onStart(ServiceInstance service) async {
       service.setAsBackgroundService();
     });
   }
-  service.on('stopService').listen((event) {
+
+  Future<void> storeLocationInFirestore(Position position) async {
+    try {
+      await Firebase.initializeApp(
+        name: 'service_app',
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+
+      final locationCollection = FirebaseFirestore.instance.collection(
+        'user_locations',
+      );
+
+      final userId = FirebaseAuth.instance.currentUser?.uid;
+
+      await locationCollection.doc(userId).collection('location_history').add({
+        'latitude': position.latitude,
+        'longitude': position.longitude,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+      '---------> Success'.log();
+    } catch (e) {
+      print('EEEEE:- Error storing location data: $e');
+    }
+    // await _locationCollection.doc(userId).collection('location_history').add({
+    //   'latitude': position.latitude,
+    //   'longitude': position.longitude,
+    //   'timestamp': FieldValue.serverTimestamp(),
+    // }).catchError((error) {
+    //   print('Error storing location data: $error');
+    // });
+  }
+
+  final sub = Geolocator.getPositionStream(
+    locationSettings: const LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 10,
+    ),
+  ).listen((Position position) async {
+    print('1111111 Live Latitude: ${position.latitude}');
+    print('2222222 Live Longitude: ${position.longitude}');
+    await storeLocationInFirestore(position);
+  }, onError: (error) {
+    print('Error obtaining location: error');
+  });
+
+  service.on('stopService').listen((event) async {
+    await sub.cancel();
     service.stopSelf();
   });
 }
@@ -164,7 +215,9 @@ class BackgroundService {
     final _locationCollection =
         FirebaseFirestore.instance.collection('user_locations');
 
-    _locationCollection.doc('user_id').collection('location_history').add({
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+
+    _locationCollection.doc(userId).collection('location_history').add({
       'latitude': position.latitude,
       'longitude': position.longitude,
       'timestamp': FieldValue.serverTimestamp(),

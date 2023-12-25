@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -6,9 +7,28 @@ import 'package:rmpl_hrm/constants/dimensions.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/features/login/login.dart';
 import 'package:rmpl_hrm/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class LoginView extends HookConsumerWidget {
   const LoginView({super.key});
+
+  Future<void> saveFcmTokenToFirebase(String fcmToken) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseFirestore.instance
+          .collection('employee')
+          .doc(user.uid)
+          .set({'token': fcmToken}, SetOptions(merge: true));
+    }
+  }
+
+  Future<void> saveFcmToken() async {
+    final String? fcmToken = await FirebaseMessaging.instance.getToken();
+    if (fcmToken != null) {
+      await saveFcmTokenToFirebase(fcmToken);
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,7 +54,6 @@ class LoginView extends HookConsumerWidget {
               ),
             ),
             Container(
-              // height: mq.height * 0.6,
               width: double.infinity,
               padding: mq.width > Dimensions.webScreenSize
                   ? EdgeInsets.symmetric(
@@ -51,8 +70,6 @@ class LoginView extends HookConsumerWidget {
                   topLeft: Radius.circular(28),
                   topRight: Radius.circular(28),
                 ),
-                // borderRadius: BorderRadius.all(Radius.circular(28)
-                // )
               ),
               child: Form(
                 key: key,
@@ -81,6 +98,7 @@ class LoginView extends HookConsumerWidget {
                     ),
                     20.heightBox,
                     const LoginButton(),
+                    
                     8.heightBox,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -9,8 +9,8 @@ import 'package:rmpl_hrm/extensions/object/formatted_date.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/main.dart';
 import 'package:rmpl_hrm/responsive/web_screen_layout.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:intl/intl.dart';
 
 class DashboardView extends ConsumerWidget {
   const DashboardView({Key? key});
@@ -26,13 +26,12 @@ class DashboardView extends ConsumerWidget {
 
     final firstDayOfMonthProvider = Provider<DateTime>((ref) {
       final now = DateTime.now();
-      return DateTime(now.year, now.month, 1); // First day of the current month
+      return DateTime(now.year, now.month, 1);
     });
 
     final lastDayOfMonthProvider = Provider<DateTime>((ref) {
       final now = DateTime.now();
-      final lastDay =
-          DateTime(now.year, now.month + 1, 0); // Last day of the current month
+      final lastDay = DateTime(now.year, now.month + 1, 0);
       return lastDay.isAfter(now) ? now : lastDay;
     });
 
@@ -47,10 +46,11 @@ class DashboardView extends ConsumerWidget {
       return totalDays;
     });
 
-    final _attendancePercentage = 0;
-    final _leavePercentage = 0;
-    final _remainingPercentage = 0;
-    final _otherPercentage = 0;
+    final employeeState = ref.watch(profileProvider);
+    final DateTime? employeeTime = employeeState!.probationTill;
+    final String formattedDate = DateFormat('dd-MM-yyyy').format(employeeTime!);
+    print("ubdwibidw $formattedDate");
+    // final String formattedTime = employeTime.toString();
 
     final List<ChartData> chartData = _generateChartData(
       attendanceCount: attendanceCount,
@@ -69,6 +69,39 @@ class DashboardView extends ConsumerWidget {
     final attendanceStatus = ref.watch(attendanceProvider).status;
     final punchStatus = ref.watch(attendanceProvider).punchStatus;
 
+    // late String probation;
+    // late String probationTill;
+
+    // Future<void> fetchData() async {
+    //   try {
+    //     final user = FirebaseAuth.instance.currentUser;
+    //     if (user != null) {
+    //       final data = await FirebaseFirestore.instance
+    //           .collection('employee')
+    //           .doc(user.uid)
+    //           .get();
+
+    //       if (data.exists) {
+    //         probation = data.get('probation') ?? '';
+    //         probationTill = data.get('probationTill') ?? '';
+
+    //         print('Probation: $probation');
+    //         print('Probation Till: $probationTill');
+    //       } else {
+    //         print('Employee document does not exist for user: ${user.uid}');
+    //       }
+    //     }
+    //   } catch (error) {
+    //     print('Error fetching employee data: $error');
+    //   }
+    // }
+
+    // @override
+    // void initState() async {
+    //   super.initState();
+    //   await fetchData();
+    // }
+
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       body: mq.width > Dimensions.webScreenSize
@@ -76,6 +109,7 @@ class DashboardView extends ConsumerWidget {
           : Stack(
               children: [
                 Container(
+                  height: MediaQuery.of(context).size.height,
                   width: double.infinity,
                   padding: const EdgeInsets.only(top: 86),
                   margin: const EdgeInsets.only(top: 48),
@@ -87,28 +121,34 @@ class DashboardView extends ConsumerWidget {
                     ),
                   ),
                   child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: double.infinity,
-                          color: Colors.red[800],
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8,
-                            horizontal: 12,
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'You are under probation which will last till 2.04.2024',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
-                                color: AppColor.whiteColor,
+                        if (employeeState.probation == true)
+                          Container(
+                            width: double.infinity,
+                            color: Colors.red[800],
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 12,
+                            ),
+                            child: Center(
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'You are under probation which will last till $formattedDate',
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColor.whiteColor,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        ),
                         16.heightBox,
                         attendanceStatus.isPunchedOut
                             ? const SizedBox.shrink()
@@ -224,7 +264,7 @@ class DashboardView extends ConsumerWidget {
                             ),
                           ],
                         ),
-                        24.heightBox,
+                        30.heightBox,
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
                           child: Text(

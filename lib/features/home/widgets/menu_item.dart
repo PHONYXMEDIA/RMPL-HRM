@@ -11,10 +11,12 @@ class MenuItem extends ConsumerWidget {
     super.key,
     required this.screen,
     required this.selected,
+    required this.iconData, 
   });
 
   final Screen screen;
   final bool selected;
+  final IconData iconData; // Add this line for the icon data
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,12 +44,9 @@ class MenuItem extends ConsumerWidget {
           ),
           child: Row(
             children: [
-              SvgPicture.asset(
-                'assets/icons/Home.svg',
-                colorFilter: const ColorFilter.mode(
-                  AppColor.darkColor,
-                  BlendMode.srcIn,
-                ),
+              Icon(
+                iconData, // Use the passed icon data
+                color: AppColor.darkColor,
               ),
               12.widthBox,
               Expanded(

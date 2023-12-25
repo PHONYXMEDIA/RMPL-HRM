@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'background_service.dart';
+
 
 class LocationScreen extends StatefulWidget {
   @override
@@ -36,7 +36,7 @@ class _LocationScreenState extends State<LocationScreen> {
     if (permission == LocationPermission.denied) {
       await _requestLocationPermission();
     } else if (permission == LocationPermission.deniedForever) {
-      print("Location permission is permanently denied");
+      print('Location permission is permanently denied');
     } else {
       _startLocationUpdates();
     }
@@ -45,9 +45,9 @@ class _LocationScreenState extends State<LocationScreen> {
   Future<void> _requestLocationPermission() async {
     LocationPermission permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied) {
-      print("Location permission denied");
+      print('Location permission denied');
     } else if (permission == LocationPermission.deniedForever) {
-      print("Location permission permanently denied");
+      print('Location permission permanently denied');
     } else {
       _startLocationUpdates();
     }
@@ -57,9 +57,9 @@ class _LocationScreenState extends State<LocationScreen> {
   
 
     _positionStream = Geolocator.getPositionStream(
-      locationSettings: LocationSettings(
+      locationSettings: const LocationSettings(
         accuracy: LocationAccuracy.high,
-        distanceFilter: 10, // in meters
+        distanceFilter: 10, 
       ),
     ).listen((Position position) {
       setState(() {
@@ -68,10 +68,10 @@ class _LocationScreenState extends State<LocationScreen> {
 
  
 
-      print("Live Latitude: ${_currentPosition.latitude}");
-      print("Live Longitude: ${_currentPosition.longitude}");
+      print('Live Latitude: ${_currentPosition.latitude}');
+      print('Live Longitude: ${_currentPosition.longitude}');
     }, onError: (dynamic error) {
-      print("Error obtaining location: $error");
+      print('Error obtaining location: $error');
     });
   }
 
@@ -85,7 +85,7 @@ class _LocationScreenState extends State<LocationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Live Location'),
+        title: const Text('Live Location'),
       ),
       body: Center(
         child: Column(
