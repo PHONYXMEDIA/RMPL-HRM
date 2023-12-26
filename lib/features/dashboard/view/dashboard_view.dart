@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -12,11 +13,47 @@ import 'package:rmpl_hrm/responsive/web_screen_layout.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 
-class DashboardView extends ConsumerWidget {
-  const DashboardView({Key? key});
+class DashboardView extends ConsumerStatefulWidget {
+  const DashboardView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _DashboardViewState();
+}
+
+class _DashboardViewState extends ConsumerState<DashboardView> {
+  List<DateTime> guestedHolidayDates = [];
+  Future<void> fetchHolidays() async {
+    try {
+      final QuerySnapshot<Map<String, dynamic>> data =
+          await FirebaseFirestore.instance.collection('holidays').get();
+      setState(() {
+        for (var doc in data.docs) {
+          final Timestamp timestamp = doc['date'] as Timestamp;
+          final DateTime day = timestamp.toDate();
+          final DateTime dateOnly = DateTime(day.year, day.month, day.day);
+          guestedHolidayDates.add(dateOnly);
+        }
+      });
+    } catch (error) {
+      print('Error fetching holidays data: $error');
+    }
+    print("gustedholidays  $guestedHolidayDates");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    // Perform your asynchronous work here...
+    // For example, you might await on some async operation:
+    await fetchHolidays();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
 
     final attendanceCount = ref.watch(attendanceCountProvider);
@@ -47,9 +84,9 @@ class DashboardView extends ConsumerWidget {
     });
 
     final employeeState = ref.watch(profileProvider);
-    final DateTime? employeeTime = employeeState?.probationTill;
-    final String formattedDate = DateFormat('dd-MM-yyyy').format(employeeTime!);
-    print("ubdwibidw $formattedDate");
+    final String formattedDate = employeeState?.probationTill != null
+        ? DateFormat('dd-MM-yyyy').format(employeeState!.probationTill!)
+        : 'N/A';
 
     final List<ChartData> chartData = _generateChartData(
       attendanceCount: attendanceCount,
@@ -68,38 +105,15 @@ class DashboardView extends ConsumerWidget {
     final attendanceStatus = ref.watch(attendanceProvider).status;
     final punchStatus = ref.watch(attendanceProvider).punchStatus;
 
-    // late String probation;
-    // late String probationTill;
-
-    // Future<void> fetchData() async {
-    //   try {
-    //     final user = FirebaseAuth.instance.currentUser;
-    //     if (user != null) {
-    //       final data = await FirebaseFirestore.instance
-    //           .collection('employee')
-    //           .doc(user.uid)
-    //           .get();
-
-    //       if (data.exists) {
-    //         probation = data.get('probation') ?? '';
-    //         probationTill = data.get('probationTill') ?? '';
-
-    //         print('Probation: $probation');
-    //         print('Probation Till: $probationTill');
-    //       } else {
-    //         print('Employee document does not exist for user: ${user.uid}');
-    //       }
-    //     }
-    //   } catch (error) {
-    //     print('Error fetching employee data: $error');
-    //   }
-    // }
-
-    // @override
-    // void initState() async {
-    //   super.initState();
-    //   await fetchData();
-    // }
+    final currentTime = DateTime.now();
+    final isWithinTimeRange = currentTime.hour >= 10 && currentTime.hour < 18;
+    final isWeekend = currentTime.weekday == DateTime.saturday ||
+        currentTime.weekday == DateTime.sunday;
+    final isGuestedHoliday = guestedHolidayDates.contains(
+        DateTime(currentTime.year, currentTime.month, currentTime.day));
+    print('holiday $isGuestedHoliday');
+    print(guestedHolidayDates);
+    print(DateTime(currentTime.year, currentTime.month, currentTime.day));
 
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
@@ -124,7 +138,7 @@ class DashboardView extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (employeeState!.probation == true)
+                        if (employeeState?.probation == true)
                           Container(
                             width: double.infinity,
                             color: Colors.red[800],
@@ -155,45 +169,50 @@ class DashboardView extends ConsumerWidget {
                                 ? const Center(
                                     child: CircularProgressIndicator(),
                                   )
-                                : GestureDetector(
-                                    onLongPress: ref
-                                        .read(attendanceProvider.notifier)
-                                        .createAttendance,
-                                    child: Container(
-                                      width: double.infinity,
-                                      margin: const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical: 16,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: AppColor.buttonColor,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black.withOpacity(
-                                              0.2,
-                                            ),
-                                            blurRadius: 4,
-                                            spreadRadius: 2,
+                                : (isWithinTimeRange &&
+                                        !isWeekend &&
+                                        !isGuestedHoliday
+                                    ? GestureDetector(
+                                        onLongPress: ref
+                                            .read(attendanceProvider.notifier)
+                                            .createAttendance,
+                                        child: Container(
+                                          width: double.infinity,
+                                          margin: const EdgeInsets.symmetric(
+                                            horizontal: 12,
                                           ),
-                                        ],
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          attendanceStatus.isPunchedIn
-                                              ? 'Hold to punch out'
-                                              : 'Hold to punch in',
-                                          style: const TextStyle(
-                                            color: AppColor.backgroundColor,
-                                            fontSize: 16,
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 12,
+                                            vertical: 16,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            color: AppColor.buttonColor,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black.withOpacity(
+                                                  0.2,
+                                                ),
+                                                blurRadius: 4,
+                                                spreadRadius: 2,
+                                              ),
+                                            ],
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              attendanceStatus.isPunchedIn
+                                                  ? 'Hold to punch out'
+                                                  : 'Hold to punch in',
+                                              style: const TextStyle(
+                                                color: AppColor.backgroundColor,
+                                                fontSize: 16,
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
+                                      )
+                                    : const SizedBox.shrink()),
                         24.heightBox,
                         Column(
                           children: [
