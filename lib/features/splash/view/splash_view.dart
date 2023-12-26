@@ -4,8 +4,10 @@ import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/main.dart';
 
+
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
+  
 
   @override
   Widget build(BuildContext context) {

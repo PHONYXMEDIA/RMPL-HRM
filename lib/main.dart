@@ -44,7 +44,7 @@ Future<void> execute(
     },
   );
 
-  await Future<void>.delayed(const Duration(seconds: 30));
+  // await Future<void>.delayed(const Duration(seconds: 30));
   await listener.cancel();
 }
 
@@ -54,10 +54,7 @@ Future<void> main() async {
   await execute(InternetConnectionChecker());
 
   final InternetConnectionChecker customInstance =
-      InternetConnectionChecker.createInstance(
-    checkTimeout: const Duration(seconds: 1),
-    checkInterval: const Duration(seconds: 1),
-  );
+      InternetConnectionChecker.createInstance();
 
   await execute(customInstance);
 
@@ -66,7 +63,7 @@ Future<void> main() async {
   );
 
   // BackgroundService.start();
-  await _checkLocationPermission();
+
   await initializeService();
 
   final messaging = FirebaseMessaging.instance;
