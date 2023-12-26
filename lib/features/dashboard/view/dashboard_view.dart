@@ -47,10 +47,9 @@ class DashboardView extends ConsumerWidget {
     });
 
     final employeeState = ref.watch(profileProvider);
-    final DateTime? employeeTime = employeeState!.probationTill;
+    final DateTime? employeeTime = employeeState?.probationTill;
     final String formattedDate = DateFormat('dd-MM-yyyy').format(employeeTime!);
     print("ubdwibidw $formattedDate");
-    // final String formattedTime = employeTime.toString();
 
     final List<ChartData> chartData = _generateChartData(
       attendanceCount: attendanceCount,
@@ -125,7 +124,7 @@ class DashboardView extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (employeeState.probation == true)
+                        if (employeeState!.probation == true)
                           Container(
                             width: double.infinity,
                             color: Colors.red[800],
@@ -137,7 +136,7 @@ class DashboardView extends ConsumerWidget {
                               child: Row(
                                 children: [
                                   Text(
-                                    'You are under probation which will last till $formattedDate',
+                                    'You are under probation last date till $formattedDate',
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       fontFamily: 'Inter',
