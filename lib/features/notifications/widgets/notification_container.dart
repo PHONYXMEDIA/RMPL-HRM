@@ -5,26 +5,16 @@ import 'package:rmpl_hrm/extensions/widget/box.dart';
 
 class NotificationContainer extends StatelessWidget {
   const NotificationContainer({
-    Key? key,
+    super.key,
     required this.text,
-    required this.notificationTime,
-  }) : super(key: key);
+    required this.date,
+  });
 
   final String text;
-  final String notificationTime;
+  final DateTime? date;
 
   @override
   Widget build(BuildContext context) {
-    DateTime parsedDateTime = _parseDateTime(notificationTime);
-
-    if (parsedDateTime == null) {
-      // Handle the case where parsing failed
-      return Container();
-    }
-
-    String formattedDateTime =
-        DateFormat('dd.MM.yyyy hh:mm a').format(parsedDateTime);
-
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
@@ -46,7 +36,7 @@ class NotificationContainer extends StatelessWidget {
           ),
           6.heightBox,
           Text(
-            'Date and Time: $formattedDateTime IST',
+            'Date and Time: ${date != null ? DateFormat('dd.MM.yyyy').format(date!) : 'N/A'} ${date != null ? DateFormat.jm().format(date!) : ''}',
             style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 12,
@@ -57,14 +47,5 @@ class NotificationContainer extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  DateTime _parseDateTime(String dateTimeString) {
-    try {
-      return DateTime.parse(dateTimeString);
-    } catch (e) {
-      print('Error parsing dateTimeString: $e');
-      return DateTime.now();
-    }
   }
 }

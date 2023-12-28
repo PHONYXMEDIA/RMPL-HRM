@@ -17,6 +17,7 @@ class RootView extends ConsumerWidget {
       case AuthStatus.unauthenticated:
         return const LoginPage();
       case AuthStatus.initial:
+      default:
         return const SplashPage();
     }
   }

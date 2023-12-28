@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:formz/formz.dart';
 import 'package:models/models.dart';
@@ -47,7 +48,7 @@ class Login extends _$Login {
             password: state.password.value!,
           );
       state = state.copyWith(status: FormzSubmissionStatus.success);
-      final user = ref.watch(firebaseAuthProvider).currentUser;
+      final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         final token = await FirebaseMessaging.instance.getToken();
         await ref

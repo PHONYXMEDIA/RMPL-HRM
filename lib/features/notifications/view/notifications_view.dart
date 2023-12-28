@@ -31,7 +31,7 @@ class NotificationView extends ConsumerWidget {
                       final notification = notifications.elementAt(index);
                       return NotificationContainer(
                         text: notification.message ?? '',
-                        notificationTime: notification.createdAt.toString(),
+                        date: notification.createdAt,
                       );
                     },
                   ),

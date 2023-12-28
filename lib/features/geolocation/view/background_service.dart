@@ -7,26 +7,26 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:rmpl_hrm/extensions/object/log.dart';
 import 'package:rmpl_hrm/firebase_options.dart';
 
-Future<void> initializeService() async {
+Future<void> initializeService(
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
+) async {
   final service = FlutterBackgroundService();
 
   const channel = AndroidNotificationChannel(
     'location_service',
-    'foreground service',
+    'Foreground service',
     description: 'This channel is used for important notifications.',
     importance: Importance.high,
   );
 
-  final flutterLocalNotificationPlugin = FlutterLocalNotificationsPlugin();
-
   if (Platform.isAndroid || Platform.isIOS) {
-    await flutterLocalNotificationPlugin.initialize(
+    await flutterLocalNotificationsPlugin.initialize(
       const InitializationSettings(
         iOS: DarwinInitializationSettings(),
         android: AndroidInitializationSettings('ic_bg_service_small'),
@@ -34,7 +34,7 @@ Future<void> initializeService() async {
     );
   }
 
-  await flutterLocalNotificationPlugin
+  await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
@@ -50,8 +50,8 @@ Future<void> initializeService() async {
       isForegroundMode: true,
       autoStartOnBoot: true,
       notificationChannelId: 'location_service',
-      initialNotificationTitle: 'AWESOME SERVICE',
-      initialNotificationContent: 'Initializing',
+      initialNotificationTitle: 'RMPL HRA',
+      initialNotificationContent: 'RMPL HRA Service',
       foregroundServiceNotificationId: 888,
     ),
   );
@@ -96,7 +96,7 @@ Future<void> onStart(ServiceInstance service) async {
       });
       '---------> Success'.log();
     } catch (e) {
-      print('EEEEE:- Error storing location data: $e');
+      'EEEEE:- Error storing location data: $e'.log();
     }
     // await _locationCollection.doc(userId).collection('location_history').add({
     //   'latitude': position.latitude,
@@ -125,120 +125,120 @@ Future<void> onStart(ServiceInstance service) async {
     service.stopSelf();
   });
 }
-
-class BackgroundService {
-  static const String _serviceKey = 'location_service';
-  static const String notificationChannelId = 'my_foreground';
-  static const int notificationId = 888;
-
-  static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
-  static Future<void> start() async {
-    final service = FlutterBackgroundService();
-
-    const AndroidNotificationChannel channel = AndroidNotificationChannel(
-      notificationChannelId,
-      'MY FOREGROUND SERVICE',
-      description: 'This channel is used for important notifications.',
-      importance: Importance.high,
-    );
-
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
-
-    FutureOr<bool> onIosBackground(ServiceInstance service) async {
-      WidgetsFlutterBinding.ensureInitialized();
-      DartPluginRegistrant.ensureInitialized();
-      return true;
-    }
-
-    Future<void> onStart(ServiceInstance service) async {
-      DartPluginRegistrant.ensureInitialized();
-      if (service is AndroidServiceInstance) {
-        service.on('setAsForeground').listen((event) {
-          service.setAsForegroundService();
-        });
-        service.on('setAsBackground').listen((event) {
-          service.setAsBackgroundService();
-        });
-      }
-      service.on('stopService').listen((event) {
-        service.stopSelf();
-      });
-    }
-
-    await service.configure(
-      androidConfiguration: AndroidConfiguration(
-        onStart: onStart,
-        autoStart: true,
-        isForegroundMode: true,
-        notificationChannelId: notificationChannelId,
-        initialNotificationTitle: 'AWESOME SERVICE',
-        initialNotificationContent: 'Initializing',
-        foregroundServiceNotificationId: notificationId,
-      ),
-      iosConfiguration: IosConfiguration(
-        onForeground: onStart,
-        onBackground: onIosBackground,
-      ),
-    );
-    void _startLocationUpdates() {
-      Geolocator.getPositionStream(
-        locationSettings: const LocationSettings(
-          accuracy: LocationAccuracy.high,
-          distanceFilter: 10,
-        ),
-      ).listen((Position position) {
-        flutterLocalNotificationsPlugin.show(
-          notificationId,
-          'Live Location Update',
-          'Latitude: ${position.latitude}, Longitude: ${position.longitude}',
-          const NotificationDetails(
-            android: AndroidNotificationDetails(
-              notificationChannelId,
-              'Live Location Updates',
-            ),
-          ),
-        );
-
-        _storeLocationInFirestore(position);
-      }, onError: (dynamic error) {
-        print('Error obtaining location: $error');
-      });
-    }
-  }
-
-  static void _storeLocationInFirestore(Position position) {
-    final _locationCollection =
-        FirebaseFirestore.instance.collection('user_locations');
-
-    final userId = FirebaseAuth.instance.currentUser?.uid;
-
-    _locationCollection.doc(userId).collection('location_history').add({
-      'latitude': position.latitude,
-      'longitude': position.longitude,
-      'timestamp': FieldValue.serverTimestamp(),
-    }).catchError((error) {
-      print('Error storing location data: $error');
-    });
-  }
-}
-
-Future<void> _onStart() async {
-  print('Executing onStart');
-  BackgroundService.flutterLocalNotificationsPlugin.show(
-    BackgroundService.notificationId,
-    'AWESOME SERVICE',
-    'Service is running...',
-    const NotificationDetails(
-      android: AndroidNotificationDetails(
-        BackgroundService.notificationChannelId,
-        'AWESOME SERVICE',
-      ),
-    ),
-  );
-  BackgroundService.start();
-}
+//
+// class BackgroundService {
+//   static const String _serviceKey = 'location_service';
+//   static const String notificationChannelId = 'my_foreground';
+//   static const int notificationId = 888;
+//
+//   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+//       FlutterLocalNotificationsPlugin();
+//
+//   static Future<void> start() async {
+//     final service = FlutterBackgroundService();
+//
+//     const AndroidNotificationChannel channel = AndroidNotificationChannel(
+//       notificationChannelId,
+//       'MY FOREGROUND SERVICE',
+//       description: 'This channel is used for important notifications.',
+//       importance: Importance.high,
+//     );
+//
+//     await flutterLocalNotificationsPlugin
+//         .resolvePlatformSpecificImplementation<
+//             AndroidFlutterLocalNotificationsPlugin>()
+//         ?.createNotificationChannel(channel);
+//
+//     FutureOr<bool> onIosBackground(ServiceInstance service) async {
+//       WidgetsFlutterBinding.ensureInitialized();
+//       DartPluginRegistrant.ensureInitialized();
+//       return true;
+//     }
+//
+//     Future<void> onStart(ServiceInstance service) async {
+//       DartPluginRegistrant.ensureInitialized();
+//       if (service is AndroidServiceInstance) {
+//         service.on('setAsForeground').listen((event) {
+//           service.setAsForegroundService();
+//         });
+//         service.on('setAsBackground').listen((event) {
+//           service.setAsBackgroundService();
+//         });
+//       }
+//       service.on('stopService').listen((event) {
+//         service.stopSelf();
+//       });
+//     }
+//
+//     await service.configure(
+//       androidConfiguration: AndroidConfiguration(
+//         onStart: onStart,
+//         autoStart: true,
+//         isForegroundMode: true,
+//         notificationChannelId: notificationChannelId,
+//         initialNotificationTitle: 'AWESOME SERVICE',
+//         initialNotificationContent: 'Initializing',
+//         foregroundServiceNotificationId: notificationId,
+//       ),
+//       iosConfiguration: IosConfiguration(
+//         onForeground: onStart,
+//         onBackground: onIosBackground,
+//       ),
+//     );
+//     void _startLocationUpdates() {
+//       Geolocator.getPositionStream(
+//         locationSettings: const LocationSettings(
+//           accuracy: LocationAccuracy.high,
+//           distanceFilter: 10,
+//         ),
+//       ).listen((Position position) {
+//         flutterLocalNotificationsPlugin.show(
+//           notificationId,
+//           'Live Location Update',
+//           'Latitude: ${position.latitude}, Longitude: ${position.longitude}',
+//           const NotificationDetails(
+//             android: AndroidNotificationDetails(
+//               notificationChannelId,
+//               'Live Location Updates',
+//             ),
+//           ),
+//         );
+//
+//         _storeLocationInFirestore(position);
+//       }, onError: (dynamic error) {
+//         print('Error obtaining location: $error');
+//       });
+//     }
+//   }
+//
+//   static void _storeLocationInFirestore(Position position) {
+//     final _locationCollection =
+//         FirebaseFirestore.instance.collection('user_locations');
+//
+//     final userId = FirebaseAuth.instance.currentUser?.uid;
+//
+//     _locationCollection.doc(userId).collection('location_history').add({
+//       'latitude': position.latitude,
+//       'longitude': position.longitude,
+//       'timestamp': FieldValue.serverTimestamp(),
+//     }).catchError((error) {
+//       print('Error storing location data: $error');
+//     });
+//   }
+// }
+//
+// Future<void> _onStart() async {
+//   print('Executing onStart');
+//   BackgroundService.flutterLocalNotificationsPlugin.show(
+//     BackgroundService.notificationId,
+//     'AWESOME SERVICE',
+//     'Service is running...',
+//     const NotificationDetails(
+//       android: AndroidNotificationDetails(
+//         BackgroundService.notificationChannelId,
+//         'AWESOME SERVICE',
+//       ),
+//     ),
+//   );
+//   BackgroundService.start();
+// }
