@@ -45,7 +45,7 @@ class MenuItem extends ConsumerWidget {
           child: Row(
             children: [
               Icon(
-                iconData, // Use the passed icon data
+                iconData, 
                 color: AppColor.darkColor,
               ),
               12.widthBox,
