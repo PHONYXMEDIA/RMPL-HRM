@@ -12,6 +12,7 @@ class Notification extends _$Notification {
         firestoreProvider,
       )
       .collection('notifications')
+      .orderBy('createdAt', descending: true)
       .where(
         'isVisible',
         isEqualTo: true,
