@@ -47,9 +47,18 @@ class Login extends _$Login {
             email: state.email.value!,
             password: state.password.value!,
           );
-      state = state.copyWith(status: FormzSubmissionStatus.success);
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
+        final oldUser = await ref
+            .read(firestoreProvider)
+            .collection('employees')
+            .doc(user.uid)
+            .get();
+
+        if (!oldUser.exists) {
+          throw Exception('User is not exists');
+        }
+
         final token = await FirebaseMessaging.instance.getToken();
         await ref
             .read(firestoreProvider)
@@ -58,6 +67,8 @@ class Login extends _$Login {
             .update({
           'tokens': FieldValue.arrayUnion([token]),
         });
+
+        state = state.copyWith(status: FormzSubmissionStatus.success);
       }
     } on LogInWithEmailAndPasswordFailure catch (e) {
       state = state.copyWith(

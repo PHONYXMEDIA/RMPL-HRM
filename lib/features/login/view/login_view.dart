@@ -98,7 +98,6 @@ class LoginView extends HookConsumerWidget {
                     ),
                     20.heightBox,
                     const LoginButton(),
-                    
                     8.heightBox,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
