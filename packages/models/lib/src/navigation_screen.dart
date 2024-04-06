@@ -9,8 +9,7 @@ enum Screen {
   holidays(title: 'Holidays'),
   manageLeave(title: 'Manage Leave'),
   salaryDetails(title: 'Salary Details'),
-  myProfile(title: 'My Profile'),
-  contactAdmin(title: 'Contact Admin');
+  myProfile(title: 'My Profile');
 
   const Screen({
     required this.title,

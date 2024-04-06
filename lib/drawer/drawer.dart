@@ -37,13 +37,6 @@ Widget customDrawer(context) {
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
-                // InkWell(
-                //   onTap: () {
-                //     Navigator.pop(context);
-                //     Navigator.of(context).push(ApplyLeaveView.route());
-                //   },
-                //   child: drawerList('Dashboard'),
-                // ),
                 DrawerList(text: 'Dashboard'),
                 DrawerList(text: 'Notifications'),
                 DrawerList(text: 'My Attendance'),
@@ -51,7 +44,6 @@ Widget customDrawer(context) {
                 DrawerList(text: 'Manage Leave'),
                 DrawerList(text: 'Salary Details'),
                 DrawerList(text: 'My Profile'),
-                DrawerList(text: 'Contact Admin'),
               ],
             ),
           ),

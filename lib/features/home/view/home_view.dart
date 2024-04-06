@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:models/models.dart';
@@ -9,7 +8,6 @@ import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/drawer/drawer_header.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
 import 'package:rmpl_hrm/features/attendance/attendance.dart';
-import 'package:rmpl_hrm/features/contact/contact.dart';
 import 'package:rmpl_hrm/features/dashboard/dashboard.dart';
 import 'package:rmpl_hrm/features/holidays/holidays.dart';
 import 'package:rmpl_hrm/features/home/home.dart';
@@ -26,23 +24,10 @@ const Iterable<Widget> screens = [
   ManageLeavePage(),
   SalaryDetailsPage(),
   ProfilePage(),
-  ContactPage(),
 ];
 
 class HomeView extends ConsumerWidget {
-  HomeView({Key? key}) : super(key: key);
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
-  Future<void> _requestNotificationPermission() async {
-    NotificationSettings settings = await _firebaseMessaging.requestPermission(
-      alert: true,
-      badge: true,
-      provisional: false,
-      sound: true,
-    );
-
-    print('User granted permission: ${settings.authorizationStatus}');
-  }
+  HomeView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -190,8 +175,6 @@ class HomeView extends ConsumerWidget {
         return Icons.attach_money;
       case Screen.myProfile:
         return Icons.person;
-      case Screen.contactAdmin:
-        return Icons.contacts;
       default:
         return Icons.error;
     }
