@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:providers/providers.dart'; // Import your providers package
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:providers/providers.dart';
 import 'package:rmpl_hrm/components/textfield.dart';
 import 'package:rmpl_hrm/constants/colors.dart';
 import 'package:rmpl_hrm/extensions/widget/box.dart';
-import 'package:rmpl_hrm/main.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 
 class ProfileView extends ConsumerWidget {
-  const ProfileView({Key? key}) : super(key: key);
+  const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profileData = ref.watch(profileProvider);
     final mq = MediaQuery.of(context).size;
 
-    String formatDate(String date) {
-      final parsedDate = DateTime.parse(date);
-      final formattedDate = DateFormat.yMd().format(parsedDate);
-      return formattedDate;
-    }
+    // String formatDate(String date) {
+    //   final parsedDate = DateTime.parse(date);
+    //   final formattedDate = DateFormat.yMd().format(parsedDate);
+    //   return formattedDate;
+    // }
 
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
@@ -94,6 +92,7 @@ class ProfileView extends ConsumerWidget {
                 _buildProfileField('First Name', '${profileData?.firstName}'),
                 _buildProfileField('Last Name', '${profileData?.lastName}'),
                 _buildProfileField('Date of Birth', '${profileData?.dob}'),
+                _buildProfileField('Region', '${profileData?.branch}'),
                 _buildProfileField(
                     'Designation', '${profileData?.designation}'),
                 _buildProfileField('Date Joined', '${profileData?.dateJoined}'),
