@@ -3,12 +3,19 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'date.g.dart';
 
 @riverpod
-DateTime currentDate(CurrentDateRef _) => DateTime.now();
+class CurrentDate extends _$CurrentDate {
+  @override
+  DateTime build() => DateTime.now();
+
+  void updateDate(DateTime date) {
+    state = date;
+  }
+}
 
 @riverpod
 DateTime firstDayOfMonth(FirstDayOfMonthRef ref) {
   final date = ref.watch(currentDateProvider);
-  return DateTime(date.year, date.month, 1);
+  return DateTime(date.year, date.month);
 }
 
 @riverpod
@@ -22,7 +29,6 @@ int totalDaysInMonth(TotalDaysInMonthRef ref) {
   final date = DateTime.now();
   return DateTime(date.year, date.month + 1, 0).day;
 }
-// ref.watch(lastDayOfMonthProvider).day;
 
 @riverpod
 int remainingDaysInMonth(RemainingDaysInMonthRef ref) =>

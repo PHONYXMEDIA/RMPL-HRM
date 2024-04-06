@@ -21,7 +21,7 @@ final workingDayCountProvider = AutoDisposeProvider<int>.internal(
 );
 
 typedef WorkingDayCountRef = AutoDisposeProviderRef<int>;
-String _$absenceCountHash() => r'a7917c5a30b9a60e49e54e7bec3bb2e2bbaf6fae';
+String _$absenceCountHash() => r'3a3d7589690a6d08d6cd7f3ca8fa0c77095d53dd';
 
 /// See also [absenceCount].
 @ProviderFor(absenceCount)

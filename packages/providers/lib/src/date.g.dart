@@ -6,21 +6,7 @@ part of 'date.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currentDateHash() => r'2070037c804de87c8a61c9984747d5f88f11176d';
-
-/// See also [currentDate].
-@ProviderFor(currentDate)
-final currentDateProvider = AutoDisposeProvider<DateTime>.internal(
-  currentDate,
-  name: r'currentDateProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$currentDateHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef CurrentDateRef = AutoDisposeProviderRef<DateTime>;
-String _$firstDayOfMonthHash() => r'f68622baabff5f521bf61db47d7cb98ed0fd53d8';
+String _$firstDayOfMonthHash() => r'0dfe1e3b9768e4e8df42dc8ee3c07675243d8381';
 
 /// See also [firstDayOfMonth].
 @ProviderFor(firstDayOfMonth)
@@ -81,5 +67,20 @@ final remainingDaysInMonthProvider = AutoDisposeProvider<int>.internal(
 );
 
 typedef RemainingDaysInMonthRef = AutoDisposeProviderRef<int>;
+String _$currentDateHash() => r'938063aff867f9f29266313a2bf2e1f02980dfd1';
+
+/// See also [CurrentDate].
+@ProviderFor(CurrentDate)
+final currentDateProvider =
+    AutoDisposeNotifierProvider<CurrentDate, DateTime>.internal(
+  CurrentDate.new,
+  name: r'currentDateProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$currentDateHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$CurrentDate = AutoDisposeNotifier<DateTime>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
