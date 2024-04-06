@@ -363,23 +363,23 @@ class WebScreenLayout extends StatelessWidget {
                                       ),
                                       selectionGesture:
                                           ActivationMode.singleTap,
-                                      annotations: <CircularChartAnnotation>[
+                                      annotations: const <CircularChartAnnotation>[
                                         CircularChartAnnotation(
                                             angle: 300,
                                             radius: '40%',
-                                            widget: const Text('25%')),
+                                            widget: Text('25%')),
                                         CircularChartAnnotation(
                                             angle: 200,
                                             radius: '40%',
-                                            widget: const Text('38%')),
+                                            widget: Text('38%')),
                                         CircularChartAnnotation(
                                             angle: 100,
                                             radius: '40%',
-                                            widget: const Text('34%')),
+                                            widget: Text('34%')),
                                         CircularChartAnnotation(
                                             angle: 0,
                                             radius: '40%',
-                                            widget: const Text('52%')),
+                                            widget: Text('52%')),
                                       ],
                                       series: <CircularSeries>[
                                         // Render pie chart
@@ -540,23 +540,23 @@ class WebScreenLayout extends StatelessWidget {
                                       ),
                                       selectionGesture:
                                           ActivationMode.singleTap,
-                                      annotations: <CircularChartAnnotation>[
+                                      annotations: const <CircularChartAnnotation>[
                                         CircularChartAnnotation(
                                             angle: 300,
                                             radius: '40%',
-                                            widget: const Text('25%')),
+                                            widget: Text('25%')),
                                         CircularChartAnnotation(
                                             angle: 200,
                                             radius: '40%',
-                                            widget: const Text('38%')),
+                                            widget: Text('38%')),
                                         CircularChartAnnotation(
                                             angle: 100,
                                             radius: '40%',
-                                            widget: const Text('34%')),
+                                            widget: Text('34%')),
                                         CircularChartAnnotation(
                                             angle: 0,
                                             radius: '40%',
-                                            widget: const Text('52%')),
+                                            widget: Text('52%')),
                                       ],
                                       series: <CircularSeries>[
                                         // Render pie chart

@@ -37,7 +37,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
     } catch (error) {
       print('Error fetching holidays data: $error');
     }
-    print("gustedholidays  $guestedHolidayDates");
+    print('gustedholidays  $guestedHolidayDates');
   }
 
   @override
@@ -409,7 +409,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                           Column(
                             children: [
                               Text(
-                                '${holidaysCount}',
+                                '$holidaysCount',
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,

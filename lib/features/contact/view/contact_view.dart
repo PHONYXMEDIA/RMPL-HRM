@@ -138,7 +138,8 @@ class _ContactViewState extends State<ContactView> {
                 ElevatedButton(
                   onPressed: _submitForm,
                   style: ElevatedButton.styleFrom(
-                    primary: AppColor.primaryColor, // Custom color
+                    // primary: AppColor.primaryColor, // Custom color
+                    backgroundColor: AppColor.primaryColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
                   child: const Text(

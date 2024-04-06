@@ -1,5 +1,5 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:models/models.dart';
 import 'package:providers/providers.dart';
@@ -17,7 +17,6 @@ import 'package:rmpl_hrm/features/manage_leave/manage_leave.dart';
 import 'package:rmpl_hrm/features/notifications/notifications.dart';
 import 'package:rmpl_hrm/features/profile/profile.dart';
 import 'package:rmpl_hrm/features/salary_details/salary_details.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 const Iterable<Widget> screens = [
   DashboardPage(),
