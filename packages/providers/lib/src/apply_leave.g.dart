@@ -6,7 +6,7 @@ part of 'apply_leave.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$applyLeaveHash() => r'a83801cdb82d666884b9cbff5533219f7199af4c';
+String _$applyLeaveHash() => r'303ff2babe2efe4642a3be63e4dfbde0f4b78539';
 
 /// See also [ApplyLeave].
 @ProviderFor(ApplyLeave)

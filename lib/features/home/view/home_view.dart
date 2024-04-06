@@ -27,7 +27,7 @@ const Iterable<Widget> screens = [
 ];
 
 class HomeView extends ConsumerWidget {
-  HomeView({super.key});
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

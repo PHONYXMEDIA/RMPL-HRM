@@ -78,7 +78,7 @@ class Leave extends _$Leave {
               .doc(
                 ref.read(authProvider).user.id,
               ),
-          'under': ref.read(profileProvider)!.creator,
+          // 'under': ref.read(profileProvider)?.creator,
         },
       );
     }

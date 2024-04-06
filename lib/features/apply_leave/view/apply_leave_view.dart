@@ -22,8 +22,17 @@ class ApplyLeaveView extends ConsumerWidget {
         if (next != previous) {
           if (next.oneDayState.status.isSuccess ||
               next.multipleDayState.status.isSuccess) {
+            ScaffoldMessenger.maybeOf(context)
+              ?..removeCurrentSnackBar()
+              ..showSnackBar(
+                const SnackBar(
+                  backgroundColor: Colors.green,
+                  content: Text('Successfully leave application submitted'),
+                ),
+              );
             Navigator.of(context).maybePop();
           }
+
           if (next.oneDayState.status.isFailure ||
               next.multipleDayState.status.isFailure) {
             ScaffoldMessenger.maybeOf(context)
@@ -33,6 +42,7 @@ class ApplyLeaveView extends ConsumerWidget {
                   content: Text('Something went wrong'),
                 ),
               );
+            ref.read(applyLeaveProvider.notifier).resetStatus();
           }
         }
       },

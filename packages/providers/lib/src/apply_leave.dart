@@ -10,6 +10,17 @@ class ApplyLeave extends _$ApplyLeave {
   @override
   ApplyLeaveState build() => const ApplyLeaveState();
 
+  void resetStatus() {
+    state = state.copyWith(
+      multipleDayState: state.multipleDayState.copyWith(
+        status: FormzSubmissionStatus.initial,
+      ),
+      oneDayState: state.oneDayState.copyWith(
+        status: FormzSubmissionStatus.initial,
+      ),
+    );
+  }
+
   void dateChanged(String? value) {
     final date = Date.dirty(value);
     state = state.copyWith.oneDayState(
