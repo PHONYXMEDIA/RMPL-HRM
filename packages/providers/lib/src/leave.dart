@@ -52,13 +52,16 @@ class Leave extends _$Leave {
 
   Future<void> applyLeave() async {
     if (ref.read(selectedDayTypeProvider).isOneDay) {
-      await ref
+      final doc = ref
           .read(
             firestoreProvider,
           )
           .collection('leave')
-          .add(
+          .doc();
+
+      await doc.set(
         {
+          'id': doc.id,
           'date': Timestamp.fromDate(
             DateTime.parse(
               ref.read(applyLeaveProvider).oneDayState.date.value!,
@@ -83,8 +86,11 @@ class Leave extends _$Leave {
       );
     }
     if (ref.read(selectedDayTypeProvider).isMultipleDay) {
-      await ref.read(firestoreProvider).collection('leave').add(
+      final doc = ref.read(firestoreProvider).collection('leave').doc();
+
+      await doc.set(
         {
+          'id': doc.id,
           'date': Timestamp.fromDate(
             DateTime.parse(
               ref.read(applyLeaveProvider).multipleDayState.fromDate.value!,
