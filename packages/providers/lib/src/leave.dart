@@ -52,6 +52,17 @@ class Leave extends _$Leave {
 
   Future<void> applyLeave() async {
     if (ref.read(selectedDayTypeProvider).isOneDay) {
+      final user = await ref
+          .read(firestoreProvider)
+          .collection('employees')
+          .doc(ref.read(authProvider).user.id)
+          .get();
+
+      String? branch;
+      if (user.exists) {
+        branch = (user.data()! as Map)['branch'] as String?;
+      }
+
       final doc = ref
           .read(
             firestoreProvider,
@@ -81,12 +92,24 @@ class Leave extends _$Leave {
               .doc(
                 ref.read(authProvider).user.id,
               ),
+          'branch': branch,
           // 'under': ref.read(profileProvider)?.creator,
         },
       );
     }
     if (ref.read(selectedDayTypeProvider).isMultipleDay) {
       final doc = ref.read(firestoreProvider).collection('leave').doc();
+
+      final user = await ref
+          .read(firestoreProvider)
+          .collection('employees')
+          .doc(ref.read(authProvider).user.id)
+          .get();
+
+      String? branch;
+      if (user.exists) {
+        branch = (user.data()! as Map)['branch'] as String?;
+      }
 
       await doc.set(
         {
@@ -114,6 +137,7 @@ class Leave extends _$Leave {
               .doc(
                 ref.read(authProvider).user.id,
               ),
+          'branch': branch,
         },
       );
     }
